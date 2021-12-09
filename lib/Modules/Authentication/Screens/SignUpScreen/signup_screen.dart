@@ -1,0 +1,219 @@
+import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/signup_bloc.dart';
+import 'package:airwaycompanion/Modules/Authentication/Events/signup_events.dart';
+import 'package:airwaycompanion/Modules/Authentication/Screens/SignUpScreen/signup_states.dart';
+import 'package:airwaycompanion/Modules/Authentication/Widgets/signup_button.dart';
+import 'package:airwaycompanion/Modules/General%20Widgets/toast.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class SignUpPageView extends StatefulWidget {
+  const SignUpPageView({Key? key}) : super(key: key);
+
+  @override
+  _SignUpPageViewState createState() => _SignUpPageViewState();
+}
+
+class _SignUpPageViewState extends State<SignUpPageView> {
+  final _formKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    FlutterToast.init(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<SignupBloc, SignupState>(
+      listener: (context, state) async {
+        // Display Signup succesful toast
+        if (state.internalStateValue == 1) {
+          FlutterToast.display("Signed up");
+          await Future.delayed(const Duration(seconds: 2));
+          Navigator.pop(context);
+
+          // Display Signup failed toast
+        } else if (state.internalStateValue == 2) {
+          FlutterToast.display("Failed to Sign Up");
+        }
+      },
+      builder: (context, state) {
+        return _signUpForm();
+      },
+    );
+  }
+
+  //? Main Login Form
+  Widget _signUpForm() {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                SafeArea(child: _signUpIndicatorImage()),
+                const SizedBox(
+                  height: 30,
+                ),
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _titleText(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      _usernameTextField(),
+                      _mailTextField(),
+                      _passwordTextField(),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const SignUpButton(),
+                      _backToLoginIndicator(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  //? Title
+  Widget _titleText() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 1),
+      child: Text(
+        "Sign Up",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.w900,
+          fontSize: 30,
+        ),
+      ),
+    );
+  }
+
+  //? Username Field
+  Widget _usernameTextField() {
+    return TextFormField(
+      obscureText: false,
+      decoration: InputDecoration(
+        hintText: "username",
+        labelText: "Username",
+        labelStyle: TextStyle(fontSize: 15, color: Colors.grey.shade500),
+        hintStyle: TextStyle(color: Colors.grey.shade300),
+        focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.5)),
+        icon: const Icon(
+          Icons.person,
+          color: Color.fromRGBO(87, 77, 245, 2),
+        ),
+      ),
+      validator: (value) {
+        if (value == null) return "Username required";
+        if (value.length < 3) return "Username is too short";
+        return null;
+      },
+      onChanged: (value) {
+        context.read<SignupBloc>().add(UsernameAddedEvent(username: value));
+      },
+    );
+  }
+
+  //? Password field
+  Widget _passwordTextField() {
+    return TextFormField(
+      obscureText: true,
+      decoration: InputDecoration(
+        hintText: "password",
+        labelText: "Password",
+        labelStyle: TextStyle(fontSize: 15, color: Colors.grey.shade500),
+        hintStyle: TextStyle(color: Colors.grey.shade300),
+        focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.5)),
+        icon: const Icon(
+          Icons.lock,
+          color: Color.fromRGBO(87, 77, 245, 2),
+        ),
+      ),
+      validator: (value) {
+        if (value == null) return "Password required";
+        if (value.length < 8) return "Password is too short";
+        return null;
+      },
+      onChanged: (value) {
+        context.read<SignupBloc>().add(PasswordAddedEvent(password: value));
+      },
+    );
+  }
+
+  //? Email Field
+  Widget _mailTextField() {
+    return TextFormField(
+      decoration: InputDecoration(
+        hintText: "email",
+        labelText: "Email",
+        labelStyle: TextStyle(fontSize: 15, color: Colors.grey.shade500),
+        hintStyle: TextStyle(color: Colors.grey.shade300),
+        focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.5)),
+        icon: const Icon(
+          Icons.mail,
+          color: Color.fromRGBO(87, 77, 245, 2),
+        ),
+      ),
+      validator: (value) {
+        if (value == null) return "Mail required";
+        if (value.length < 3) return "Invalid mail";
+        return null;
+      },
+      onChanged: (value) {
+        context.read<SignupBloc>().add(MailAddedEvent(mail: value));
+      },
+    );
+  }
+
+//? Login Screen Image
+  Widget _signUpIndicatorImage() {
+    return Image.asset(
+      "assets/images/signup_purple.png",
+      fit: BoxFit.cover,
+    );
+  }
+
+  //? Signup indicator
+  Widget _backToLoginIndicator() {
+    return BlocBuilder<SignupBloc, SignupState>(
+      builder: (context, state) {
+        return TextButton(
+          child: const Text(
+            "back to login",
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w900),
+          ),
+          style: ButtonStyle(
+              overlayColor: MaterialStateProperty.all(
+                  const Color.fromRGBO(95, 77, 250, 0.05))),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
+  }
+}
