@@ -33,7 +33,6 @@ class _AirwayCompanionAppState extends State<AirwayCompanionApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
-        // theme: ThemeData(fontFamily: GoogleFonts.lato().fontFamily),
         onGenerateRoute: _authPageRouter.onGenerateRoute,
       ),
     );
