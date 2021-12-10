@@ -36,11 +36,11 @@ class _SignUpButtonState extends State<SignUpButton> {
                         color: Colors.white,
                       )),
           style: TextButton.styleFrom(
-            minimumSize: const Size(160, 43),
+            minimumSize: const Size(230, 45),
             primary: Colors.white,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
-                Radius.circular(10),
+                Radius.elliptical(30, 30),
               ),
             ),
             backgroundColor: const Color.fromRGBO(87, 77, 245, 2),

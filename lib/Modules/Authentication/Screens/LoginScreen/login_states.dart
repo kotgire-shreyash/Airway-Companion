@@ -34,9 +34,9 @@ class LoginState {
       password: password ?? this.password,
       title: username == null
           ? "Welcome ${this.username == null || this.username.isEmpty ? "" : (this.username.length <= 10) ? this.username : this.username.substring(0, 9) + "..."}"
-          : (username.length <= 10)
+          : (username.length <= 9)
               ? "Welcome $username"
-              : "Welcome ${username.substring(0, 9)}...",
+              : "Welcome ${username.substring(0, 8)}...",
       isFormSubmitted: isFormSubmitted ?? this.isFormSubmitted,
       isSignupPageNavigationCalled:
           isSignupPageNavigationCalled ?? this.isSignupPageNavigationCalled,
