@@ -18,6 +18,9 @@ class LoginPageView extends StatefulWidget {
 
 class _LoginPageViewState extends State<LoginPageView> {
   final _formKey = GlobalKey();
+  final _latoFontFamily = GoogleFonts.lato().fontFamily;
+  final _latoBoldFontFamily =
+      GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
 
   @override
   void initState() {
@@ -72,19 +75,13 @@ class _LoginPageViewState extends State<LoginPageView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       _titleText(),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      _sizedBoxSpace(20),
                       _usernameTextField(),
                       _mailTextField(),
                       _passwordTextField(),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      _sizedBoxSpace(20),
                       _passwordReset(),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      _sizedBoxSpace(25),
                       const LoginButton(),
                       _signupIndicator()
                     ],
@@ -107,13 +104,22 @@ class _LoginPageViewState extends State<LoginPageView> {
             child: Text(
               state.title,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w900,
                 fontSize: 30,
+                fontFamily:
+                    GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily,
               ),
             ));
       },
+    );
+  }
+
+  //? Const Space widget
+  Widget _sizedBoxSpace(double height) {
+    return SizedBox(
+      height: height,
     );
   }
 
@@ -124,17 +130,24 @@ class _LoginPageViewState extends State<LoginPageView> {
         return TextFormField(
           obscureText: false,
           autofocus: false,
+          style: TextStyle(
+            fontFamily: _latoFontFamily,
+          ),
           decoration: InputDecoration(
             hintText: "username",
             labelText: "Username",
-            labelStyle: TextStyle(fontSize: 15, color: Colors.grey.shade500),
-            hintStyle: TextStyle(color: Colors.grey.shade300),
-            focusedBorder: const UnderlineInputBorder(
+            labelStyle: TextStyle(
+                fontSize: 15,
+                color: Colors.grey.shade500,
+                fontFamily: _latoFontFamily),
+            hintStyle: TextStyle(
+                color: Colors.grey.shade300, fontFamily: _latoFontFamily),
+            focusedBorder: UnderlineInputBorder(
                 borderSide:
-                    BorderSide(color: CustomColors.lightPurple, width: 2.5)),
-            icon: const Icon(
+                    BorderSide(color: CustomColors.loginSwatch, width: 2.5)),
+            icon: Icon(
               Icons.person,
-              color: Color.fromRGBO(87, 77, 245, 2),
+              color: CustomColors.loginSwatch,
             ),
           ),
           validator: (value) {
@@ -161,14 +174,18 @@ class _LoginPageViewState extends State<LoginPageView> {
           decoration: InputDecoration(
             hintText: "password",
             labelText: "Password",
-            labelStyle: TextStyle(fontSize: 15, color: Colors.grey.shade500),
-            hintStyle: TextStyle(color: Colors.grey.shade300),
-            focusedBorder: const UnderlineInputBorder(
+            labelStyle: TextStyle(
+                fontSize: 15,
+                color: Colors.grey.shade500,
+                fontFamily: _latoFontFamily),
+            hintStyle: TextStyle(
+                color: Colors.grey.shade300, fontFamily: _latoFontFamily),
+            focusedBorder: UnderlineInputBorder(
                 borderSide:
-                    BorderSide(color: CustomColors.lightPurple, width: 2.5)),
-            icon: const Icon(
+                    BorderSide(color: CustomColors.loginSwatch, width: 2.5)),
+            icon: Icon(
               Icons.lock,
-              color: Color.fromRGBO(87, 77, 245, 2),
+              color: CustomColors.loginSwatch,
             ),
           ),
           validator: (value) {
@@ -194,14 +211,18 @@ class _LoginPageViewState extends State<LoginPageView> {
           decoration: InputDecoration(
             hintText: "email",
             labelText: "Email",
-            labelStyle: TextStyle(fontSize: 15, color: Colors.grey.shade500),
-            hintStyle: TextStyle(color: Colors.grey.shade300),
-            focusedBorder: const UnderlineInputBorder(
+            labelStyle: TextStyle(
+                fontSize: 15,
+                color: Colors.grey.shade500,
+                fontFamily: _latoFontFamily),
+            hintStyle: TextStyle(
+                color: Colors.grey.shade300, fontFamily: _latoFontFamily),
+            focusedBorder: UnderlineInputBorder(
                 borderSide:
-                    BorderSide(color: CustomColors.lightPurple, width: 2.5)),
-            icon: const Icon(
+                    BorderSide(color: CustomColors.loginSwatch, width: 2.5)),
+            icon: Icon(
               Icons.mail,
-              color: Color.fromRGBO(87, 77, 245, 2),
+              color: CustomColors.loginSwatch,
             ),
           ),
           validator: (value) {
@@ -221,12 +242,13 @@ class _LoginPageViewState extends State<LoginPageView> {
   Widget _passwordReset() {
     return Container(
       alignment: Alignment.centerRight,
-      child: const Text(
-        "forgot password?",
+      child: Text(
+        "Forgot password?",
         style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w900,
-            color: Color.fromRGBO(95, 77, 250, 2)),
+            fontFamily: _latoFontFamily,
+            color: CustomColors.loginSwatch),
       ),
     );
   }
@@ -234,7 +256,7 @@ class _LoginPageViewState extends State<LoginPageView> {
 //? Login Screen Image
   Widget _loginIndicatorImage() {
     return Image.asset(
-      "assets/images/login_image_purple.png",
+      "assets/images/login_image_persian_blue.png",
       fit: BoxFit.cover,
     );
   }
@@ -244,15 +266,19 @@ class _LoginPageViewState extends State<LoginPageView> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
+        Text(
           "Don't have an account? ",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontFamily: _latoFontFamily),
         ),
         TextButton(
-          child: const Text(
+          child: Text(
             "SignUp",
             style: TextStyle(
-                color: Color.fromRGBO(95, 77, 250, 2),
+                color: CustomColors.loginSwatch,
+                fontFamily: _latoBoldFontFamily,
                 fontWeight: FontWeight.w900),
           ),
           style: ButtonStyle(

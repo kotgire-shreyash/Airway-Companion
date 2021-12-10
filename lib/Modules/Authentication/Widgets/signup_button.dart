@@ -1,6 +1,7 @@
 import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/signup_bloc.dart';
 import 'package:airwaycompanion/Modules/Authentication/Events/signup_events.dart';
 import 'package:airwaycompanion/Modules/Authentication/Screens/SignUpScreen/signup_states.dart';
+import 'package:airwaycompanion/Modules/General%20Widgets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,14 +37,14 @@ class _SignUpButtonState extends State<SignUpButton> {
                         color: Colors.white,
                       )),
           style: TextButton.styleFrom(
-            minimumSize: const Size(160, 43),
+            minimumSize: const Size(230, 45),
             primary: Colors.white,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
-                Radius.circular(10),
+                Radius.elliptical(30, 30),
               ),
             ),
-            backgroundColor: const Color.fromRGBO(87, 77, 245, 2),
+            backgroundColor: CustomColors.signupSwatch,
             // shape: const StadiumBorder(),
           ),
           onPressed: () {

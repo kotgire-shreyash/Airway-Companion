@@ -2,6 +2,7 @@ import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/signup_bloc.dart';
 import 'package:airwaycompanion/Modules/Authentication/Events/signup_events.dart';
 import 'package:airwaycompanion/Modules/Authentication/Screens/SignUpScreen/signup_states.dart';
 import 'package:airwaycompanion/Modules/Authentication/Widgets/signup_button.dart';
+import 'package:airwaycompanion/Modules/General%20Widgets/colors.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -120,9 +121,9 @@ class _SignUpPageViewState extends State<SignUpPageView> {
         hintStyle: TextStyle(color: Colors.grey.shade300),
         focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.5)),
-        icon: const Icon(
+        icon: Icon(
           Icons.person,
-          color: Color.fromRGBO(87, 77, 245, 2),
+          color: CustomColors.signupSwatch,
         ),
       ),
       validator: (value) {
@@ -147,9 +148,9 @@ class _SignUpPageViewState extends State<SignUpPageView> {
         hintStyle: TextStyle(color: Colors.grey.shade300),
         focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.5)),
-        icon: const Icon(
+        icon: Icon(
           Icons.lock,
-          color: Color.fromRGBO(87, 77, 245, 2),
+          color: CustomColors.signupSwatch,
         ),
       ),
       validator: (value) {
@@ -173,9 +174,9 @@ class _SignUpPageViewState extends State<SignUpPageView> {
         hintStyle: TextStyle(color: Colors.grey.shade300),
         focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.5)),
-        icon: const Icon(
+        icon: Icon(
           Icons.mail,
-          color: Color.fromRGBO(87, 77, 245, 2),
+          color: CustomColors.signupSwatch,
         ),
       ),
       validator: (value) {
@@ -192,7 +193,7 @@ class _SignUpPageViewState extends State<SignUpPageView> {
 //? Login Screen Image
   Widget _signUpIndicatorImage() {
     return Image.asset(
-      "assets/images/signup_purple.png",
+      "assets/images/signup_red_accent200.png",
       fit: BoxFit.cover,
     );
   }
