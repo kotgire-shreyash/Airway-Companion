@@ -142,12 +142,12 @@ class _LoginPageViewState extends State<LoginPageView> {
                 fontFamily: _latoFontFamily),
             hintStyle: TextStyle(
                 color: Colors.grey.shade300, fontFamily: _latoFontFamily),
-            focusedBorder: const UnderlineInputBorder(
+            focusedBorder: UnderlineInputBorder(
                 borderSide:
-                    BorderSide(color: CustomColors.lightPurple, width: 2.5)),
-            icon: const Icon(
+                    BorderSide(color: CustomColors.loginSwatch, width: 2.5)),
+            icon: Icon(
               Icons.person,
-              color: Color.fromRGBO(87, 77, 245, 2),
+              color: CustomColors.loginSwatch,
             ),
           ),
           validator: (value) {
@@ -180,12 +180,12 @@ class _LoginPageViewState extends State<LoginPageView> {
                 fontFamily: _latoFontFamily),
             hintStyle: TextStyle(
                 color: Colors.grey.shade300, fontFamily: _latoFontFamily),
-            focusedBorder: const UnderlineInputBorder(
+            focusedBorder: UnderlineInputBorder(
                 borderSide:
-                    BorderSide(color: CustomColors.lightPurple, width: 2.5)),
-            icon: const Icon(
+                    BorderSide(color: CustomColors.loginSwatch, width: 2.5)),
+            icon: Icon(
               Icons.lock,
-              color: Color.fromRGBO(87, 77, 245, 2),
+              color: CustomColors.loginSwatch,
             ),
           ),
           validator: (value) {
@@ -217,12 +217,12 @@ class _LoginPageViewState extends State<LoginPageView> {
                 fontFamily: _latoFontFamily),
             hintStyle: TextStyle(
                 color: Colors.grey.shade300, fontFamily: _latoFontFamily),
-            focusedBorder: const UnderlineInputBorder(
+            focusedBorder: UnderlineInputBorder(
                 borderSide:
-                    BorderSide(color: CustomColors.lightPurple, width: 2.5)),
-            icon: const Icon(
+                    BorderSide(color: CustomColors.loginSwatch, width: 2.5)),
+            icon: Icon(
               Icons.mail,
-              color: Color.fromRGBO(87, 77, 245, 2),
+              color: CustomColors.loginSwatch,
             ),
           ),
           validator: (value) {
@@ -248,7 +248,7 @@ class _LoginPageViewState extends State<LoginPageView> {
             fontSize: 15,
             fontWeight: FontWeight.w900,
             fontFamily: _latoFontFamily,
-            color: const Color.fromRGBO(95, 77, 250, 2)),
+            color: CustomColors.loginSwatch),
       ),
     );
   }
@@ -256,7 +256,7 @@ class _LoginPageViewState extends State<LoginPageView> {
 //? Login Screen Image
   Widget _loginIndicatorImage() {
     return Image.asset(
-      "assets/images/login_image_purple.png",
+      "assets/images/login_image_persian_blue.png",
       fit: BoxFit.cover,
     );
   }
@@ -277,7 +277,7 @@ class _LoginPageViewState extends State<LoginPageView> {
           child: Text(
             "SignUp",
             style: TextStyle(
-                color: const Color.fromRGBO(95, 77, 250, 2),
+                color: CustomColors.loginSwatch,
                 fontFamily: _latoBoldFontFamily,
                 fontWeight: FontWeight.w900),
           ),

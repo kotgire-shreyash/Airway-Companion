@@ -44,7 +44,7 @@ class _LoginButtonState extends State<LoginButton> {
                 Radius.elliptical(30, 30),
               ),
             ),
-            backgroundColor: const Color.fromRGBO(87, 77, 245, 2),
+            backgroundColor: Colors.blue.shade900,
             // shape: const StadiumBorder(),
           ),
           onPressed: () async {
