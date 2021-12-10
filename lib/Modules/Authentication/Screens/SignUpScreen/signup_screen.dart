@@ -7,6 +7,7 @@ import 'package:airwaycompanion/Modules/General%20Widgets/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SignUpPageView extends StatefulWidget {
   const SignUpPageView({Key? key}) : super(key: key);
@@ -17,6 +18,9 @@ class SignUpPageView extends StatefulWidget {
 
 class _SignUpPageViewState extends State<SignUpPageView> {
   final _formKey = GlobalKey();
+  final _latoFontFamily = GoogleFonts.lato().fontFamily;
+  final _latoBoldFontFamily =
+      GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
 
   @override
   void initState() {
@@ -203,13 +207,11 @@ class _SignUpPageViewState extends State<SignUpPageView> {
     return BlocBuilder<SignupBloc, SignupState>(
       builder: (context, state) {
         return TextButton(
-          child: const Text(
+          child: Text(
             "back to login",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w900),
+            style:
+                TextStyle(color: Colors.black, fontFamily: _latoBoldFontFamily),
           ),
-          style: ButtonStyle(
-              overlayColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(95, 77, 250, 0.05))),
           onPressed: () {
             Navigator.pop(context);
           },
