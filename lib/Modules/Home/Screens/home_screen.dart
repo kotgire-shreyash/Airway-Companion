@@ -27,7 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeScreenBloc, HomeScreenState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state.isSearchBoxTextFieldEnabled && !state.isSearchIconPressed) {
+          context.read<HomeScreenBloc>().add(
+              SearchBoxTextFieldPressed(isSearchBoxTextFieldEnabled: false));
+        }
+      },
       builder: (context, state) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -223,12 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.grey.shade700,
               ),
             ),
-            child: FloatingActionButton(
-              elevation: 0,
-              focusElevation: 0,
-              hoverElevation: 0,
-              isExtended: true,
-              backgroundColor: Colors.white,
+            child: InkWell(
               child: Center(
                 child: AnimatedTextKit(
                   animatedTexts: [
@@ -266,9 +266,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   repeatForever: true,
                   pause: const Duration(seconds: 2),
                   stopPauseOnTap: true,
+                  onTap: () {
+                    context.read<HomeScreenBloc>().add(
+                        SearchBoxTextFieldPressed(
+                            isSearchBoxTextFieldEnabled: true));
+                  },
                 ),
               ),
-              onPressed: () {
+              onTap: () {
                 context.read<HomeScreenBloc>().add(SearchBoxTextFieldPressed(
                     isSearchBoxTextFieldEnabled: true));
               },
