@@ -49,6 +49,7 @@ dependencies:
   flutter_svg:
   pull_to_refresh:
   animated_text_kit:
+  font_awesome_flutter:
 
   
 dev_dependencies:

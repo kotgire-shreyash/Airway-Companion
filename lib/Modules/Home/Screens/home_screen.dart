@@ -6,6 +6,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -151,6 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 20,
                   ),
+                  _flightBookingVerificationCard(),
                 ],
               ),
             ),
@@ -217,7 +219,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.grey.shade900,
               ),
             ))
-        : Container(
+        :
+        // Animated Search Text Guide
+        Container(
             height: 50,
             width: MediaQuery.of(context).size.width - 50,
             decoration: BoxDecoration(
@@ -273,11 +277,85 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
+
+              // Second onTap necessary for when the space other than the animated text is tapped
               onTap: () {
                 context.read<HomeScreenBloc>().add(SearchBoxTextFieldPressed(
                     isSearchBoxTextFieldEnabled: true));
               },
             ),
           );
+  }
+
+  // Flight-Booking verification card
+  Widget _flightBookingVerificationCard() {
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      elevation: 10,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Container(
+        height: 280,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: Colors.blue.shade700,
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+        ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 140,
+              width: 250,
+              // color: Colors.blue,
+              child: SvgPicture.asset(
+                "assets/images/flight_booking.svg",
+                fit: BoxFit.fill,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            SizedBox(
+              child: Text(
+                "Booking Verification",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: GoogleFonts.lato(
+                          fontWeight: FontWeight.bold, fontSize: 35)
+                      .fontFamily,
+                  fontSize: 25,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            ElevatedButton(
+              child: Text(
+                "Verify",
+                style: TextStyle(
+                    color: Colors.black, fontFamily: _latoBoldFontFamily),
+              ),
+              style: TextButton.styleFrom(
+                minimumSize: const Size(150, 40),
+                primary: Colors.white,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                ),
+                backgroundColor: Colors.white,
+                // shape: const StadiumBorder(),
+              ),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -256,7 +256,7 @@ class _LoginPageViewState extends State<LoginPageView> {
 //? Login Screen Image
   Widget _loginIndicatorImage() {
     return Image.asset(
-      "assets/images/login_image_persian_blue.png",
+      "assets/images/login_image_peacock_blue.png",
       fit: BoxFit.cover,
     );
   }
