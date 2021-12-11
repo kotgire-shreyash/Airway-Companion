@@ -48,6 +48,7 @@ dependencies:
   loading_animation_widget:
   flutter_svg:
   pull_to_refresh:
+  animated_text_kit:
 
   
 dev_dependencies:

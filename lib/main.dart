@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'Logic/Bloc/AuthenticationBloc/login_bloc.dart';
+import 'Logic/Bloc/HomeBloc/home_screen_bloc.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,12 +29,11 @@ class _AirwayCompanionAppState extends State<AirwayCompanionApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => LoginBloc()),
-        // BlocProvider(create: (context) => HomeScreenBloc()),
+        BlocProvider(create: (context) => HomeScreenBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
-        // theme: ThemeData(fontFamily: GoogleFonts.lato().fontFamily),
         onGenerateRoute: _authPageRouter.onGenerateRoute,
       ),
     );
