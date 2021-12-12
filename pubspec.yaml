@@ -50,6 +50,8 @@ dependencies:
   pull_to_refresh:
   animated_text_kit:
   font_awesome_flutter:
+  convex_bottom_bar:
+  bottom_bar_with_sheet:
 
   
 dev_dependencies:

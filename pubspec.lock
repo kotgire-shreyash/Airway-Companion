@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  bottom_bar_with_sheet:
+    dependency: "direct main"
+    description:
+      name: bottom_bar_with_sheet
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   characters:
     dependency: transitive
     description:
@@ -78,6 +85,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  convex_bottom_bar:
+    dependency: "direct main"
+    description:
+      name: convex_bottom_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   crypto:
     dependency: transitive
     description:

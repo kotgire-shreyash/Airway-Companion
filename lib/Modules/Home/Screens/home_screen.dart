@@ -1,6 +1,8 @@
 import 'package:airwaycompanion/Logic/Bloc/HomeBloc/home_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Home/Events/home_screen_events.dart';
 import 'package:airwaycompanion/Modules/Home/Screens/home_screen_states.dart';
+import 'package:airwaycompanion/Modules/Home/Widgets/booking_verification_button.dart';
+import 'package:airwaycompanion/Modules/Home/Widgets/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,8 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:airwaycompanion/Modules/Home/Widgets/bottom_navigation_bar.dart'
+    as bottomBar;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -47,7 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
   // Home Page Layout
   Widget _home() {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Colors.white,
+      bottomNavigationBar: bottomBar.bottomNavigationBar(),
       body: SafeArea(
         child: SmartRefresher(
           controller: _refreshController,
@@ -63,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
             child: Container(
-              color: Colors.grey.shade100,
+              color: Colors.white,
               child: Column(
                 children: [
                   Container(
@@ -83,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "Hi ",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      color: Colors.grey.shade600,
+                                      color: Colors.grey.shade400,
                                       fontSize: 15,
                                       fontFamily: _latoBoldFontFamily,
                                       fontWeight: FontWeight.w700),
@@ -108,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Flexible(
                           child: Container(
-                            color: Colors.grey.shade100,
+                            color: Colors.white,
                             alignment: Alignment.center,
                             margin: const EdgeInsets.only(right: 10),
                             child: IconButton(
@@ -159,6 +164,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+      floatingActionButton: ChatBot(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
@@ -299,7 +306,7 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 280,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: Colors.blue.shade700,
+          color: Colors.white, //Colors.blue.shade700,
           borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
         child: Column(
@@ -312,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 250,
               // color: Colors.blue,
               child: SvgPicture.asset(
-                "assets/images/flight_booking.svg",
+                "assets/images/flight_booking_grey.svg",
                 fit: BoxFit.fill,
               ),
             ),
@@ -323,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text(
                 "Booking Verification",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontFamily: GoogleFonts.lato(
                           fontWeight: FontWeight.bold, fontSize: 35)
                       .fontFamily,
@@ -334,25 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 15,
             ),
-            ElevatedButton(
-              child: Text(
-                "Verify",
-                style: TextStyle(
-                    color: Colors.black, fontFamily: _latoBoldFontFamily),
-              ),
-              style: TextButton.styleFrom(
-                minimumSize: const Size(150, 40),
-                primary: Colors.white,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
-                  ),
-                ),
-                backgroundColor: Colors.white,
-                // shape: const StadiumBorder(),
-              ),
-              onPressed: () {},
-            ),
+            const VerificationButton(),
           ],
         ),
       ),
