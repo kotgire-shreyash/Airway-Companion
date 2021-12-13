@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 Widget bottomNavigationBar() {
   return BottomBarWithSheet(
     sheetChild: const Center(child: Text("Content")),
-    // mainActionButton: ChatBot(),
+    selectedIndex: 1,
     disableMainActionButton: true,
     bottomBarTheme: BottomBarTheme(
       contentPadding: const EdgeInsets.only(top: 15),
@@ -22,9 +22,12 @@ Widget bottomNavigationBar() {
         fontSize: 10,
       ),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: Colors.white,
         borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(30),
+        ),
+        border: Border.all(color: Colors.grey.shade100),
       ),
     ),
     items: _items,

@@ -1,3 +1,4 @@
+import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/login_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/HomeBloc/home_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Home/Events/home_screen_events.dart';
 import 'package:airwaycompanion/Modules/Home/Screens/home_screen_states.dart';
@@ -48,11 +49,22 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void _onRefresh() async {
+    await Future.delayed(const Duration(seconds: 1));
+    _refreshController.refreshCompleted();
+  }
+
   // Home Page Layout
   Widget _home() {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: bottomBar.bottomNavigationBar(),
+      endDrawer: Drawer(
+        child: Container(
+          width: MediaQuery.of(context).size.width - 350,
+          color: Colors.yellow.shade500,
+        ),
+      ),
       body: SafeArea(
         child: SmartRefresher(
           controller: _refreshController,
@@ -63,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Colors.grey.shade200,
             color: Colors.black87,
           ),
-          // onRefresh: _onRefresh,
+          onRefresh: _onRefresh,
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
@@ -98,6 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 5),
                                 child: Text(
+                                  // context.read<LoginBloc>().state.username
                                   "Ninad07",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(

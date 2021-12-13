@@ -17,7 +17,7 @@ class GlobalRouter {
                   child: const SignUpPageView(),
                 ));
       case 'home':
-      return MaterialPageRoute(builder: (_) => const HomeScreen());
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
 
       default:
         return MaterialPageRoute(builder: (_) => const LoginPageView());
