@@ -4,7 +4,7 @@ import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/login_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/HomeBloc/home_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Home/Events/home_screen_events.dart';
 import 'package:airwaycompanion/Modules/Home/Screens/home_screen_states.dart';
-import 'package:airwaycompanion/Modules/Home/Widgets/booking_verification_button.dart';
+import 'package:airwaycompanion/Modules/Home/Widgets/flights_check_button.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  _flightBookingVerificationCard(),
+                  _flightsCheckNotifier(),
                   const SizedBox(
                     height: 30,
                   ),
@@ -332,9 +332,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Flight-Booking verification card
-  Widget _flightBookingVerificationCard() {
+  Widget _flightsCheckNotifier() {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       elevation: 10,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -365,7 +365,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(
               child: Text(
-                "Booking Verification",
+                "Check Flights",
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: GoogleFonts.lato(
@@ -378,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 15,
             ),
-            const VerificationButton(),
+            const FlightsCheckNotifierButton(),
           ],
         ),
       ),

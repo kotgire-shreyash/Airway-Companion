@@ -1,7 +1,7 @@
 import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/login_bloc.dart';
 import 'package:airwaycompanion/Modules/Authentication/Screens/LoginScreen/login_states.dart';
 import 'package:airwaycompanion/Modules/Authentication/Widgets/login_button.dart';
-import 'package:airwaycompanion/Modules/General%20Widgets/colors.dart';
+import 'package:airwaycompanion/Modules/General%20Widgets/custom_colors.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

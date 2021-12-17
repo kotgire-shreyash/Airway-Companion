@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class VerificationButton extends StatelessWidget {
-  const VerificationButton({Key? key}) : super(key: key);
+class FlightsCheckNotifierButton extends StatelessWidget {
+  const FlightsCheckNotifierButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       child: Text(
-        "Verify",
+        "Check",
         style: TextStyle(
             color: Colors.white,
             fontFamily:
