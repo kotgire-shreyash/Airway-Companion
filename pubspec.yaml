@@ -51,7 +51,6 @@ dependencies:
   animated_text_kit:
   font_awesome_flutter:
   bottom_bar_with_sheet:
-  flutter_statusbarcolor_ns:
   
 dev_dependencies:
   flutter_test:
