@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/login_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/HomeBloc/home_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Home/Events/home_screen_events.dart';
@@ -171,6 +173,28 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20,
                   ),
                   _flightBookingVerificationCard(),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.only(left: 20),
+                    child: Text(
+                      "Services For You",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily:
+                            GoogleFonts.lato(fontWeight: FontWeight.w400)
+                                .fontFamily,
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  _servicesWidget(),
                 ],
               ),
             ),
@@ -356,6 +380,66 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const VerificationButton(),
           ],
+        ),
+      ),
+    );
+  }
+
+  // Services Widget
+  Widget _servicesWidget() {
+    return Center(
+        child: Column(
+      children: [
+        _serviceRowLayout(
+          _serviceCard(Colors.deepPurpleAccent.shade400,
+              Colors.deepPurpleAccent.shade200),
+          _serviceCard(Colors.deepPurpleAccent.shade200,
+              Colors.deepPurpleAccent.shade100),
+        ),
+        const SizedBox(height: 15),
+        _serviceRowLayout(
+          _serviceCard(Colors.deepPurpleAccent.shade200,
+              Colors.deepPurpleAccent.shade100),
+          _serviceCard(Colors.deepPurpleAccent.shade200,
+              Colors.deepPurpleAccent.shade100),
+        ),
+        const SizedBox(height: 15),
+        Center(
+            child: _serviceCard(Colors.deepPurpleAccent.shade400,
+                Colors.deepPurpleAccent.shade100)),
+        const SizedBox(height: 15),
+      ],
+    ));
+  }
+
+  Widget _serviceRowLayout(Widget serviceCard1, Widget serviceCard2) {
+    return Container(
+      height: 150,
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        children: [
+          serviceCard1,
+          const SizedBox(width: 15),
+          serviceCard2,
+        ],
+      ),
+    );
+  }
+
+  // Service card
+  Widget _serviceCard(Color color1, Color color2) {
+    return Card(
+      elevation: 10,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Container(
+        height: 150,
+        width: MediaQuery.of(context).size.width / 2.5,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
       ),
     );
