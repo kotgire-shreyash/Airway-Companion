@@ -25,14 +25,14 @@ class TaskCard extends StatelessWidget {
       },
       child: Container(
         width: 280,
-        margin: EdgeInsets.only(top: 12),
+        margin: const EdgeInsets.only(top: 12),
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(left: 18, top: 8),
+                margin: const EdgeInsets.only(left: 18, top: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

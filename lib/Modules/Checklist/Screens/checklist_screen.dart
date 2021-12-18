@@ -1,6 +1,6 @@
+import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/task_data.dart';
 import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
 import 'package:airwaycompanion/Modules/Checklist/widgets/task_class.dart';
-import 'package:airwaycompanion/Modules/Checklist/widgets/todo_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -32,7 +32,7 @@ class _CheckListScreenState extends State<CheckListScreen> {
         child: Column(
           children: [
             const SizedBox(
-              height: 30,
+              height: 35,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,6 +95,9 @@ class _CheckListScreenState extends State<CheckListScreen> {
                 textScaleFactor: 1.4,
               ),
             ),
+            const SizedBox(
+              height: 20,
+            ),
             Column(
               children: _todoWidgets,
             ),
@@ -133,36 +136,3 @@ class _CheckListScreenState extends State<CheckListScreen> {
     }
   }
 }
-
-// Initial data of task card for widget list
-final List<taskClass> taskList = [
-  taskClass(
-    title: 'Documents',
-    todolist: [
-      'aadhar',
-      'pancard',
-      'passport',
-      'gate pass',
-      'vaccination Certificate',
-    ],
-    iconData: Icons.document_scanner,
-  ),
-  taskClass(
-    title: 'Utilities',
-    todolist: [
-      'Charger',
-      'Powerbank',
-      'Headphones',
-    ],
-    iconData: Icons.cable_sharp,
-  ),
-  taskClass(
-    title: 'Covid Necessary',
-    todolist: [
-      'Mask',
-      'Hand Sanitizer',
-      'RTPCR Report',
-    ],
-    iconData: Icons.coronavirus_outlined,
-  ),
-];
