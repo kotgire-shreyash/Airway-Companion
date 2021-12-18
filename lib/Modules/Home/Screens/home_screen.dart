@@ -366,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(
               child: Text(
-                "Check Flights",
+                "Available Flights",
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: GoogleFonts.lato(
