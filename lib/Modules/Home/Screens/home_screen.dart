@@ -201,8 +201,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      floatingActionButton: ChatBot(),
+      floatingActionButton: const ChatBot(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      resizeToAvoidBottomInset: false,
     );
   }
 
