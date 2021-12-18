@@ -1,4 +1,4 @@
-import 'package:airwaycompanion/Modules/Home/Widgets/chat_bot.dart';
+import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

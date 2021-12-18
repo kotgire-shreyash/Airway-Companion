@@ -5,7 +5,7 @@ import 'package:airwaycompanion/Logic/Bloc/HomeBloc/home_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Home/Events/home_screen_events.dart';
 import 'package:airwaycompanion/Modules/Home/Screens/home_screen_states.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/flights_check_button.dart';
-import 'package:airwaycompanion/Modules/Home/Widgets/chat_bot.dart';
+import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
