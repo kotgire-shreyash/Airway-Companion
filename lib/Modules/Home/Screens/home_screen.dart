@@ -4,14 +4,17 @@ import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/login_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/HomeBloc/home_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Home/Events/home_screen_events.dart';
 import 'package:airwaycompanion/Modules/Home/Screens/home_screen_states.dart';
+import 'package:airwaycompanion/Modules/Home/Widgets/drawer_widget.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/flights_check_button.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/bottom_navigation_bar.dart'
@@ -33,18 +36,20 @@ class _HomeScreenState extends State<HomeScreen> {
       GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext buildContext) {
     return BlocConsumer<HomeScreenBloc, HomeScreenState>(
       listener: (context, state) {
         if (state.isSearchBoxTextFieldEnabled && !state.isSearchIconPressed) {
           context.read<HomeScreenBloc>().add(
               SearchBoxTextFieldPressed(isSearchBoxTextFieldEnabled: false));
+        } else if (state.isChecklistTilePressed) {
+          Navigator.pushNamed(context, "checklistPage");
         }
       },
       builder: (context, state) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: _home(),
+          home: _home(context),
           onGenerateRoute: _homeScreenPageRouter.onGenerateRoute,
         );
       },
@@ -57,16 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Home Page Layout
-  Widget _home() {
+  Widget _home(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: bottomBar.bottomNavigationBar(),
-      endDrawer: Drawer(
-        child: Container(
-          width: MediaQuery.of(context).size.width - 350,
-          color: Colors.yellow.shade500,
-        ),
-      ),
+      endDrawer: _drawer(),
       body: SafeArea(
         child: SmartRefresher(
           controller: _refreshController,
@@ -343,9 +343,9 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Container(
         height: 280,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white, //Colors.blue.shade700,
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         child: Column(
           children: [
@@ -386,6 +386,142 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Drawer
+  Widget _drawer() {
+    return SafeArea(
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width - 100,
+        child: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              Container(
+                color: Colors.blue.shade500,
+                height: 220,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 130,
+                      width: MediaQuery.of(context).size.width - 100,
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 20),
+                        height: 100,
+                        width: 100,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.person,
+                            size: 60,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(right: 23),
+                      alignment: Alignment.centerRight,
+                      // height: 35,
+                      child: Text(
+                        "Ninad07",
+                        style: TextStyle(
+                          fontFamily:
+                              GoogleFonts.lato(fontWeight: FontWeight.w900)
+                                  .fontFamily,
+                          fontSize: 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(right: 23),
+                      alignment: Alignment.centerRight,
+                      height: 25,
+                      child: Text(
+                        "demouser123@gmail.com",
+                        style: TextStyle(
+                          fontFamily:
+                              GoogleFonts.lato(fontWeight: FontWeight.w800)
+                                  .fontFamily,
+                          fontSize: 15,
+                          color: Colors.grey.shade200,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ListTile(
+                leading: const Icon(
+                  CupertinoIcons.person,
+                  size: 25,
+                ),
+                title: Text(
+                  "Profile",
+                  style: TextStyle(
+                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w800)
+                        .fontFamily,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(
+                  CupertinoIcons.checkmark_alt_circle,
+                  size: 25,
+                ),
+                title: Text(
+                  "Check List",
+                  style: TextStyle(
+                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w800)
+                        .fontFamily,
+                    fontSize: 15,
+                  ),
+                ),
+                onTap: () {
+                  context
+                      .read<HomeScreenBloc>()
+                      .add(CheckListTilePressed(isChecklistTilePressed: true));
+                },
+              ),
+              ListTile(
+                leading: const Icon(
+                  FontAwesomeIcons.globe,
+                  size: 25,
+                ),
+                title: Text(
+                  "Navigation",
+                  style: TextStyle(
+                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w800)
+                        .fontFamily,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(
+                  CupertinoIcons.settings,
+                  size: 25,
+                ),
+                title: Text(
+                  "Settings",
+                  style: TextStyle(
+                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w800)
+                        .fontFamily,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   // Services Widget
   Widget _servicesWidget() {
     return Center(
@@ -413,6 +549,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ));
   }
 
+  // Services Layout
   Widget _serviceRowLayout(Widget serviceCard1, Widget serviceCard2) {
     return Container(
       height: 150,

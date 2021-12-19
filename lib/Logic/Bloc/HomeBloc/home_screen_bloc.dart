@@ -6,6 +6,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   HomeScreenBloc() : super(HomeScreenState()) {
     on<SearchIconPressed>(_onSearchIconPressedEvent);
     on<SearchBoxTextFieldPressed>(_onSearchBoxTextFieldPressedEvent);
+    on<CheckListTilePressed>(_onCheckListTilePressedEvent);
   }
 
   void _onSearchIconPressedEvent(
@@ -17,5 +18,10 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       SearchBoxTextFieldPressed event, Emitter<HomeScreenState> emit) {
     emit(state.copyWith(
         isSearchBoxTextFieldEnabled: event.isSearchBoxTextFieldEnabled));
+  }
+
+  void _onCheckListTilePressedEvent(
+      CheckListTilePressed event, Emitter<HomeScreenState> emit) {
+    emit(state.copyWith(isChecklistTilePressed: event.isChecklistTilePressed));
   }
 }

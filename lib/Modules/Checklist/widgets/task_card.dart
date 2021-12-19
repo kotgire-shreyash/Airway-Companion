@@ -13,16 +13,7 @@ class TaskCard extends StatelessWidget {
     final _latoBoldFontFamily =
         GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
     return InkWell(
-      onLongPress: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (BuildContext context) => TaskCardScreen(
-        //       taskClassObject: taskClassObject,
-        //     ),
-        //   ),
-        // );
-      },
+      onLongPress: () {},
       child: Container(
         width: 280,
         margin: const EdgeInsets.only(top: 12),

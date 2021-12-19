@@ -17,7 +17,6 @@ class _CheckListScreenState extends State<CheckListScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _getItems();
     super.initState();
   }
@@ -34,40 +33,21 @@ class _CheckListScreenState extends State<CheckListScreen> {
             const SizedBox(
               height: 35,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 5, left: 20),
-                  child: Text(
-                    "Hi Shreyash ",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        //color: Colors.grey.shade600,
-                        color: Colors.black,
-                        fontSize: 15,
-                        fontFamily: _latoBoldFontFamily,
-                        fontWeight: FontWeight.w900),
-                    textScaleFactor: 1.6,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 15),
-                  child: IconButton(
-                      onPressed: () {
-                        _addCard();
-                        setState(() {
-                          _todoWidgets.last;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.add,
-                        color: Colors.black,
-                        size: 40,
-                      )),
-                ),
-              ],
+            Container(
+              margin: const EdgeInsets.only(right: 20),
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                  onPressed: () {
+                    _addCard();
+                    setState(() {
+                      _todoWidgets.last;
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.add,
+                    color: Colors.black,
+                    size: 40,
+                  )),
             ),
             Container(
               alignment: Alignment.centerLeft,

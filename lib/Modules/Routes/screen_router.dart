@@ -20,9 +20,12 @@ class GlobalRouter {
       case 'home':
         return MaterialPageRoute(builder: (_) => const HomeScreen());
 
+      case 'checklistPage':
+        return MaterialPageRoute(builder: (_) => const CheckListScreen());
+
       default:
         //return MaterialPageRoute(builder: (_) => const LoginPageView());
-        return MaterialPageRoute(builder: (_) => const CheckListScreen());
+        return MaterialPageRoute(builder: (_) => const LoginPageView());
     }
   }
 }
