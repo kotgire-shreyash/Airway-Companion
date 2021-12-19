@@ -1,6 +1,7 @@
 import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/signup_bloc.dart';
 import 'package:airwaycompanion/Modules/Authentication/Screens/LoginScreen/login_screen.dart';
 import 'package:airwaycompanion/Modules/Authentication/Screens/SignUpScreen/signup_screen.dart';
+import 'package:airwaycompanion/Modules/Checklist/Screens/checklist_screen.dart';
 import 'package:airwaycompanion/Modules/Home/Screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +21,8 @@ class GlobalRouter {
         return MaterialPageRoute(builder: (_) => const HomeScreen());
 
       default:
-        return MaterialPageRoute(builder: (_) => const LoginPageView());
+        //return MaterialPageRoute(builder: (_) => const LoginPageView());
+        return MaterialPageRoute(builder: (_) => const CheckListScreen());
     }
   }
 }
