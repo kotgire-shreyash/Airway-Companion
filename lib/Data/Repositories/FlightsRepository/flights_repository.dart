@@ -31,9 +31,15 @@ class FlightRepository {
           arrivalGate: item['arrival']['gate'],
           departureGate: item['departure']['gate'],
         );
+
+        flightList.add(flightModel);
       }
     } catch (e) {
       rethrow;
     }
+  }
+
+  FlightModel getFlightDataModel(int index) {
+    return flightList[index];
   }
 }
