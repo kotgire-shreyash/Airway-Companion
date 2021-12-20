@@ -482,6 +482,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 onTap: () {
+                  print("Checklist screen");
                   context
                       .read<HomeScreenBloc>()
                       .add(CheckListTilePressed(isChecklistTilePressed: true));

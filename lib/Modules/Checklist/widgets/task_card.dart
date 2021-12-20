@@ -1,13 +1,21 @@
+import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/checklist_bloc.dart';
+import 'package:airwaycompanion/Modules/Checklist/Screens/checklist_screen_states.dart';
 import 'package:airwaycompanion/Modules/Checklist/Screens/taskcard_screen.dart';
 import 'package:airwaycompanion/Modules/Checklist/widgets/task_class.dart';
 import 'package:airwaycompanion/Modules/Checklist/widgets/todo_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TaskCard extends StatelessWidget {
+class TaskCard extends StatefulWidget {
   TaskCard({required this.taskClassObject});
-  final taskClass taskClassObject;
+  final TaskClass taskClassObject;
 
+  @override
+  _TaskCardState createState() => _TaskCardState();
+}
+
+class _TaskCardState extends State<TaskCard> {
   @override
   Widget build(BuildContext context) {
     final _latoBoldFontFamily =
@@ -28,7 +36,7 @@ class TaskCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Icon(
-                      taskClassObject.iconData,
+                      widget.taskClassObject.iconData,
                       color: Colors.cyan,
                       size: 40,
                     ),
@@ -36,7 +44,7 @@ class TaskCard extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      taskClassObject.title,
+                      widget.taskClassObject.title,
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           color: Colors.black,
@@ -48,14 +56,19 @@ class TaskCard extends StatelessWidget {
                   ],
                 ),
               ),
-              ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: taskClassObject.todolist.length,
-                  itemBuilder: (context, int index) {
-                    return ToDoTile(
-                      title: taskClassObject.todolist[index],
-                    );
-                  }),
+              BlocBuilder<CheckListScreenBloc, CheckListScreenState>(
+                builder: (context, state) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: widget.taskClassObject.todolist.length,
+                    itemBuilder: (context, int index) {
+                      return ToDoTile(
+                        title: widget.taskClassObject.todolist[index],
+                      );
+                    },
+                  );
+                },
+              )
             ],
           ),
         ),
