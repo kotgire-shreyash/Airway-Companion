@@ -17,7 +17,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:airwaycompanion/Modules/Home/Widgets/bottom_navigation_bar.dart'
+import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart'
     as bottomBar;
 
 class HomeScreen extends StatefulWidget {
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _home(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: bottomBar.bottomNavigationBar(),
+      bottomNavigationBar: const bottomBar.BottomNavigationBar(),
       endDrawer: _drawer(),
       body: SafeArea(
         child: SmartRefresher(
@@ -454,72 +454,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              ListTile(
-                leading: const Icon(
-                  CupertinoIcons.person,
-                  size: 25,
-                ),
-                title: Text(
-                  "Profile",
-                  style: TextStyle(
-                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w800)
-                        .fontFamily,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: const Icon(
-                  CupertinoIcons.checkmark_alt_circle,
-                  size: 25,
-                ),
-                title: Text(
-                  "Check List",
-                  style: TextStyle(
-                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w800)
-                        .fontFamily,
-                    fontSize: 15,
-                  ),
-                ),
-                onTap: () {
-                  print("Checklist screen");
-                  context
-                      .read<HomeScreenBloc>()
-                      .add(CheckListTilePressed(isChecklistTilePressed: true));
-                },
-              ),
-              ListTile(
-                leading: const Icon(
-                  FontAwesomeIcons.globe,
-                  size: 25,
-                ),
-                title: Text(
-                  "Navigation",
-                  style: TextStyle(
-                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w800)
-                        .fontFamily,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: const Icon(
-                  CupertinoIcons.settings,
-                  size: 25,
-                ),
-                title: Text(
-                  "Settings",
-                  style: TextStyle(
-                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w800)
-                        .fontFamily,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
+              _drawerListTile("Profile", CupertinoIcons.person, () => null),
+              _drawerListTile("Check List", CupertinoIcons.checkmark_alt_circle,
+                  () {
+                context
+                    .read<HomeScreenBloc>()
+                    .add(CheckListTilePressed(isChecklistTilePressed: true));
+              }),
+              _drawerListTile("Navigation", FontAwesomeIcons.globe, () {}),
+              _drawerListTile("Settings", CupertinoIcons.settings, () {}),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  // Drawer Tile
+  Widget _drawerListTile(String title, IconData icon, Function() onTap) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        size: 25,
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w800).fontFamily,
+          fontSize: 15,
+        ),
+      ),
+      onTap: onTap,
     );
   }
 
