@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:airwaycompanion/Data/Repositories/FlightsRepository/flights_data_provider.dart';
@@ -9,27 +10,29 @@ class FlightRepository {
 
   Future getFlightList() async {
     var rawFlightData = await _flightAPI.getFlightDataEncoded();
-    var jsonDecoded = await jsonDecode(rawFlightData.body);
+    var flightDataJsonDecoded = await jsonDecode(rawFlightData.body);
 
+    print("Here");
+    print(flightDataJsonDecoded);
     try {
-      for (var item in jsonDecoded['data']) {
+      for (var item in flightDataJsonDecoded['data']) {
         FlightModel flightModel = FlightModel(
-          flightDate: item['flight_date'],
-          flightStatus: item['flight_status'],
-          airlineName: item['airline']['name'],
-          flightNumber: item['flight']['number'],
-          flightICAOCode: item['flight']['icao'],
-          flightIATACode: item['flight']['iata'],
-          arrivalAirport: item['arrival']['airport'],
-          departureAirport: item['departure']['airport'],
-          arrivalTerminal: item['arrival']['terminal'],
-          departureTerminal: item['departure']['terminal'],
-          arrivalDelay: item['arrival']['delay'],
-          departureDelay: item['departure']['delay'],
-          arrivalSchedule: item['arrival']['schedule'],
-          departureSchedule: item['departure']['schedule'],
-          arrivalGate: item['arrival']['gate'],
-          departureGate: item['departure']['gate'],
+          flightDate: item['flight_date'] ?? "Null",
+          flightStatus: item['flight_status'] ?? "Null",
+          airlineName: item['airline']['name'] ?? "Null",
+          flightNumber: item['flight']['number'] ?? "Null",
+          flightICAOCode: item['flight']['icao'] ?? "Null",
+          flightIATACode: item['flight']['iata'] ?? "Null",
+          arrivalAirport: item['arrival']['airport'] ?? "Null",
+          departureAirport: item['departure']['airport'] ?? "Null",
+          arrivalTerminal: item['arrival']['terminal'] ?? "Null",
+          departureTerminal: item['departure']['terminal'] ?? "Null",
+          arrivalDelay: item['arrival']['delay'].toString(),
+          departureDelay: item['departure']['delay'].toString(),
+          arrivalSchedule: item['arrival']['schedule'] ?? "Null",
+          departureSchedule: item['departure']['schedule'] ?? "Null",
+          arrivalGate: item['arrival']['gate'] ?? "Null",
+          departureGate: item['departure']['gate'] ?? "Null",
         );
 
         flightList.add(flightModel);
