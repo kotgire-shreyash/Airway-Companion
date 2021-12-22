@@ -2,6 +2,7 @@ import 'package:airwaycompanion/Data/Repositories/FlightsRepository/flights_data
 import 'package:airwaycompanion/Data/Repositories/FlightsRepository/flights_repository.dart';
 import 'package:airwaycompanion/Logic/Bloc/FlightsScreenBloc/flights_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Flights/Events/flights_screen_events.dart';
+import 'package:airwaycompanion/Modules/General%20Widgets/custom_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:airwaycompanion/Modules/General Widgets/Bottom Navigation Bar/bottom_navigation_bar.dart'
@@ -126,7 +127,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                                           fontSize: 13),
                                       icon: Icon(
                                         FontAwesomeIcons.sourcetree,
-                                        color: Colors.grey.shade600,
+                                        color: Colors.grey.shade900,
                                         size: 22,
                                       ),
                                     ),
@@ -143,7 +144,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                                           fontSize: 13),
                                       icon: Icon(
                                         CupertinoIcons.airplane,
-                                        color: Colors.grey.shade600,
+                                        color: Colors.grey.shade900,
                                       ),
                                     ),
                                   ),
@@ -158,7 +159,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: GoogleFonts.lato(
-                                                  fontWeight: FontWeight.bold)
+                                                  fontWeight: FontWeight.w900)
                                               .fontFamily,
                                         ),
                                       ),
@@ -193,14 +194,14 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                           return Card(
                             elevation: 10,
                             margin: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
+                                horizontal: 15, vertical: 10),
                             shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
                             ),
                             child: Container(
-                              height: 300,
-                              width: 180,
+                              height: 330,
+                              width: 200,
                               decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius:
@@ -233,29 +234,515 @@ class _AvailableFlightsState extends State<AvailableFlights> {
   }
 
   Widget _flightDetailsCard(int index) {
+    var dataModel = context
+        .read<FlightScreenBloc>()
+        .state
+        .flightsRepo
+        .getFlightDataModel(index);
+
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8),
+        const SizedBox(
+          height: 25,
+        ),
+        SizedBox(
+          height: 75,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                child: Text(
-                  context
-                      .read<FlightScreenBloc>()
-                      .state
-                      .flightsRepo
-                      .getFlightDataModel(index)
-                      .arrivalAirport,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w900)
-                        .fontFamily,
-                    fontSize: 25,
-                  ),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        context
+                            .read<FlightScreenBloc>()
+                            .state
+                            .flightsRepo
+                            .getFlightDataModel(index)
+                            .departureIATACode,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily:
+                              GoogleFonts.lato(fontWeight: FontWeight.w900)
+                                  .fontFamily,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Flexible(
+                      child: SizedBox(
+                        width: 80,
+                        height: 15,
+                        child: Center(
+                          child: Text(
+                            dataModel.departureAirport,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            maxLines: 1,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontFamily:
+                                  GoogleFonts.lato(fontWeight: FontWeight.w900)
+                                      .fontFamily,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Icon(
+                CupertinoIcons.airplane,
+                size: 35,
+                color: Colors.blue.shade500,
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        context
+                            .read<FlightScreenBloc>()
+                            .state
+                            .flightsRepo
+                            .getFlightDataModel(index)
+                            .arrivalIATACode,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily:
+                              GoogleFonts.lato(fontWeight: FontWeight.w900)
+                                  .fontFamily,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Flexible(
+                      child: Container(
+                        width: 80,
+                        height: 15,
+                        child: Center(
+                          child: Text(
+                            context
+                                .read<FlightScreenBloc>()
+                                .state
+                                .flightsRepo
+                                .getFlightDataModel(index)
+                                .arrivalAirport,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            maxLines: 1,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontFamily:
+                                  GoogleFonts.lato(fontWeight: FontWeight.w900)
+                                      .fontFamily,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Flexible(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            // height: 25,
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2 - 30,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 0.5),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Scheduled",
+                          style: TextStyle(
+                            color: Colors.grey.shade900,
+                            fontFamily:
+                                GoogleFonts.lato(fontWeight: FontWeight.bold)
+                                    .fontFamily,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          child: FittedBox(
+                            child: Text(
+                              dataModel.departureSchedule,
+                              style: TextStyle(
+                                color: Colors.redAccent.shade200,
+                                fontFamily: GoogleFonts.lato(
+                                        fontWeight: FontWeight.w900)
+                                    .fontFamily,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Flexible(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2 - 30,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 0.5),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Scheduled",
+                          style: TextStyle(
+                            color: Colors.grey.shade900,
+                            fontFamily:
+                                GoogleFonts.lato(fontWeight: FontWeight.bold)
+                                    .fontFamily,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          child: FittedBox(
+                            child: Text(
+                              dataModel.arrivalSchedule,
+                              style: TextStyle(
+                                color: Colors.redAccent.shade200,
+                                fontFamily: GoogleFonts.lato(
+                                        fontWeight: FontWeight.w900)
+                                    .fontFamily,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Flexible(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2 - 30,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 0.5),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Terminal",
+                          style: TextStyle(
+                            color: Colors.grey.shade900,
+                            fontFamily:
+                                GoogleFonts.lato(fontWeight: FontWeight.bold)
+                                    .fontFamily,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            dataModel.departureTerminal,
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontFamily:
+                                  GoogleFonts.lato(fontWeight: FontWeight.w900)
+                                      .fontFamily,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Flexible(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2 - 30,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 0.5),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Terminal",
+                          style: TextStyle(
+                            color: Colors.grey.shade900,
+                            fontFamily:
+                                GoogleFonts.lato(fontWeight: FontWeight.bold)
+                                    .fontFamily,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            dataModel.arrivalTerminal,
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontFamily:
+                                  GoogleFonts.lato(fontWeight: FontWeight.w900)
+                                      .fontFamily,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Flexible(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+            width: MediaQuery.of(context).size.width,
+            height: 40,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width / 2 - 30,
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Container(
+                            height: 25,
+                            width: MediaQuery.of(context).size.width / 2 - 120,
+                            decoration: BoxDecoration(
+                              color: Colors.deepPurpleAccent.shade100,
+                              border: Border.all(color: Colors.grey),
+                            ),
+
+                            // margin: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Center(
+                              child: Text(
+                                "Delay",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: GoogleFonts.lato(
+                                          fontWeight: FontWeight.bold)
+                                      .fontFamily,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          child: Container(
+                            height: 25,
+                            width: MediaQuery.of(context).size.width / 2 - 120,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.grey),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "${dataModel.departureDelay}",
+                                style: TextStyle(
+                                  color: Colors.grey.shade900,
+                                  fontFamily: GoogleFonts.lato(
+                                          fontWeight: FontWeight.bold)
+                                      .fontFamily,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Flexible(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2 - 30,
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Container(
+                            height: 25,
+                            width: MediaQuery.of(context).size.width / 2 - 120,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.grey),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "${dataModel.arrivalDelay}",
+                                style: TextStyle(
+                                  color: Colors.grey.shade900,
+                                  fontFamily: GoogleFonts.lato(
+                                          fontWeight: FontWeight.bold)
+                                      .fontFamily,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          child: Container(
+                            height: 25,
+                            width: MediaQuery.of(context).size.width / 2 - 120,
+                            decoration: BoxDecoration(
+                              color: Colors.deepPurpleAccent.shade100,
+                              border: Border.all(color: Colors.grey),
+                            ),
+
+                            // margin: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Center(
+                              child: Text(
+                                "Delay",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: GoogleFonts.lato(
+                                          fontWeight: FontWeight.bold)
+                                      .fontFamily,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Flexible(
+          child: Container(
+            margin: const EdgeInsets.only(top: 15, left: 10, right: 10),
+            // color: Colors.blue,
+            width: MediaQuery.of(context).size.width,
+            height: 70,
+            child: Row(
+              children: [
+                const SizedBox(width: 10),
+                SizedBox(
+                  child: FittedBox(
+                    child: Text(
+                      dataModel.flightIATA,
+                      style: TextStyle(
+                        color: Colors.grey.shade500,
+                        fontFamily:
+                            GoogleFonts.lato(fontWeight: FontWeight.w900)
+                                .fontFamily,
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 40,
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Center(
+                    child: Text("More info",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily:
+                                GoogleFonts.lato(fontWeight: FontWeight.w800)
+                                    .fontFamily)),
+                  ),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.yellow.shade600,
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Center(
+                    child: Text(
+                      "Book",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily:
+                              GoogleFonts.lato(fontWeight: FontWeight.w800)
+                                  .fontFamily),
+                    ),
+                  ),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
