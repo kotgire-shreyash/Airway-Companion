@@ -25,7 +25,9 @@ class FlightsCheckNotifierButton extends StatelessWidget {
         backgroundColor: Colors.blue.shade700,
         // shape: const StadiumBorder(),
       ),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, "availableFlights");
+      },
     );
   }
 }
