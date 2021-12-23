@@ -39,9 +39,9 @@ class _AvailableFlightsState extends State<AvailableFlights> {
   }
 
   void _onRefresh() {
-    context
-        .read<FlightScreenBloc>()
-        .add(FlightAPICalled(isFlightAPICalled: true));
+    context.read<FlightScreenBloc>().add(FlightAPICalled(
+          isFlightAPICalled: true,
+        ));
     _refreshController.refreshCompleted();
   }
 
@@ -70,170 +70,177 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(
                       Icons.arrow_back,
-                      color: Colors.black,
+                      color: Colors.white,
                     )),
               ),
-              body: CustomScrollView(
-                // shrinkWrap: true,
+
+              // ! SHRINK WRAP ISSUE HERE
+              body: NestedScrollView(
                 physics: const BouncingScrollPhysics(),
-                slivers: [
-                  SliverSafeArea(
-                    sliver: SliverAppBar(
+                // shrinkWrap: true,
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    SliverAppBar(
                       automaticallyImplyLeading: false,
                       expandedHeight: MediaQuery.of(context).size.height / 2.6,
+                      floating: true,
+                      pinned: true,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(20),
                           bottomRight: Radius.circular(20),
                         ),
                       ),
-                      flexibleSpace: Container(
-                        height: MediaQuery.of(context).size.height / 2.6,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          // color: Colors.deepPurpleAccent.shade200,
-                          color: Colors.blue.shade500,
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20),
+                      flexibleSpace: Flexible(
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 2.6,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            // color: Colors.deepPurpleAccent.shade200,
+                            color: Colors.blue.shade500,
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Search Flights",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: GoogleFonts.lato(
-                                          fontWeight: FontWeight.w900)
-                                      .fontFamily,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Center(
-                              child: Container(
+                          child: Column(
+                            children: [
+                              Container(
                                 margin:
-                                    const EdgeInsets.symmetric(horizontal: 25),
-                                height:
-                                    MediaQuery.of(context).size.height / 3.5,
-                                width: MediaQuery.of(context).size.width,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(17.0),
-                                  child: Column(
-                                    children: [
-                                      TextFormField(
-                                        decoration: InputDecoration(
-                                          hintText: "source",
-                                          hintStyle: TextStyle(
-                                              fontFamily:
-                                                  GoogleFonts.lato().fontFamily,
-                                              fontSize: 13),
-                                          icon: Icon(
-                                            FontAwesomeIcons.sourcetree,
-                                            color: Colors.grey.shade900,
-                                            size: 22,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      TextFormField(
-                                        decoration: InputDecoration(
-                                          hintText: "destination",
-                                          hintStyle: TextStyle(
-                                              fontFamily:
-                                                  GoogleFonts.lato().fontFamily,
-                                              fontSize: 13),
-                                          icon: Icon(
-                                            CupertinoIcons.airplane,
-                                            color: Colors.grey.shade900,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      Center(
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            "Search",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: GoogleFonts.lato(
-                                                      fontWeight:
-                                                          FontWeight.w900)
-                                                  .fontFamily,
-                                            ),
-                                          ),
-                                          style: TextButton.styleFrom(
-                                            backgroundColor: Colors.blue,
-                                            minimumSize: const Size(130, 40),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "Search Flights",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: GoogleFonts.lato(
+                                            fontWeight: FontWeight.w900)
+                                        .fontFamily,
+                                    fontSize: 20,
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Center(
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 25),
+                                  height:
+                                      MediaQuery.of(context).size.height / 3.5,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(17.0),
+                                    child: Column(
+                                      children: [
+                                        TextFormField(
+                                          decoration: InputDecoration(
+                                            hintText: "source",
+                                            hintStyle: TextStyle(
+                                                fontFamily: GoogleFonts.lato()
+                                                    .fontFamily,
+                                                fontSize: 13),
+                                            icon: Icon(
+                                              FontAwesomeIcons.sourcetree,
+                                              color: Colors.grey.shade900,
+                                              size: 22,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        TextFormField(
+                                          decoration: InputDecoration(
+                                            hintText: "destination",
+                                            hintStyle: TextStyle(
+                                                fontFamily: GoogleFonts.lato()
+                                                    .fontFamily,
+                                                fontSize: 13),
+                                            icon: Icon(
+                                              CupertinoIcons.airplane,
+                                              color: Colors.grey.shade900,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        Center(
+                                          child: ElevatedButton(
+                                            onPressed: () {},
+                                            child: Text(
+                                              "Search",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: GoogleFonts.lato(
+                                                        fontWeight:
+                                                            FontWeight.w900)
+                                                    .fontFamily,
+                                              ),
+                                            ),
+                                            style: TextButton.styleFrom(
+                                              backgroundColor: Colors.blue,
+                                              minimumSize: const Size(130, 40),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return Card(
-                          elevation: 10,
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          child: Container(
-                            height: 330,
-                            width: 200,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                            ),
-                            child: state.isFlightAPIDataLoading
-                                ? Center(
-                                    child: SizedBox(
-                                      height: 50,
-                                      width: 50,
-                                      child: LoadingAnimationWidget
-                                          .staggeredDotWave(
-                                              color: Colors.black, size: 50),
-                                    ),
-                                  )
-                                : _flightDetailsCard(index),
-                          ),
-                        );
-                      },
-                      childCount: !state.isFlightAPICalled
-                          ? 5
-                          : state.flightsRepo.flightList.length,
-                    ),
-                  ),
-                ],
+                    )
+                  ];
+                },
+                body: ListView.builder(
+                  itemCount: !state.isFlightAPICalled
+                      ? 5
+                      : state.flightsRepo.flightList.length,
+                  shrinkWrap: true,
+                  primary: false,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, int index) {
+                    return Card(
+                      elevation: 10,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                      child: Container(
+                        height: 330,
+                        width: 200,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        child: state.isFlightAPIDataLoading
+                            ? Center(
+                                child: SizedBox(
+                                  height: 50,
+                                  width: 50,
+                                  child:
+                                      LoadingAnimationWidget.staggeredDotWave(
+                                          color: Colors.black, size: 50),
+                                ),
+                              )
+                            : _flightDetailsCard(index),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),

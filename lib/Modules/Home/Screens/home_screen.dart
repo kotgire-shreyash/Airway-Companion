@@ -355,11 +355,14 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 140,
               width: 250,
-              // color: Colors.blue,
               child: SvgPicture.asset(
                 "assets/images/flight_booking_grey.svg",
                 fit: BoxFit.fill,
               ),
+              // child: Image.asset(
+              //   "assets/images/airplane2.jpg",
+              //   fit: BoxFit.contain,
+              // ),
             ),
             const SizedBox(
               height: 5,
