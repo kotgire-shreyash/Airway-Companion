@@ -43,14 +43,16 @@ class _CheckListScreenState extends State<CheckListScreen> {
                       context.read<CheckListScreenBloc>().add(
                             AddCard(
                               newTaskCard: TaskCard(
+                                cardIndex: state.taskWidgets.length,
                                 taskClassObject: TaskClass(
-                                  title: "sas",
+                                  isChecked: false,
+                                  title: "Something",
                                   todolist: [
-                                    'aadhar',
-                                    'pancard',
-                                    'passport',
-                                    'gate pass',
-                                    'vaccination Certificate',
+                                    ['aadhar', false],
+                                    ['pancard', false],
+                                    ['passport', false],
+                                    ['gate pass', false],
+                                    ['vaccination Certificate', false],
                                   ],
                                 ),
                               ),
@@ -93,16 +95,18 @@ class _CheckListScreenState extends State<CheckListScreen> {
                 height: 20,
               ),
               Flexible(
-                child: Container(
+                child: SizedBox(
                   child: ListView.builder(
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
-                    itemCount: state.taskWidgets == null
-                        ? 0
-                        : state.taskWidgets.length,
+                    itemCount: state.taskWidgets.length,
                     itemBuilder: (context, int index) {
-                      print(state.taskWidgets.length);
-                      return state.taskWidgets[index];
+                      return BlocBuilder<CheckListScreenBloc,
+                          CheckListScreenState>(
+                        builder: (context, state) {
+                          return state.taskWidgets[index];
+                        },
+                      );
                     },
                   ),
                 ),

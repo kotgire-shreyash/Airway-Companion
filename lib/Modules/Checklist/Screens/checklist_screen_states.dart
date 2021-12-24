@@ -2,21 +2,22 @@ import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
 import 'package:flutter/material.dart';
 
 class CheckListScreenState {
-  var taskWidgets;
-
-  // bool isChecked;
+  List taskWidgets;
+  bool isChecked;
 
   CheckListScreenState({
     this.taskWidgets = const [],
+    this.isChecked = false,
   });
 
-  CheckListScreenState copyWith({var taskWidgets}) {
+  CheckListScreenState copyWith({var taskWidgets, var isChecked}) {
     return CheckListScreenState(
       taskWidgets: taskWidgets ?? this.taskWidgets,
+      isChecked: isChecked ?? this.isChecked,
     );
   }
 
-  final _initialTaskWidgets = [
+  /*final _initialTaskWidgets = [
     TaskCard(
       taskClassObject: TaskClass(
         title: 'Documents',
@@ -52,5 +53,5 @@ class CheckListScreenState {
         iconData: Icons.coronavirus_outlined,
       ),
     ),
-  ];
+  ];*/
 }

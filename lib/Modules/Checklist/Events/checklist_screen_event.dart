@@ -13,3 +13,12 @@ class AddCard extends CheckListScreenEvent {
   TaskCard newTaskCard;
   AddCard({required this.newTaskCard});
 }
+
+// CheckBox pressed
+class CheckBoxPressed extends CheckListScreenEvent {
+  bool isCheckBoxPressed;
+  int index;
+  int cardIndex;
+  CheckBoxPressed(
+      {this.isCheckBoxPressed = false, this.index = -1, this.cardIndex = -1});
+}

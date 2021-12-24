@@ -6,9 +6,22 @@ class CheckListScreenBloc
     extends Bloc<CheckListScreenEvent, CheckListScreenState> {
   CheckListScreenBloc() : super(CheckListScreenState()) {
     on<AddCard>(_onAddCardEvent);
+    on<CheckBoxPressed>(_onCheckBoxPressedEvent);
   }
 
   void _onAddCardEvent(AddCard event, Emitter<CheckListScreenState> emit) {
     emit(state.copyWith(taskWidgets: state.taskWidgets + [event.newTaskCard]));
+  }
+
+  void _onCheckBoxPressedEvent(
+      CheckBoxPressed event, Emitter<CheckListScreenState> emit) {
+    print(state.taskWidgets[event.cardIndex].taskClassObject.isChecked);
+    state.taskWidgets[event.cardIndex].taskClassObject.todolist[event.index]
+            [1] =
+        !state.taskWidgets[event.cardIndex].taskClassObject
+            .todolist[event.index][1];
+    print(state.taskWidgets[event.cardIndex].taskClassObject.isChecked);
+
+    emit(state.copyWith(taskWidgets: state.taskWidgets));
   }
 }
