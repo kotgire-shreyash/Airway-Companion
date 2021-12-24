@@ -1,10 +1,5 @@
-import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/checklist_bloc.dart';
-import 'package:airwaycompanion/Modules/Checklist/Screens/checklist_screen_states.dart';
 import 'package:airwaycompanion/Modules/Checklist/Screens/taskcard_screen.dart';
-import 'package:airwaycompanion/Modules/Checklist/widgets/task_class.dart';
-import 'package:airwaycompanion/Modules/Checklist/widgets/todo_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TaskCard extends StatefulWidget {
@@ -12,7 +7,7 @@ class TaskCard extends StatefulWidget {
   final TaskClass taskClassObject;
 
   @override
-  _TaskCardState createState() => _TaskCardState();
+  State<TaskCard> createState() => _TaskCardState();
 }
 
 class _TaskCardState extends State<TaskCard> {
@@ -20,11 +15,20 @@ class _TaskCardState extends State<TaskCard> {
   Widget build(BuildContext context) {
     final _latoBoldFontFamily =
         GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
-    return InkWell(
-      onLongPress: () {},
-      child: Container(
-        width: 280,
-        margin: const EdgeInsets.only(top: 12),
+    return Container(
+      width: 280,
+      margin: const EdgeInsets.only(top: 12),
+      child: InkWell(
+        onLongPress: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => TaskCardScreen(
+                taskClassObject: widget.taskClassObject,
+              ),
+            ),
+          );
+        },
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
@@ -56,23 +60,35 @@ class _TaskCardState extends State<TaskCard> {
                   ],
                 ),
               ),
-              BlocBuilder<CheckListScreenBloc, CheckListScreenState>(
-                builder: (context, state) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: widget.taskClassObject.todolist.length,
-                    itemBuilder: (context, int index) {
-                      return ToDoTile(
-                        title: widget.taskClassObject.todolist[index],
-                      );
-                    },
-                  );
-                },
-              )
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: widget.taskClassObject.todolist.length,
+                  itemBuilder: (context, int index) {
+                    bool _ischecked = false;
+                    return CheckboxListTile(
+                      // key: ,
+                      value: _ischecked,
+                      activeColor: Colors.red,
+                      onChanged: (value) {
+                        setState(() {
+                          _ischecked = !_ischecked;
+                        });
+                      },
+                      title: Text(widget.taskClassObject.todolist[index]),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    );
+                  }),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+class TaskClass {
+  TaskClass({required this.title, required this.todolist, this.iconData});
+  final title;
+  final todolist;
+  final iconData;
 }
