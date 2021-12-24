@@ -49,6 +49,9 @@ dependencies:
   flutter_svg:
   pull_to_refresh:
   animated_text_kit:
+  timelines:
+  flutter_highlight: 
+  timeline_tile:
 
   
 dev_dependencies:

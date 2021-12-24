@@ -1,31 +1,34 @@
 import 'package:airwaycompanion/Modules/Checklist/Screens/taskcard_screen.dart';
-import 'package:airwaycompanion/Modules/Checklist/widgets/task_class.dart';
-import 'package:airwaycompanion/Modules/Checklist/widgets/todo_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TaskCard extends StatelessWidget {
+class TaskCard extends StatefulWidget {
   TaskCard({required this.taskClassObject});
   final taskClass taskClassObject;
 
   @override
+  State<TaskCard> createState() => _TaskCardState();
+}
+
+class _TaskCardState extends State<TaskCard> {
+  @override
   Widget build(BuildContext context) {
     final _latoBoldFontFamily =
         GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
-    return InkWell(
-      onLongPress: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (BuildContext context) => TaskCardScreen(
-        //       taskClassObject: taskClassObject,
-        //     ),
-        //   ),
-        // );
-      },
-      child: Container(
-        width: 280,
-        margin: const EdgeInsets.only(top: 12),
+    return Container(
+      width: 280,
+      margin: const EdgeInsets.only(top: 12),
+      child: InkWell(
+        onLongPress: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => TaskCardScreen(
+                taskClassObject: widget.taskClassObject,
+              ),
+            ),
+          );
+        },
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
@@ -37,7 +40,7 @@ class TaskCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Icon(
-                      taskClassObject.iconData,
+                      widget.taskClassObject.iconData,
                       color: Colors.cyan,
                       size: 40,
                     ),
@@ -45,7 +48,7 @@ class TaskCard extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      taskClassObject.title,
+                      widget.taskClassObject.title,
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           color: Colors.black,
@@ -59,10 +62,20 @@ class TaskCard extends StatelessWidget {
               ),
               ListView.builder(
                   shrinkWrap: true,
-                  itemCount: taskClassObject.todolist.length,
+                  itemCount: widget.taskClassObject.todolist.length,
                   itemBuilder: (context, int index) {
-                    return ToDoTile(
-                      title: taskClassObject.todolist[index],
+                    bool _ischecked = false;
+                    return CheckboxListTile(
+                      // key: ,
+                      value: _ischecked,
+                      activeColor: Colors.red,
+                      onChanged: (value) {
+                        setState(() {
+                          _ischecked = !_ischecked;
+                        });
+                      },
+                      title: Text(widget.taskClassObject.todolist[index]),
+                      controlAffinity: ListTileControlAffinity.leading,
                     );
                   }),
             ],
@@ -71,4 +84,11 @@ class TaskCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class taskClass {
+  taskClass({required this.title, required this.todolist, this.iconData});
+  final title;
+  final todolist;
+  final iconData;
 }

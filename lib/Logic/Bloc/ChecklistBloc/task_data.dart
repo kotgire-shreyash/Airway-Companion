@@ -1,4 +1,5 @@
-import 'package:airwaycompanion/Modules/Checklist/widgets/task_class.dart';
+import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
+
 import 'package:flutter/material.dart';
 
 // Initial data of task card for widget list
