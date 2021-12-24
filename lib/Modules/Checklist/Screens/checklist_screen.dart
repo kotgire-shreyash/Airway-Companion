@@ -35,35 +35,53 @@ class _CheckListScreenState extends State<CheckListScreen> {
               const SizedBox(
                 height: 35,
               ),
-              Container(
-                margin: const EdgeInsets.only(right: 20),
-                alignment: Alignment.centerRight,
-                child: IconButton(
-                    onPressed: () {
-                      context.read<CheckListScreenBloc>().add(
-                            AddCard(
-                              newTaskCard: TaskCard(
-                                cardIndex: state.taskWidgets.length,
-                                taskClassObject: TaskClass(
-                                  isChecked: false,
-                                  title: "Something",
-                                  todolist: [
-                                    ['aadhar', false],
-                                    ['pancard', false],
-                                    ['passport', false],
-                                    ['gate pass', false],
-                                    ['vaccination Certificate', false],
-                                  ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 20),
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                          size: 35,
+                        )),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(right: 20),
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                        onPressed: () {
+                          context.read<CheckListScreenBloc>().add(
+                                AddCard(
+                                  newTaskCard: TaskCard(
+                                    cardIndex: state.taskWidgets.length,
+                                    taskClassObject: TaskClass(
+                                      isChecked: false,
+                                      title: "Something",
+                                      todolist: [
+                                        ['aadhar', false],
+                                        ['pancard', false],
+                                        ['passport', false],
+                                        ['gate pass', false],
+                                        ['vaccination Certificate', false],
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          );
-                    },
-                    icon: const Icon(
-                      Icons.add,
-                      color: Colors.black,
-                      size: 40,
-                    )),
+                              );
+                        },
+                        icon: const Icon(
+                          Icons.add,
+                          color: Colors.black,
+                          size: 40,
+                        )),
+                  ),
+                ],
               ),
               Container(
                 alignment: Alignment.centerLeft,

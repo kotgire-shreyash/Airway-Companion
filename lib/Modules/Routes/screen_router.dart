@@ -30,11 +30,7 @@ class GlobalRouter {
         return MaterialPageRoute(builder: (_) => const CheckListScreen());
 
       case 'availableFlights':
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (context) => FlightScreenBloc(),
-                  child: const AvailableFlights(),
-                ));
+        return MaterialPageRoute(builder: (_) => const AvailableFlights());
 
       // case 'navigationPage':
       //   return MaterialPageRoute(builder: (_) => MapNavigation());

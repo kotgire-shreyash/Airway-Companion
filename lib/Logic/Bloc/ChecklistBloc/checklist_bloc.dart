@@ -15,12 +15,10 @@ class CheckListScreenBloc
 
   void _onCheckBoxPressedEvent(
       CheckBoxPressed event, Emitter<CheckListScreenState> emit) {
-    print(state.taskWidgets[event.cardIndex].taskClassObject.isChecked);
     state.taskWidgets[event.cardIndex].taskClassObject.todolist[event.index]
             [1] =
         !state.taskWidgets[event.cardIndex].taskClassObject
             .todolist[event.index][1];
-    print(state.taskWidgets[event.cardIndex].taskClassObject.isChecked);
 
     emit(state.copyWith(taskWidgets: state.taskWidgets));
   }
