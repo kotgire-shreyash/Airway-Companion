@@ -9,7 +9,6 @@ class CheckListScreenBloc
   }
 
   void _onAddCardEvent(AddCard event, Emitter<CheckListScreenState> emit) {
-    state.todoWidgets.add(event.newTaskCard);
-    emit(state.copyWith(taskCard: event.newTaskCard));
+    emit(state.copyWith(taskWidgets: state.taskWidgets + [event.newTaskCard]));
   }
 }

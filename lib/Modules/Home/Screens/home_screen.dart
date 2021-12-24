@@ -44,6 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
               SearchBoxTextFieldPressed(isSearchBoxTextFieldEnabled: false));
         } else if (state.isChecklistTilePressed) {
           Navigator.pushNamed(context, "checklistPage");
+        } else if (state.isNavigationTilePressed) {
+          Navigator.pushNamed(context, "navigationPage");
         }
       },
       builder: (context, state) {
@@ -464,7 +466,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     .read<HomeScreenBloc>()
                     .add(CheckListTilePressed(isChecklistTilePressed: true));
               }),
-              _drawerListTile("Navigation", FontAwesomeIcons.globe, () {}),
+              _drawerListTile("Navigation", FontAwesomeIcons.globe, () {
+                // context
+                //     .read<HomeScreenBloc>()
+                //     .add(NavigationTilePressed(isNavigationTilePressed: true));
+              }),
               _drawerListTile("Settings", CupertinoIcons.settings, () {}),
             ],
           ),

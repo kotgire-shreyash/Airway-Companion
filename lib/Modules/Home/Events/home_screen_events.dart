@@ -18,3 +18,9 @@ class CheckListTilePressed extends HomeScreenEvent {
   bool isChecklistTilePressed;
   CheckListTilePressed({this.isChecklistTilePressed = false});
 }
+
+//? Navigation Tile pressed
+class NavigationTilePressed extends HomeScreenEvent {
+  bool isNavigationTilePressed;
+  NavigationTilePressed({this.isNavigationTilePressed = false});
+}

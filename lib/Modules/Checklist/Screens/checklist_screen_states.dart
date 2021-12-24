@@ -1,31 +1,56 @@
 import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
-import 'package:airwaycompanion/Modules/Checklist/widgets/task_class.dart';
 import 'package:flutter/material.dart';
 
 class CheckListScreenState {
-  List<Widget> todoWidgets = <Widget>[
-    TaskCard(
-      taskClassObject: TaskClass(
-        title: 'Temp CARD',
-        todolist: ['one', 'two'],
-      ),
-    ),
-  ];
-  var taskCard;
+  var taskWidgets;
+
   // bool isChecked;
 
   CheckListScreenState({
-    this.taskCard,
+    this.taskWidgets = const [],
   });
 
-  CheckListScreenState copyWith({var taskCard}) {
-    if (taskCard != null) {
-      todoWidgets.add(taskCard);
-      print(todoWidgets.length);
-    }
-
+  CheckListScreenState copyWith({var taskWidgets}) {
     return CheckListScreenState(
-      taskCard: taskCard ?? this.taskCard,
+      taskWidgets: taskWidgets ?? this.taskWidgets,
     );
   }
+
+  final _initialTaskWidgets = [
+    TaskCard(
+      taskClassObject: TaskClass(
+        title: 'Documents',
+        todolist: [
+          'aadhar',
+          'pancard',
+          'passport',
+          'gate pass',
+          'vaccination Certificate',
+        ],
+        iconData: Icons.document_scanner,
+      ),
+    ),
+    TaskCard(
+      taskClassObject: TaskClass(
+        title: 'Utilities',
+        todolist: [
+          'Charger',
+          'Powerbank',
+          'Headphones',
+        ],
+        iconData: Icons.cable_sharp,
+      ),
+    ),
+    TaskCard(
+      taskClassObject: TaskClass(
+        title: 'Covid Necessary',
+        todolist: [
+          'Mask',
+          'Hand Sanitizer',
+          'RTPCR Report',
+        ],
+        iconData: Icons.coronavirus_outlined,
+      ),
+    ),
+  ];
 }

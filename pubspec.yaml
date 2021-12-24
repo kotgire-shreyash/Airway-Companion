@@ -54,7 +54,7 @@ dependencies:
   flutter_google_street_view:
   custom_pop_up_menu:
   pinput:
-  provider:
+  # provider:
   geolocator:
   google_maps_flutter:
   flutter_slidable:

@@ -1,37 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttericon/linecons_icons.dart';
-import 'package:fluttericon/maki_icons.dart';
-import 'package:fluttericon/meteocons_icons.dart';
-import 'package:fluttericon/mfg_labs_icons.dart';
-import 'package:fluttericon/modern_pictograms_icons.dart';
-import 'package:fluttericon/octicons_icons.dart';
-import 'package:fluttericon/rpg_awesome_icons.dart';
-import 'package:fluttericon/typicons_icons.dart';
-import 'package:fluttericon/web_symbols_icons.dart';
-import 'package:fluttericon/zocial_icons.dart';
 
 // Main Function Start
 
-class MapNavigation extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      color: Colors.blue,
-      home: ListViewPage(),
-    );
-  }
-}
 // First Stateless Widget with MaterialApp Ends
 
 // Main Stateful Widget Start
-class ListViewPage extends StatefulWidget {
+class MapNavigationScreen extends StatefulWidget {
   @override
-  _ListViewPageState createState() => _ListViewPageState();
+  _MapNavigationScreenState createState() => _MapNavigationScreenState();
 }
 
-class _ListViewPageState extends State<ListViewPage> {
+class _MapNavigationScreenState extends State<MapNavigationScreen> {
   // Title List Here
   var titleList = [
     "Mumbai to Delhi",
@@ -204,7 +184,6 @@ showDialogFunc(context, img, title, desc) {
                 //   ),
                 // ),
 
-
                 // Till
                 Container(
                   child: Row(
@@ -285,7 +264,6 @@ showDialogFunc(context, img, title, desc) {
                                     fontSize: 40,
                                     color: Colors.blueAccent),
                               ),
-
                               Text(
                                 // ignore: unnecessary_string_interpolations
                                 "$full2",
@@ -311,9 +289,19 @@ showDialogFunc(context, img, title, desc) {
                       //   alignment: Alignment.topLeft,
                       //   child: Icon(Icons.dark_mode,color: Colors.blueAccent, size: 50,),
                       // )
-                      Icon(Icons.dark_mode,color: Colors.blueAccent, size: 50,),
-                      SizedBox(width: 190,),
-                      Icon(Icons.light_mode,color: Colors.blueAccent, size: 50,),
+                      Icon(
+                        Icons.dark_mode,
+                        color: Colors.blueAccent,
+                        size: 50,
+                      ),
+                      SizedBox(
+                        width: 190,
+                      ),
+                      Icon(
+                        Icons.light_mode,
+                        color: Colors.blueAccent,
+                        size: 50,
+                      ),
                     ],
                   ),
                 ),
@@ -323,17 +311,23 @@ showDialogFunc(context, img, title, desc) {
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
                       Container(
-                        child: Text("Sun 22 2021", style: TextStyle(color: Colors.blueAccent),),
+                        child: Text(
+                          "Sun 22 2021",
+                          style: TextStyle(color: Colors.blueAccent),
+                        ),
                       ),
-                      SizedBox(width: 150,),
+                      SizedBox(
+                        width: 150,
+                      ),
                       Container(
-                        child: Text("Mon 23 2021", style: TextStyle(color: Colors.blueAccent),),
+                        child: Text(
+                          "Mon 23 2021",
+                          style: TextStyle(color: Colors.blueAccent),
+                        ),
                       ),
                     ],
                   ),
                 ),
-
-
 
                 Container(
                   child: Row(
@@ -419,7 +413,6 @@ showDialogFunc(context, img, title, desc) {
                                     fontSize: 20,
                                     color: Colors.blueAccent),
                               ),
-
                               Text(
                                 // ignore: unnecessary_string_interpolations
                                 "DUBAI AIRPORT",
@@ -434,8 +427,9 @@ showDialogFunc(context, img, title, desc) {
                   ),
                 ),
 
-
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
                 Container(
                   height: 40,
                   width: MediaQuery.of(context).size.width,
@@ -450,16 +444,23 @@ showDialogFunc(context, img, title, desc) {
                         child: Column(
                           // ignore: prefer_const_literals_to_create_immutables
                           children: [
-                            Text("PASSENGER        SEAT         DEPARTURE     BORDING ZONE      GATE", style: TextStyle(color: Colors.white, fontSize: 10),),
-                            SizedBox(height: 5,),
-                            Text("HARRY     334C    22:05 PM         D3        A33", style: TextStyle(color: Colors.white),)
+                            Text(
+                              "PASSENGER        SEAT         DEPARTURE     BORDING ZONE      GATE",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 10),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "HARRY     334C    22:05 PM         D3        A33",
+                              style: TextStyle(color: Colors.white),
+                            )
                           ],
                         ),
                       ),
 
                       // SizedBox(width:10),
-
-                      
                     ],
                   ),
                 )
