@@ -8,14 +8,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TaskCard extends StatefulWidget {
-<<<<<<< HEAD
-  TaskCard({required this.taskClassObject});
-  final taskClass taskClassObject;
-=======
   TaskCard({required this.taskClassObject, required this.cardIndex});
   final TaskClass taskClassObject;
   int cardIndex;
->>>>>>> master
 
   @override
   State<TaskCard> createState() => _TaskCardState();
@@ -26,73 +21,6 @@ class _TaskCardState extends State<TaskCard> {
   Widget build(BuildContext context) {
     final _latoBoldFontFamily =
         GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
-<<<<<<< HEAD
-    return Container(
-      width: 280,
-      margin: const EdgeInsets.only(top: 12),
-      child: InkWell(
-        onLongPress: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => TaskCardScreen(
-                taskClassObject: widget.taskClassObject,
-              ),
-            ),
-          );
-        },
-        child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 18, top: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(
-                      widget.taskClassObject.iconData,
-                      color: Colors.cyan,
-                      size: 40,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      widget.taskClassObject.title,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontFamily: _latoBoldFontFamily,
-                          fontWeight: FontWeight.w900),
-                      textScaleFactor: 1.6,
-                    ),
-                  ],
-                ),
-              ),
-              ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: widget.taskClassObject.todolist.length,
-                  itemBuilder: (context, int index) {
-                    bool _ischecked = false;
-                    return CheckboxListTile(
-                      // key: ,
-                      value: _ischecked,
-                      activeColor: Colors.red,
-                      onChanged: (value) {
-                        setState(() {
-                          _ischecked = !_ischecked;
-                        });
-                      },
-                      title: Text(widget.taskClassObject.todolist[index]),
-                      controlAffinity: ListTileControlAffinity.leading,
-                    );
-                  }),
-            ],
-          ),
-=======
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -176,20 +104,12 @@ class _TaskCardState extends State<TaskCard> {
               height: 15,
             )
           ],
->>>>>>> master
         ),
       ),
     );
   }
 }
 
-<<<<<<< HEAD
-class taskClass {
-  taskClass({required this.title, required this.todolist, this.iconData});
-  final title;
-  final todolist;
-  final iconData;
-=======
 class TaskClass {
   TaskClass(
       {required this.title,
@@ -200,5 +120,4 @@ class TaskClass {
   final todolist;
   final iconData;
   bool isChecked;
->>>>>>> master
 }
