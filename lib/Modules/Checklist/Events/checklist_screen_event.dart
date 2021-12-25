@@ -10,8 +10,14 @@ class DismissCard extends CheckListScreenEvent {
 
 // Add Card
 class AddCard extends CheckListScreenEvent {
-  TaskCard newTaskCard;
+  var newTaskCard;
   AddCard({required this.newTaskCard});
+}
+
+// Delete Card
+class DeleteCard extends CheckListScreenEvent {
+  int index;
+  DeleteCard({required this.index});
 }
 
 // CheckBox pressed
