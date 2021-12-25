@@ -4,6 +4,7 @@ import 'package:airwaycompanion/Modules/Checklist/Screens/checklist_screen_state
 import 'package:airwaycompanion/Modules/Checklist/Screens/taskcard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TaskCard extends StatefulWidget {
@@ -21,22 +22,24 @@ class _TaskCardState extends State<TaskCard> {
     final _latoBoldFontFamily =
         GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+      margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      elevation: 10,
       child: Container(
-        width: 280,
+        width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         child: Column(
           children: [
             Container(
-              margin: const EdgeInsets.only(left: 18, top: 8),
+              margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+              width: MediaQuery.of(context).size.width,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Icon(
                     widget.taskClassObject.iconData,
-                    color: Colors.cyan,
-                    size: 40,
+                    color: Colors.blue,
+                    size: 30,
                   ),
                   const SizedBox(
                     width: 5,
@@ -51,6 +54,24 @@ class _TaskCardState extends State<TaskCard> {
                         fontWeight: FontWeight.w900),
                     textScaleFactor: 1.6,
                   ),
+                  const SizedBox(
+                    width: 60,
+                  ),
+                  Flexible(
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        alignment: Alignment.centerRight,
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.edit,
+                          color: Colors.redAccent,
+                          size: 30,
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -61,7 +82,7 @@ class _TaskCardState extends State<TaskCard> {
                   return BlocBuilder<CheckListScreenBloc, CheckListScreenState>(
                     builder: (context, state) {
                       return CheckboxListTile(
-                        value: state.taskWidgets[widget.cardIndex]
+                        value: state.taskWidgets[widget.cardIndex].child
                             .taskClassObject.todolist[index][1],
                         activeColor: Colors.red,
                         onChanged: (value) {

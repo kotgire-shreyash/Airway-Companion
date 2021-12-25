@@ -2,7 +2,7 @@ import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
 import 'package:flutter/material.dart';
 
 class CheckListScreenState {
-  List taskWidgets;
+  List<dynamic> taskWidgets;
   bool isChecked;
 
   CheckListScreenState({
