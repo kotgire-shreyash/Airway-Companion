@@ -16,6 +16,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart'
     as bottomBar;
@@ -43,7 +44,15 @@ class _HomeScreenState extends State<HomeScreen> {
           context.read<HomeScreenBloc>().add(
               SearchBoxTextFieldPressed(isSearchBoxTextFieldEnabled: false));
         } else if (state.isChecklistTilePressed) {
+          context
+              .read<HomeScreenBloc>()
+              .add(CheckListTilePressed(isChecklistTilePressed: false));
           Navigator.pushNamed(context, "checklistPage");
+        } else if (state.isNavigationTilePressed) {
+          context
+              .read<HomeScreenBloc>()
+              .add(NavigationTilePressed(isNavigationTilePressed: false));
+          Navigator.pushNamed(context, "navigationPage");
         }
       },
       builder: (context, state) {
@@ -211,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _searchWidget() {
     return context.read<HomeScreenBloc>().state.isSearchBoxTextFieldEnabled
         ? Container(
-            height: 50,
+            height: 60,
             width: MediaQuery.of(context).size.width - 50,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -221,7 +230,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.grey.shade700,
               ),
             ),
-            child: TextField(
+            child: Center(
+              child: FloatingSearchBar(
+                elevation: 0,
+                borderRadius: const BorderRadius.all(Radius.elliptical(30, 30)),
+                shadowColor: Colors.transparent,
+                backdropColor: Colors.transparent,
+                accentColor: Colors.transparent,
+                builder: (context, transition) {
+                  return Container(
+                    color: Colors.white,
+                  );
+                },
+              ),
+            ),
+          )
+
+        /*
+            TextField(
               autofocus: true,
               textAlign: TextAlign.center,
               autocorrect: false,
@@ -264,10 +290,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.grey.shade900,
               ),
             ))
-        :
+              */
+
         // Animated Search Text Guide
-        Container(
-            height: 50,
+        : Container(
+            height: 60,
             width: MediaQuery.of(context).size.width - 50,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -355,11 +382,14 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 140,
               width: 250,
-              // color: Colors.blue,
               child: SvgPicture.asset(
                 "assets/images/flight_booking_grey.svg",
                 fit: BoxFit.fill,
               ),
+              // child: Image.asset(
+              //   "assets/images/airplane2.jpg",
+              //   fit: BoxFit.contain,
+              // ),
             ),
             const SizedBox(
               height: 5,
@@ -461,7 +491,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     .read<HomeScreenBloc>()
                     .add(CheckListTilePressed(isChecklistTilePressed: true));
               }),
-              _drawerListTile("Navigation", FontAwesomeIcons.globe, () {}),
+              _drawerListTile("Navigation", FontAwesomeIcons.globe, () {
+                // context
+                //     .read<HomeScreenBloc>()
+                //     .add(NavigationTilePressed(isNavigationTilePressed: true));
+              }),
               _drawerListTile("Settings", CupertinoIcons.settings, () {}),
             ],
           ),

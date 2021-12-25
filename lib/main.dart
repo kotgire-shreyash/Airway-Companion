@@ -1,4 +1,5 @@
 import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/checklist_bloc.dart';
+import 'package:airwaycompanion/Logic/Bloc/FlightsScreenBloc/flights_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -36,7 +37,10 @@ class _AirwayCompanionAppState extends State<AirwayCompanionApp> {
       providers: [
         BlocProvider(create: (context) => LoginBloc()),
         BlocProvider(create: (context) => HomeScreenBloc()),
-        BlocProvider(create: (context) => CheckListScreenBloc()),
+        BlocProvider(create: (context) => FlightScreenBloc()),
+        BlocProvider(
+          create: (context) => CheckListScreenBloc(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

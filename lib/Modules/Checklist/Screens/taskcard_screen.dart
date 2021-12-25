@@ -1,4 +1,4 @@
-import 'package:airwaycompanion/Modules/Checklist/widgets/task_class.dart';
+import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
 import 'package:flutter/material.dart';
 
 class TaskCardScreen extends StatefulWidget {
