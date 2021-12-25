@@ -1,10 +1,13 @@
 import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 import 'package:flutter/material.dart';
 
 class TaskCardScreen extends StatefulWidget {
   const TaskCardScreen({required this.taskClassObject});
-  final taskClass taskClassObject;
+  final TaskClass taskClassObject;
 
   @override
   _TaskCardScreenState createState() => _TaskCardScreenState();

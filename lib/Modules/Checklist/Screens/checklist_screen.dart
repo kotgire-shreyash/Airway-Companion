@@ -1,7 +1,10 @@
-import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/task_data.dart';
+import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/checklist_bloc.dart';
+import 'package:airwaycompanion/Modules/Checklist/Events/checklist_screen_event.dart';
+import 'package:airwaycompanion/Modules/Checklist/Screens/checklist_screen_states.dart';
 import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
-import 'package:airwaycompanion/Modules/Checklist/widgets/task_class.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CheckListScreen extends StatefulWidget {
@@ -17,122 +20,172 @@ class _CheckListScreenState extends State<CheckListScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    _getItems();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-      body: SafeArea(
-          child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 35,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 5, left: 20),
-                  child: Text(
-                    "Hi Shreyash ",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        //color: Colors.grey.shade600,
-                        color: Colors.black,
-                        fontSize: 15,
-                        fontFamily: _latoBoldFontFamily,
-                        fontWeight: FontWeight.w900),
-                    textScaleFactor: 1.6,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 15),
-                  child: IconButton(
-                      onPressed: () {
-                        _addCard();
-                        setState(() {
-                          _todoWidgets.last;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.add,
-                        color: Colors.black,
-                        size: 40,
-                      )),
-                ),
-              ],
-            ),
-            Container(
+    return BlocConsumer<CheckListScreenBloc, CheckListScreenState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            leading: Container(
+              margin: const EdgeInsets.only(right: 20),
               alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 20),
-              child: Text(
-                "Complete the following ",
-                style: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontSize: 15,
-                    fontFamily: _latoBoldFontFamily,
-                    fontWeight: FontWeight.w900),
-                textScaleFactor: 1.4,
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                    size: 35,
+                  )),
+            ),
+            actions: [
+              Container(
+                margin: const EdgeInsets.only(right: 20),
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                    onPressed: () {
+                      context.read<CheckListScreenBloc>().add(
+                            AddCard(
+                              newTaskCard: Dismissible(
+                                key: Key("$hashCode"),
+                                child: TaskCard(
+                                  cardIndex: state.taskWidgets.length,
+                                  taskClassObject: TaskClass(
+                                    isChecked: false,
+                                    title: "Something",
+                                    iconData: Icons.task_rounded,
+                                    todolist: [
+                                      ['aadhar', false],
+                                      ['pancard', false],
+                                      ['passport', false],
+                                      ['gate pass', false],
+                                      ['vaccination Certificate', false],
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                    },
+                    icon: const Icon(
+                      Icons.add,
+                      color: Colors.black,
+                      size: 40,
+                    )),
+              ),
+            ],
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      height: 250,
+                      width: 250,
+                      child: SvgPicture.asset(
+                        "assets/images/tasks.svg",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Flexible(
+                      child: Container(
+                        height: 80,
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          "Complete the following tasks for hassle-free travel!",
+                          style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontSize: 15,
+                              fontFamily: _latoBoldFontFamily,
+                              fontWeight: FontWeight.w900),
+                          textScaleFactor: 1.4,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 5,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: state.taskWidgets.length,
+                        itemBuilder: (context, int index) {
+                          return BlocBuilder<CheckListScreenBloc,
+                              CheckListScreenState>(
+                            builder: (context, state) {
+                              return state.taskWidgets[index];
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 20),
-              child: Text(
-                "tasks for hasslefree travel ",
-                style: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontSize: 15,
-                    fontFamily: _latoBoldFontFamily,
-                    fontWeight: FontWeight.w900),
-                textScaleFactor: 1.4,
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Column(
-              children: _todoWidgets,
-            ),
-          ],
-        ),
-      )),
+          ),
+        );
+      },
     );
   }
 
-  // widget List of todowidgets to be displayed on checklist Screen
-  final List<Widget> _todoWidgets = <Widget>[];
-
-  //TO add task card in widget list
-  _addCard() {
-    _todoWidgets.add(
-      TaskCard(
-        taskClassObject: taskClass(
-          title: 'Temp CARD',
-          todolist: ['one', 'two'],
-        ),
-      ),
-    );
-  }
-
-  // This will add initial task cards to widget list
   _getItems() {
     for (var item in taskList) {
-      _todoWidgets.add(
-        Dismissible(
-          key: Key(item.title),
-          child: TaskCard(
-            taskClassObject: item,
-          ),
-        ),
-      );
+      // _todoWidgets.add(
+      //   Dismissible(
+      //     key: Key(item.title),
+      //     child: TaskCard(
+      //       taskClassObject: item,
+      //     ),
+      //   ),
+      // );
     }
   }
+
+  final List<TaskClass> taskList = [
+    TaskClass(
+      title: 'Documents',
+      todolist: [
+        'aadhar',
+        'pancard',
+        'passport',
+        'gate pass',
+        'vaccination Certificate',
+      ],
+      iconData: Icons.document_scanner,
+    ),
+    TaskClass(
+      title: 'Utilities',
+      todolist: [
+        'Charger',
+        'Powerbank',
+        'Headphones',
+      ],
+      iconData: Icons.cable_sharp,
+    ),
+    TaskClass(
+      title: 'Covid Necessary',
+      todolist: [
+        'Mask',
+        'Hand Sanitizer',
+        'RTPCR Report',
+      ],
+      iconData: Icons.coronavirus_outlined,
+    ),
+  ];
 }

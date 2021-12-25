@@ -2,7 +2,7 @@ import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/signup_bloc.dart';
 import 'package:airwaycompanion/Modules/Authentication/Events/signup_events.dart';
 import 'package:airwaycompanion/Modules/Authentication/Screens/SignUpScreen/signup_states.dart';
 import 'package:airwaycompanion/Modules/Authentication/Widgets/signup_button.dart';
-import 'package:airwaycompanion/Modules/General%20Widgets/colors.dart';
+import 'package:airwaycompanion/Modules/General%20Widgets/custom_colors.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,10 +1,21 @@
+import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/checklist_bloc.dart';
+import 'package:airwaycompanion/Modules/Checklist/Events/checklist_screen_event.dart';
+import 'package:airwaycompanion/Modules/Checklist/Screens/checklist_screen_states.dart';
 import 'package:airwaycompanion/Modules/Checklist/Screens/taskcard_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TaskCard extends StatefulWidget {
+<<<<<<< HEAD
   TaskCard({required this.taskClassObject});
   final taskClass taskClassObject;
+=======
+  TaskCard({required this.taskClassObject, required this.cardIndex});
+  final TaskClass taskClassObject;
+  int cardIndex;
+>>>>>>> master
 
   @override
   State<TaskCard> createState() => _TaskCardState();
@@ -15,6 +26,7 @@ class _TaskCardState extends State<TaskCard> {
   Widget build(BuildContext context) {
     final _latoBoldFontFamily =
         GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
+<<<<<<< HEAD
     return Container(
       width: 280,
       margin: const EdgeInsets.only(top: 12),
@@ -80,15 +92,113 @@ class _TaskCardState extends State<TaskCard> {
                   }),
             ],
           ),
+=======
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      elevation: 10,
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    widget.taskClassObject.iconData,
+                    color: Colors.blue,
+                    size: 30,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    widget.taskClassObject.title,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontFamily: _latoBoldFontFamily,
+                        fontWeight: FontWeight.w900),
+                    textScaleFactor: 1.6,
+                  ),
+                  const SizedBox(
+                    width: 60,
+                  ),
+                  Flexible(
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        alignment: Alignment.centerRight,
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.edit,
+                          color: Colors.redAccent,
+                          size: 30,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            ListView.builder(
+                shrinkWrap: true,
+                itemCount: widget.taskClassObject.todolist.length,
+                itemBuilder: (context, int index) {
+                  return BlocBuilder<CheckListScreenBloc, CheckListScreenState>(
+                    builder: (context, state) {
+                      return CheckboxListTile(
+                        value: state.taskWidgets[widget.cardIndex].child
+                            .taskClassObject.todolist[index][1],
+                        activeColor: Colors.red,
+                        onChanged: (value) {
+                          context.read<CheckListScreenBloc>().add(
+                                CheckBoxPressed(
+                                  isCheckBoxPressed: !state.isChecked,
+                                  index: index,
+                                  cardIndex: widget.cardIndex,
+                                ),
+                              );
+                        },
+                        title: Text(widget.taskClassObject.todolist[index][0]),
+                        controlAffinity: ListTileControlAffinity.leading,
+                      );
+                    },
+                  );
+                }),
+            const SizedBox(
+              height: 15,
+            )
+          ],
+>>>>>>> master
         ),
       ),
     );
   }
 }
 
+<<<<<<< HEAD
 class taskClass {
   taskClass({required this.title, required this.todolist, this.iconData});
   final title;
   final todolist;
   final iconData;
+=======
+class TaskClass {
+  TaskClass(
+      {required this.title,
+      required this.todolist,
+      this.iconData,
+      this.isChecked = false});
+  final title;
+  final todolist;
+  final iconData;
+  bool isChecked;
+>>>>>>> master
 }
