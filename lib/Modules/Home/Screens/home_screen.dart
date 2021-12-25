@@ -233,15 +233,36 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Center(
               child: FloatingSearchBar(
                 elevation: 0,
+                autocorrect: false,
                 borderRadius: const BorderRadius.all(Radius.elliptical(30, 30)),
                 shadowColor: Colors.transparent,
                 backdropColor: Colors.transparent,
                 accentColor: Colors.transparent,
                 builder: (context, transition) {
-                  return Container(
-                    color: Colors.white,
-                  );
+                  return Container();
+                  // return ListView.builder(
+                  //   itemCount: 200,
+                  //   itemBuilder: (context, index) {
+                  //     print('build $index');
+
+                  //     return Container(
+                  //       color: Colors.white,
+                  //       height: 50,
+                  //       width: MediaQuery.of(context).size.width - 60,
+                  //       padding: const EdgeInsets.symmetric(
+                  //           horizontal: 24, vertical: 16),
+                  //       child: Text(
+                  //         '$index',
+                  //       ),
+                  //     );
+                  //   },
+                  // );
                 },
+                body: Container(
+                  height: 250,
+                  width: 100,
+                ),
+                actions: [],
               ),
             ),
           )
