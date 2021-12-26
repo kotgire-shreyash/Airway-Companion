@@ -22,7 +22,7 @@ class FlightsCheckNotifierButton extends StatelessWidget {
             Radius.circular(5),
           ),
         ),
-        backgroundColor: Colors.blue.shade700,
+        backgroundColor: Colors.blue.shade600,
         // shape: const StadiumBorder(),
       ),
       onPressed: () {

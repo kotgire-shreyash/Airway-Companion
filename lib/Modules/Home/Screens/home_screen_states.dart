@@ -1,5 +1,6 @@
 class HomeScreenState {
   bool isSearchIconPressed;
+  bool isTimeLineButtonPressed;
   bool isSearchBoxTextFieldEnabled;
   bool isChecklistTilePressed;
   bool isNavigationTilePressed;
@@ -9,6 +10,7 @@ class HomeScreenState {
     this.isSearchBoxTextFieldEnabled = false,
     this.isChecklistTilePressed = false,
     this.isNavigationTilePressed = false,
+    this.isTimeLineButtonPressed = false,
   });
 
   HomeScreenState copyWith({
@@ -16,6 +18,7 @@ class HomeScreenState {
     var isSearchBoxTextFieldEnabled,
     var isChecklistTilePressed,
     var isNavigationTilePressed,
+    var isTimeLineButtonPressed,
   }) {
     return HomeScreenState(
       isSearchIconPressed: isSearchIconPressed ?? this.isSearchIconPressed,
@@ -25,6 +28,8 @@ class HomeScreenState {
           isChecklistTilePressed ?? this.isChecklistTilePressed,
       isNavigationTilePressed:
           isNavigationTilePressed ?? this.isNavigationTilePressed,
+      isTimeLineButtonPressed:
+          isTimeLineButtonPressed ?? this.isTimeLineButtonPressed,
     );
   }
 }

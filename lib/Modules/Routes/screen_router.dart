@@ -7,6 +7,7 @@ import 'package:airwaycompanion/Modules/Flight_Detail/Flight_details.dart';
 import 'package:airwaycompanion/Modules/Flights/Screens/available_flights_screen.dart';
 import 'package:airwaycompanion/Modules/Home/Screens/home_screen.dart';
 import 'package:airwaycompanion/Modules/Navigation/Screens/navigation_screen.dart';
+import 'package:airwaycompanion/Modules/Timeline/Screens/timeline_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,12 +26,17 @@ class GlobalRouter {
                 ));
       case 'home':
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case 'checklist':
+        return MaterialPageRoute(builder: (_) => const CheckListScreen());
 
       case 'checklistPage':
         return MaterialPageRoute(builder: (_) => const CheckListScreen());
 
       case 'availableFlights':
         return MaterialPageRoute(builder: (_) => const AvailableFlights());
+
+      case 'timeline':
+        return MaterialPageRoute(builder: (_) => const TimeLineScreen());
 
       // case 'navigationPage':
       //   return MaterialPageRoute(builder: (_) => MapNavigation());
