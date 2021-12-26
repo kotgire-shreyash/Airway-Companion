@@ -219,50 +219,48 @@ class _HomeScreenState extends State<HomeScreen> {
   // Search Box
   Widget _searchWidget() {
     return context.read<HomeScreenBloc>().state.isSearchBoxTextFieldEnabled
-        ? Container(
-            height: 60,
-            width: MediaQuery.of(context).size.width - 50,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.elliptical(30, 30)),
-              border: Border.all(
-                width: 0.8,
-                color: Colors.grey.shade700,
-              ),
-            ),
-            child: Center(
-              child: FloatingSearchBar(
-                elevation: 0,
-                autocorrect: false,
+        ? Expanded(
+            child: Container(
+              height: 60,
+              width: MediaQuery.of(context).size.width - 50,
+              decoration: BoxDecoration(
+                color: Colors.white,
                 borderRadius: const BorderRadius.all(Radius.elliptical(30, 30)),
-                shadowColor: Colors.transparent,
-                backdropColor: Colors.transparent,
-                accentColor: Colors.transparent,
-                builder: (context, transition) {
-                  return Container();
-                  // return ListView.builder(
-                  //   itemCount: 200,
-                  //   itemBuilder: (context, index) {
-                  //     print('build $index');
-
-                  //     return Container(
-                  //       color: Colors.white,
-                  //       height: 50,
-                  //       width: MediaQuery.of(context).size.width - 60,
-                  //       padding: const EdgeInsets.symmetric(
-                  //           horizontal: 24, vertical: 16),
-                  //       child: Text(
-                  //         '$index',
-                  //       ),
-                  //     );
-                  //   },
-                  // );
-                },
-                body: Container(
-                  height: 250,
-                  width: 100,
+                border: Border.all(
+                  width: 0.8,
+                  color: Colors.grey.shade700,
                 ),
-                actions: [],
+              ),
+              child: Center(
+                child: FloatingSearchBar(
+                  elevation: 0,
+                  autocorrect: false,
+                  borderRadius:
+                      const BorderRadius.all(Radius.elliptical(30, 30)),
+                  shadowColor: Colors.transparent,
+                  backdropColor: Colors.transparent,
+                  accentColor: Colors.transparent,
+                  builder: (context, transition) {
+                    // return Container();
+                    return SizedBox(
+                      height: 250,
+                      width: MediaQuery.of(context).size.width - 60,
+                      child: ListView.builder(
+                        itemCount: 200,
+                        itemBuilder: (context, index) {
+                          return Text(
+                            '$index',
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  body: Container(
+                    height: 250,
+                    width: 100,
+                  ),
+                  actions: [],
+                ),
               ),
             ),
           )
