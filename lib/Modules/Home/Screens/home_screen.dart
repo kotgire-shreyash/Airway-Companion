@@ -433,7 +433,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       elevation: 10,
-      color: Colors.blue.shade600,
+      color: Colors.yellow.shade600,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
@@ -442,15 +442,15 @@ class _HomeScreenState extends State<HomeScreen> {
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: Colors.blue.shade600, //Colors.blue.shade700,
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          color: Colors.yellow.shade600, //Colors.blue.shade700,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         child: Row(
           children: [
             Flexible(
               child: Container(
                 margin: const EdgeInsets.all(5),
-                color: Colors.blue.shade600,
+                color: Colors.yellow.shade600,
                 height: 200,
                 width: MediaQuery.of(context).size.width / 2.6,
                 child: SvgPicture.asset(
@@ -462,7 +462,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Flexible(
               child: Container(
-                  color: Colors.blue.shade600,
+                  color: Colors.yellow.shade600,
                   height: 200,
                   width: MediaQuery.of(context).size.width / 2.2,
                   child: Center(
@@ -470,7 +470,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          color: Colors.blue.shade600,
+                          color: Colors.yellow.shade600,
                           height: 90,
                           child: Center(
                               child: Text(
@@ -632,18 +632,19 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
       children: [
         _serviceRowLayout(
-          _serviceCard(Colors.deepPurpleAccent.shade400, Colors.blue.shade600),
-          _serviceCard(Colors.blue.shade600, Colors.blue.shade600),
+          _serviceCard(
+              Colors.deepPurpleAccent.shade400, Colors.yellow.shade600),
+          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
         ),
         const SizedBox(height: 15),
         _serviceRowLayout(
-          _serviceCard(Colors.blue.shade600, Colors.blue.shade600),
-          _serviceCard(Colors.blue.shade600, Colors.blue.shade600),
+          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
+          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
         ),
         const SizedBox(height: 15),
         Center(
             child: _serviceCard(
-                Colors.deepPurpleAccent.shade400, Colors.blue.shade600)),
+                Colors.deepPurpleAccent.shade400, Colors.yellow.shade600)),
         const SizedBox(height: 15),
       ],
     ));
