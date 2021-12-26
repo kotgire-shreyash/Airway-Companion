@@ -53,6 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
               .read<HomeScreenBloc>()
               .add(NavigationTilePressed(isNavigationTilePressed: false));
           Navigator.pushNamed(context, "navigationPage");
+        } else if (state.isTimeLineButtonPressed) {
+          context
+              .read<HomeScreenBloc>()
+              .add(TimeLineButtonPressed(isTimeLineButtonPressed: false));
+          Navigator.pushNamed(context, "timeline");
         }
       },
       builder: (context, state) {
@@ -183,6 +188,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   _flightsCheckNotifier(),
                   const SizedBox(
+                    height: 10,
+                  ),
+                  _timeLineNotifierCard(),
+                  const SizedBox(
                     height: 30,
                   ),
                   Container(
@@ -226,41 +235,6 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: const BorderRadius.all(Radius.elliptical(30, 30)),
-                border: Border.all(
-                  width: 0.8,
-                  color: Colors.grey.shade700,
-                ),
-              ),
-              child: Center(
-                child: FloatingSearchBar(
-                  elevation: 0,
-                  autocorrect: false,
-                  borderRadius:
-                      const BorderRadius.all(Radius.elliptical(30, 30)),
-                  shadowColor: Colors.transparent,
-                  backdropColor: Colors.transparent,
-                  accentColor: Colors.transparent,
-                  builder: (context, transition) {
-                    // return Container();
-                    return SizedBox(
-                      height: 250,
-                      width: MediaQuery.of(context).size.width - 60,
-                      child: ListView.builder(
-                        itemCount: 200,
-                        itemBuilder: (context, index) {
-                          return Text(
-                            '$index',
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  body: Container(
-                    height: 250,
-                    width: 100,
-                  ),
-                  actions: [],
-                ),
               ),
             ),
           )
@@ -435,6 +409,95 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _timeLineNotifierCard() {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      elevation: 10,
+      color: Colors.yellow.shade600,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Container(
+        height: 200,
+        width: MediaQuery.of(context).size.width,
+        margin: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: Colors.yellow.shade600, //Colors.blue.shade700,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        child: Row(
+          children: [
+            Flexible(
+              child: Container(
+                margin: const EdgeInsets.all(5),
+                color: Colors.yellow.shade600,
+                height: 200,
+                width: MediaQuery.of(context).size.width / 2.6,
+                child: SvgPicture.asset(
+                  "assets/images/timeline_2.svg",
+                  color: Colors.white,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            Flexible(
+              child: Container(
+                  color: Colors.yellow.shade600,
+                  height: 200,
+                  width: MediaQuery.of(context).size.width / 2.2,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          color: Colors.yellow.shade600,
+                          height: 90,
+                          child: Center(
+                              child: Text(
+                            "Flight Timeline",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily:
+                                  GoogleFonts.lato(fontWeight: FontWeight.w900)
+                                      .fontFamily,
+                              fontSize: 25,
+                            ),
+                          )),
+                        ),
+                        SizedBox(
+                            height: 60,
+                            child: Center(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  context.read<HomeScreenBloc>().add(
+                                        TimeLineButtonPressed(
+                                            isTimeLineButtonPressed: true),
+                                      );
+                                },
+                                child: Text("Catch up!",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: GoogleFonts.lato(
+                                              fontWeight: FontWeight.w800)
+                                          .fontFamily,
+                                    )),
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  elevation: 5,
+                                ),
+                              ),
+                            )),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   // Drawer
   Widget _drawer() {
     return SafeArea(
@@ -515,7 +578,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 //     .read<HomeScreenBloc>()
                 //     .add(NavigationTilePressed(isNavigationTilePressed: true));
               }),
-              _drawerListTile("Settings", CupertinoIcons.settings, () {}),
+              _drawerListTile("Settings", CupertinoIcons.settings, () {
+                Navigator.pushNamed(context, "timeline");
+              }),
             ],
           ),
         ),
@@ -547,22 +612,19 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
       children: [
         _serviceRowLayout(
-          _serviceCard(Colors.deepPurpleAccent.shade400,
-              Colors.deepPurpleAccent.shade200),
-          _serviceCard(Colors.deepPurpleAccent.shade200,
-              Colors.deepPurpleAccent.shade100),
+          _serviceCard(
+              Colors.deepPurpleAccent.shade400, Colors.yellow.shade600),
+          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
         ),
         const SizedBox(height: 15),
         _serviceRowLayout(
-          _serviceCard(Colors.deepPurpleAccent.shade200,
-              Colors.deepPurpleAccent.shade100),
-          _serviceCard(Colors.deepPurpleAccent.shade200,
-              Colors.deepPurpleAccent.shade100),
+          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
+          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
         ),
         const SizedBox(height: 15),
         Center(
-            child: _serviceCard(Colors.deepPurpleAccent.shade400,
-                Colors.deepPurpleAccent.shade100)),
+            child: _serviceCard(
+                Colors.deepPurpleAccent.shade400, Colors.yellow.shade600)),
         const SizedBox(height: 15),
       ],
     ));

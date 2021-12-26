@@ -18,12 +18,35 @@ class _TaskCardScreenState extends State<TaskCardScreen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            color: Colors.red,
-            height: 50,
-          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                widget.taskClassObject.title,
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    // fontFamily: _latoBoldFontFamily,
+                    fontWeight: FontWeight.w900),
+                textScaleFactor: 1.6,
+              ),
+              // if clicked on text then it will convert to text field
+              TextField()
+            ],
+          )
         ],
       )),
     );
   }
 }
+
+//
+// create a column 
+// in which row will have icon + title of taskcard  
+// on clicking icon will be updated using icon picker
+// on clicking title it will be converted to text field
+// also todo also have option to be updated
+// after that list of todo's will be displayed
+// an action button to add a todo in list
+//
