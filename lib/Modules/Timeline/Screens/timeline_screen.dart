@@ -21,7 +21,7 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
         itemBuilder: (context, index) {
           final stepObject = stepObjects[index];
           return Center(
-            child: Container(
+            child: SizedBox(
               width: 360.0,
               child: Card(
                 margin: const EdgeInsets.all(20.0),

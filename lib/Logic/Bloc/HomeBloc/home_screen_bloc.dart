@@ -8,6 +8,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     on<SearchBoxTextFieldPressed>(_onSearchBoxTextFieldPressedEvent);
     on<CheckListTilePressed>(_onCheckListTilePressedEvent);
     on<NavigationTilePressed>(_onNavigationTilePressedEvent);
+    on<TimeLineButtonPressed>(_onTimeLineButtonPressedEvent);
   }
 
   void _onSearchIconPressedEvent(
@@ -30,5 +31,11 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       NavigationTilePressed event, Emitter<HomeScreenState> emit) {
     emit(
         state.copyWith(isNavigationTilePressed: event.isNavigationTilePressed));
+  }
+
+  void _onTimeLineButtonPressedEvent(
+      TimeLineButtonPressed event, Emitter<HomeScreenState> emit) {
+    emit(
+        state.copyWith(isTimeLineButtonPressed: event.isTimeLineButtonPressed));
   }
 }
