@@ -15,9 +15,9 @@ class TimeLineCardHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Icon(
+        Icon(
           Icons.transit_enterexit,
-          color: Colors.green,
+          color: Colors.yellow.shade700,
         ),
         Text(
           stepObject.name,
@@ -94,9 +94,9 @@ class TimeLineCardBody extends StatelessWidget {
             },
             indicatorBuilder: (_, index) {
               if (stages[index].isCompleted) {
-                return const DotIndicator(
-                  color: Color(0xff66c97f),
-                  child: Icon(
+                return DotIndicator(
+                  color: Colors.yellow.shade700,
+                  child: const Icon(
                     Icons.check,
                     color: Colors.white,
                     size: 12.0,
@@ -109,7 +109,7 @@ class TimeLineCardBody extends StatelessWidget {
               }
             },
             connectorBuilder: (_, index, ___) => SolidLineConnector(
-              color: stages[index].isCompleted ? const Color(0xff66c97f) : null,
+              color: stages[index].isCompleted ? Colors.yellow.shade700 : null,
             ),
           ),
         ),
@@ -137,7 +137,7 @@ class TimeLineCardFooter extends StatelessWidget {
           },
           elevation: 0,
           shape: const StadiumBorder(),
-          color: const Color(0xff66c97f),
+          color: Colors.yellow.shade700,
           textColor: Colors.white,
           child: const Text('On-time'),
         ),

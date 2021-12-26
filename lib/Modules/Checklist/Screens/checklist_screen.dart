@@ -30,112 +30,119 @@ class _CheckListScreenState extends State<CheckListScreen> {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            leading: Container(
-              margin: const EdgeInsets.only(right: 20),
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                    size: 35,
-                  )),
-            ),
-            actions: [
-              Container(
-                margin: const EdgeInsets.only(right: 20),
-                alignment: Alignment.centerRight,
-                child: IconButton(
-                    onPressed: () {
-                      context.read<CheckListScreenBloc>().add(
-                            AddCard(
-                              newTaskCard: Dismissible(
-                                key: Key("$hashCode"),
-                                child: TaskCard(
-                                  cardIndex: state.taskWidgets.length,
-                                  taskClassObject: TaskClass(
-                                    isChecked: false,
-                                    title: "Something",
-                                    iconData: Icons.task_rounded,
-                                    todolist: [
-                                      ['aadhar', false],
-                                      ['pancard', false],
-                                      ['passport', false],
-                                      ['gate pass', false],
-                                      ['vaccination Certificate', false],
-                                    ],
+          body: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) => [
+              SliverAppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: Colors.white,
+                elevation: 0,
+                leading: Container(
+                  margin: const EdgeInsets.only(right: 20),
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.black,
+                        size: 35,
+                      )),
+                ),
+                actions: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 20),
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                        onPressed: () {
+                          context.read<CheckListScreenBloc>().add(
+                                AddCard(
+                                  newTaskCard: Dismissible(
+                                    key: Key("$hashCode"),
+                                    child: TaskCard(
+                                      cardIndex: state.taskWidgets.length,
+                                      taskClassObject: TaskClass(
+                                        isChecked: false,
+                                        title: "Something",
+                                        iconData: Icons.task_rounded,
+                                        todolist: [
+                                          ['aadhar', false],
+                                          ['pancard', false],
+                                          ['passport', false],
+                                          ['gate pass', false],
+                                          ['vaccination Certificate', false],
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          );
-                    },
-                    icon: const Icon(
-                      Icons.add,
-                      color: Colors.black,
-                      size: 40,
-                    )),
+                              );
+                        },
+                        icon: const Icon(
+                          Icons.add,
+                          color: Colors.black,
+                          size: 40,
+                        )),
+                  ),
+                ],
+                expandedHeight: 300,
+                flexibleSpace: Container(
+                  margin: const EdgeInsets.only(top: 80, left: 50, right: 50),
+                  color: Colors.white,
+                  height: 350,
+                  width: 200,
+                  child: Center(
+                    child: SvgPicture.asset(
+                      "assets/images/tasks.svg",
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
               ),
             ],
-          ),
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                      height: 250,
-                      width: 250,
-                      child: SvgPicture.asset(
-                        "assets/images/tasks.svg",
-                        fit: BoxFit.cover,
+            body: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Flexible(
+                    child: Container(
+                      height: 80,
+                      width: MediaQuery.of(context).size.width / 1.2,
+                      alignment: Alignment.centerLeft,
+                      margin: const EdgeInsets.only(left: 20),
+                      child: Text(
+                        "Complete the following tasks for hassle-free travel!",
+                        style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontSize: 15,
+                            fontFamily: _latoBoldFontFamily,
+                            fontWeight: FontWeight.w900),
+                        textScaleFactor: 1.4,
                       ),
                     ),
-                    Flexible(
-                      child: Container(
-                        height: 80,
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 20),
-                        child: Text(
-                          "Complete the following tasks for hassle-free travel!",
-                          style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 15,
-                              fontFamily: _latoBoldFontFamily,
-                              fontWeight: FontWeight.w900),
-                          textScaleFactor: 1.4,
-                        ),
-                      ),
+                  ),
+                  Flexible(
+                    flex: 5,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: state.taskWidgets.length,
+                      itemBuilder: (context, int index) {
+                        return BlocBuilder<CheckListScreenBloc,
+                            CheckListScreenState>(
+                          builder: (context, state) {
+                            return state.taskWidgets[index];
+                          },
+                        );
+                      },
                     ),
-                    Flexible(
-                      flex: 5,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: state.taskWidgets.length,
-                        itemBuilder: (context, int index) {
-                          return BlocBuilder<CheckListScreenBloc,
-                              CheckListScreenState>(
-                            builder: (context, state) {
-                              return state.taskWidgets[index];
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

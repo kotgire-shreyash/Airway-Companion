@@ -7,6 +7,7 @@ import 'package:airwaycompanion/Modules/Home/Screens/home_screen_states.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/drawer_widget.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/flights_check_button.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
+import 'package:airwaycompanion/Modules/Home/Widgets/search_delegate.dart';
 import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,9 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext buildContext) {
     return BlocConsumer<HomeScreenBloc, HomeScreenState>(
       listener: (context, state) {
-        if (state.isSearchBoxTextFieldEnabled && !state.isSearchIconPressed) {
+        if (state.isSearchBoxTextFieldEnabled) {
           context.read<HomeScreenBloc>().add(
               SearchBoxTextFieldPressed(isSearchBoxTextFieldEnabled: false));
+          showSearch(context: context, delegate: SearchBoxDelegate());
         } else if (state.isChecklistTilePressed) {
           context
               .read<HomeScreenBloc>()
@@ -227,129 +229,69 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Search Box
   Widget _searchWidget() {
-    return context.read<HomeScreenBloc>().state.isSearchBoxTextFieldEnabled
-        ? Expanded(
-            child: Container(
-              height: 60,
-              width: MediaQuery.of(context).size.width - 50,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.all(Radius.elliptical(30, 30)),
-              ),
-            ),
-          )
-
-        /*
-            TextField(
-              autofocus: true,
-              textAlign: TextAlign.center,
-              autocorrect: false,
-              decoration: InputDecoration(
-                hintText: "Explore",
-                hintStyle: TextStyle(
-                    color: Colors.grey.shade300, fontWeight: FontWeight.bold),
-                contentPadding: const EdgeInsets.only(
-                  top: 1,
-                  bottom: 1,
-                  left: 20,
-                  right: 20,
+    return Container(
+      height: 60,
+      width: MediaQuery.of(context).size.width - 50,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: const BorderRadius.all(Radius.elliptical(30, 30)),
+        border: Border.all(
+          width: 0.8,
+          color: Colors.grey.shade700,
+        ),
+      ),
+      child: InkWell(
+        child: Center(
+          child: AnimatedTextKit(
+            animatedTexts: [
+              TypewriterAnimatedText(
+                "What are you searching for?",
+                textStyle: TextStyle(
+                  color: Colors.grey.shade400,
+                  fontSize: 15,
+                  fontFamily: _latoFontFamily,
+                  fontWeight: FontWeight.bold,
                 ),
-
-                // icon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade300,
-                    width: 3,
-                  ),
-                  borderRadius:
-                      const BorderRadius.all(Radius.elliptical(30, 30)),
+                speed: const Duration(milliseconds: 60),
+              ),
+              TypewriterAnimatedText(
+                "Airport Navigation?",
+                textStyle: TextStyle(
+                  color: Colors.grey.shade400,
+                  fontSize: 15,
+                  fontFamily: _latoFontFamily,
+                  fontWeight: FontWeight.bold,
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade800,
-                    width: 1.6,
-                  ),
-                  borderRadius:
-                      const BorderRadius.all(Radius.elliptical(30, 30)),
+                speed: const Duration(milliseconds: 60),
+              ),
+              TypewriterAnimatedText(
+                "Pre-Fly Guidelines?",
+                textStyle: TextStyle(
+                  color: Colors.grey.shade400,
+                  fontSize: 15,
+                  fontFamily: _latoFontFamily,
+                  fontWeight: FontWeight.bold,
                 ),
-                fillColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
+                speed: const Duration(milliseconds: 60),
               ),
-              cursorColor: Colors.grey.shade600,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                overflow: TextOverflow.visible,
-                color: Colors.grey.shade900,
-              ),
-            ))
-              */
+            ],
+            repeatForever: true,
+            pause: const Duration(seconds: 2),
+            stopPauseOnTap: true,
+            onTap: () {
+              context.read<HomeScreenBloc>().add(
+                  SearchBoxTextFieldPressed(isSearchBoxTextFieldEnabled: true));
+            },
+          ),
+        ),
 
-        // Animated Search Text Guide
-        : Container(
-            height: 60,
-            width: MediaQuery.of(context).size.width - 50,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.elliptical(30, 30)),
-              border: Border.all(
-                width: 0.8,
-                color: Colors.grey.shade700,
-              ),
-            ),
-            child: InkWell(
-              child: Center(
-                child: AnimatedTextKit(
-                  animatedTexts: [
-                    TypewriterAnimatedText(
-                      "What are you searching for?",
-                      textStyle: TextStyle(
-                        color: Colors.grey.shade400,
-                        fontSize: 15,
-                        fontFamily: _latoFontFamily,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      speed: const Duration(milliseconds: 60),
-                    ),
-                    TypewriterAnimatedText(
-                      "Airport Navigation?",
-                      textStyle: TextStyle(
-                        color: Colors.grey.shade400,
-                        fontSize: 15,
-                        fontFamily: _latoFontFamily,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      speed: const Duration(milliseconds: 60),
-                    ),
-                    TypewriterAnimatedText(
-                      "Pre-Fly Guidelines?",
-                      textStyle: TextStyle(
-                        color: Colors.grey.shade400,
-                        fontSize: 15,
-                        fontFamily: _latoFontFamily,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      speed: const Duration(milliseconds: 60),
-                    ),
-                  ],
-                  repeatForever: true,
-                  pause: const Duration(seconds: 2),
-                  stopPauseOnTap: true,
-                  onTap: () {
-                    context.read<HomeScreenBloc>().add(
-                        SearchBoxTextFieldPressed(
-                            isSearchBoxTextFieldEnabled: true));
-                  },
-                ),
-              ),
-
-              // Second onTap necessary for when the space other than the animated text is tapped
-              onTap: () {
-                context.read<HomeScreenBloc>().add(SearchBoxTextFieldPressed(
-                    isSearchBoxTextFieldEnabled: true));
-              },
-            ),
-          );
+        // Second onTap necessary for when the space other than the animated text is tapped
+        onTap: () {
+          context.read<HomeScreenBloc>().add(
+              SearchBoxTextFieldPressed(isSearchBoxTextFieldEnabled: true));
+        },
+      ),
+    );
   }
 
   // Flight-Booking verification card
@@ -363,35 +305,47 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Container(
         height: 280,
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          color: Colors.white, //Colors.blue.shade700,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.blue.shade700,
+              Colors.blue.shade500,
+              Colors.blue.shade500,
+              Colors.blue.shade700,
+            ],
+            stops: const [
+              0.1,
+              0.4,
+              0.6,
+              0.9,
+            ],
+          ),
         ),
         child: Column(
           children: [
             const SizedBox(
-              height: 10,
+              height: 15,
             ),
             SizedBox(
               height: 140,
-              width: 250,
+              width: 220,
               child: SvgPicture.asset(
-                "assets/images/flight_booking_grey.svg",
-                fit: BoxFit.fill,
+                "assets/images/airplane4.svg",
+                fit: BoxFit.scaleDown,
+                color: Colors.white,
               ),
-              // child: Image.asset(
-              //   "assets/images/airplane2.jpg",
-              //   fit: BoxFit.contain,
-              // ),
             ),
             const SizedBox(
-              height: 5,
+              height: 10,
             ),
             SizedBox(
               child: Text(
                 "Available Flights",
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontFamily: GoogleFonts.lato(
                           fontWeight: FontWeight.bold, fontSize: 35)
                       .fontFamily,
@@ -420,17 +374,31 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Container(
         height: 200,
         width: MediaQuery.of(context).size.width,
-        margin: const EdgeInsets.all(5),
+        // margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: Colors.yellow.shade600, //Colors.blue.shade700,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.yellow.shade700,
+              Colors.yellow.shade600,
+              Colors.yellow.shade600,
+              Colors.yellow.shade700,
+            ],
+            stops: const [
+              0.1,
+              0.4,
+              0.6,
+              0.9,
+            ],
+          ),
         ),
         child: Row(
           children: [
             Flexible(
               child: Container(
                 margin: const EdgeInsets.all(5),
-                color: Colors.yellow.shade600,
                 height: 200,
                 width: MediaQuery.of(context).size.width / 2.6,
                 child: SvgPicture.asset(
@@ -442,7 +410,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Flexible(
               child: Container(
-                  color: Colors.yellow.shade600,
                   height: 200,
                   width: MediaQuery.of(context).size.width / 2.2,
                   child: Center(
@@ -450,20 +417,35 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          color: Colors.yellow.shade600,
-                          height: 90,
                           child: Center(
                               child: Text(
-                            "Flight Timeline",
+                            "Track Your",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily:
+                                  GoogleFonts.lato(fontWeight: FontWeight.w500)
+                                      .fontFamily,
+                              fontSize: 20,
+                            ),
+                          )),
+                        ),
+                        Container(
+                          child: Center(
+                              child: Text(
+                            "Journey",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily:
                                   GoogleFonts.lato(fontWeight: FontWeight.w900)
                                       .fontFamily,
-                              fontSize: 25,
+                              fontSize: 32,
                             ),
                           )),
+                        ),
+                        const SizedBox(
+                          height: 5,
                         ),
                         SizedBox(
                             height: 60,
@@ -479,7 +461,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontFamily: GoogleFonts.lato(
-                                              fontWeight: FontWeight.w800)
+                                              fontWeight: FontWeight.w900)
                                           .fontFamily,
                                     )),
                                 style: TextButton.styleFrom(
