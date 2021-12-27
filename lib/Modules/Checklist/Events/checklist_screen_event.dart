@@ -16,8 +16,10 @@ class AddCard extends CheckListScreenEvent {
 
 // Delete Card
 class DeleteCard extends CheckListScreenEvent {
-  int index;
-  DeleteCard({required this.index});
+  // int cardIndex;
+  // DeleteCard({required this.cardIndex});
+  var uniqueKey;
+  DeleteCard({required this.uniqueKey});
 }
 
 // CheckBox pressed

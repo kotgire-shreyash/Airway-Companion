@@ -15,6 +15,7 @@ class CheckListScreen extends StatefulWidget {
 }
 
 class _CheckListScreenState extends State<CheckListScreen> {
+  static int cardIndex = 0;
   final _latoBoldFontFamily =
       GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
 
@@ -56,10 +57,11 @@ class _CheckListScreenState extends State<CheckListScreen> {
                     alignment: Alignment.centerRight,
                     child: IconButton(
                         onPressed: () {
+                          var _uniqueKey = UniqueKey();
                           context.read<CheckListScreenBloc>().add(
                                 AddCard(
                                   newTaskCard: Dismissible(
-                                    key: Key("$hashCode"),
+                                    key: _uniqueKey,
                                     child: TaskCard(
                                       cardIndex: state.taskWidgets.length,
                                       taskClassObject: TaskClass(
@@ -75,6 +77,10 @@ class _CheckListScreenState extends State<CheckListScreen> {
                                         ],
                                       ),
                                     ),
+                                    onDismissed: (direction) {
+                                      context.read<CheckListScreenBloc>().add(
+                                          DeleteCard(uniqueKey: _uniqueKey));
+                                    },
                                   ),
                                 ),
                               );
@@ -126,22 +132,37 @@ class _CheckListScreenState extends State<CheckListScreen> {
                       ),
                     ),
                   ),
+
                   Flexible(
-                    flex: 5,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: state.taskWidgets.length,
-                      itemBuilder: (context, int index) {
-                        return BlocBuilder<CheckListScreenBloc,
-                            CheckListScreenState>(
-                          builder: (context, state) {
-                            return state.taskWidgets[index];
-                          },
-                        );
-                      },
+                    flex: 8,
+                    child: SizedBox(
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: state.taskWidgets.length,
+                              itemBuilder: (context, int index) {
+                                return BlocBuilder<CheckListScreenBloc,
+                                    CheckListScreenState>(
+                                  builder: (context, state) {
+                                    return state.taskWidgets[index];
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
+
+                  // Flexible(
+                  //   flex: 5,
+                  //   child:
+                  // ),
                 ],
               ),
             ),
@@ -151,48 +172,56 @@ class _CheckListScreenState extends State<CheckListScreen> {
     );
   }
 
-  _getItems() {
-    for (var item in taskList) {
-      // _todoWidgets.add(
-      //   Dismissible(
-      //     key: Key(item.title),
-      //     child: TaskCard(
-      //       taskClassObject: item,
-      //     ),
-      //   ),
-      // );
-    }
-  }
-
-  final List<TaskClass> taskList = [
-    TaskClass(
-      title: 'Documents',
-      todolist: [
-        'aadhar',
-        'pancard',
-        'passport',
-        'gate pass',
-        'vaccination Certificate',
-      ],
-      iconData: Icons.document_scanner,
+  final List<Widget> taskList = [
+    Dismissible(
+      key: UniqueKey(),
+      child: TaskCard(
+        cardIndex: 0,
+        taskClassObject: TaskClass(
+          title: 'Documents',
+          todolist: [
+            'aadhar',
+            'pancard',
+            'passport',
+            'gate pass',
+            'vaccination Certificate',
+          ],
+          iconData: Icons.document_scanner,
+        ),
+      ),
+      onDismissed: (direction) {},
     ),
-    TaskClass(
-      title: 'Utilities',
-      todolist: [
-        'Charger',
-        'Powerbank',
-        'Headphones',
-      ],
-      iconData: Icons.cable_sharp,
+    Dismissible(
+      key: UniqueKey(),
+      child: TaskCard(
+        cardIndex: 0,
+        taskClassObject: TaskClass(
+          title: 'Utilities',
+          todolist: [
+            'Charger',
+            'Powerbank',
+            'Headphones',
+          ],
+          iconData: Icons.cable_sharp,
+        ),
+      ),
+      onDismissed: (direction) {},
     ),
-    TaskClass(
-      title: 'Covid Necessary',
-      todolist: [
-        'Mask',
-        'Hand Sanitizer',
-        'RTPCR Report',
-      ],
-      iconData: Icons.coronavirus_outlined,
+    Dismissible(
+      key: UniqueKey(),
+      child: TaskCard(
+        cardIndex: 0,
+        taskClassObject: TaskClass(
+          title: 'Covid Necessary',
+          todolist: [
+            'Mask',
+            'Hand Sanitizer',
+            'RTPCR Report',
+          ],
+          iconData: Icons.coronavirus_outlined,
+        ),
+      ),
+      onDismissed: (direction) {},
     ),
   ];
 }

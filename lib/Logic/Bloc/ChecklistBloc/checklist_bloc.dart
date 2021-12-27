@@ -16,7 +16,9 @@ class CheckListScreenBloc
 
   void _onDeleteCardEvent(
       DeleteCard event, Emitter<CheckListScreenState> emit) {
-    state.taskWidgets.removeAt(event.index);
+    print(state.taskWidgets.length);
+    state.taskWidgets.removeWhere((element) => element.key == event.uniqueKey);
+    print(state.taskWidgets.length);
     emit(state.copyWith(taskWidgets: state.taskWidgets));
   }
 

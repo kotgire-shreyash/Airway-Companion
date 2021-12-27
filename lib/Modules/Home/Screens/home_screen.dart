@@ -288,7 +288,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
 
   // Search Box
   Widget _searchWidget() {
-return Container(
+    return Container(
       height: 60,
       width: MediaQuery.of(context).size.width - 50,
       decoration: BoxDecoration(
