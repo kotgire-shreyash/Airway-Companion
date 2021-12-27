@@ -61,7 +61,7 @@ dependencies:
   google_maps_flutter:
   flutter_slidable:
   fluttericon:
-  material_floating_search_bar: ^0.3.6
+  showcaseview:
   shared_preferences:
   
 dev_dependencies:
