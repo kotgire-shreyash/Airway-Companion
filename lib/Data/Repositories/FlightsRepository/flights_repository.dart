@@ -12,7 +12,7 @@ class FlightRepository {
     var rawFlightData = await _flightAPI.getFlightDataEncoded();
     var flightDataJsonDecoded = await jsonDecode(rawFlightData.body);
 
-    print("Here");
+    print(flightDataJsonDecoded);
     try {
       for (var item in flightDataJsonDecoded['data']) {
         FlightModel flightModel = FlightModel(

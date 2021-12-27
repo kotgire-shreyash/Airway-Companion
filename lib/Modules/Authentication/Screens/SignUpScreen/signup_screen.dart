@@ -41,6 +41,10 @@ class _SignUpPageViewState extends State<SignUpPageView> {
           // Display Signup failed toast
         } else if (state.internalStateValue == 2) {
           FlutterToast.display("Failed to Sign Up");
+        } else if (state.isBackToNavigationButtonPressed) {
+          context.read<SignupBloc>().add(BackToLoginNavigationEvent(
+              isBackToNavigationButtonPressed: false));
+          Navigator.pop(context);
         }
       },
       builder: (context, state) {
@@ -213,7 +217,8 @@ class _SignUpPageViewState extends State<SignUpPageView> {
                 TextStyle(color: Colors.black, fontFamily: _latoBoldFontFamily),
           ),
           onPressed: () {
-            Navigator.pop(context);
+            context.read<SignupBloc>().add(BackToLoginNavigationEvent(
+                isBackToNavigationButtonPressed: true));
           },
         );
       },
