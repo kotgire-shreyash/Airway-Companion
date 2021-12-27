@@ -379,13 +379,13 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                           shape: BoxShape.circle,
                           color: Colors.white,
                         ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.person,
-                            size: 60,
-                            color: Colors.grey,
-                          ),
-                        ),
+                        child: Center(
+                            child: Image.asset(
+                          "assets/images/user.jpg",
+                          fit: BoxFit.cover,
+                          height: 70,
+                          width: 70,
+                        )),
                       ),
                     ),
                     Container(
