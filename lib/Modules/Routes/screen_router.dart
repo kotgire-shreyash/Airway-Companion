@@ -1,3 +1,4 @@
+import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/login_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/signup_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/FlightsScreenBloc/flights_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Authentication/Screens/LoginScreen/login_screen.dart';
@@ -17,7 +18,11 @@ class GlobalRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case 'login':
-        return MaterialPageRoute(builder: (_) => const LoginPageView());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => LoginBloc(),
+                  child: const LoginPageView(),
+                ));
       case 'signup':
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
@@ -26,8 +31,6 @@ class GlobalRouter {
                 ));
       case 'home':
         return MaterialPageRoute(builder: (_) => const HomeScreen());
-      case 'checklist':
-        return MaterialPageRoute(builder: (_) => const CheckListScreen());
 
       case 'checklistPage':
         return MaterialPageRoute(builder: (_) => const CheckListScreen());

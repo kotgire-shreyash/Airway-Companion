@@ -10,6 +10,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     on<PasswordAddedEvent>(_onPasswordAdded);
     on<MailAddedEvent>(_onMailAddedEvent);
     on<SignUpFormBeingSubmittedEvent>(_onSignupFormBeingSubmitted);
+    on<BackToLoginNavigationEvent>(_onBackToNavigationButtonPressEvent);
   }
 
   void _onUsernameAdded(UsernameAddedEvent event, Emitter<SignupState> emit) {
@@ -32,6 +33,13 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   void _signupFormSubmissionFailureEvent(
       SignupFormFailureSubmissionEvent event, Emitter<SignupState> emit) {
     emit(state.copyWith(isFormSubmitted: true, displayToastByValue: 2));
+  }
+
+  void _onBackToNavigationButtonPressEvent(
+      BackToLoginNavigationEvent event, Emitter<SignupState> emit) {
+    emit(state.copyWith(
+        isBackToNavigationButtonPressed:
+            event.isBackToNavigationButtonPressed));
   }
 
   void _onSignupFormBeingSubmitted(

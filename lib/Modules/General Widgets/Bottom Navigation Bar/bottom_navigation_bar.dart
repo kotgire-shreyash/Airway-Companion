@@ -46,7 +46,7 @@ class _BottomNavigationBarState extends State<BottomNavigationBar> {
           Navigator.pushNamed(context, 'availableFlights');
         }
         if (index == 2) {
-          Navigator.pushNamed(context, 'timeline');
+          // Navigator.pushNamed(context, 'timeline');
         }
       },
     );

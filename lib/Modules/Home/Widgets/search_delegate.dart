@@ -10,6 +10,14 @@ class SearchBoxDelegate extends SearchDelegate<Widget> {
     "Track",
   ];
 
+  final _featureNavigationCorrespondence = [
+    "availableFlights",
+    "checkist",
+    "checklist",
+    "checklist",
+    "timeline",
+  ];
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -56,7 +64,7 @@ class SearchBoxDelegate extends SearchDelegate<Widget> {
             _leadingIcon = Icon(Icons.widgets,
                 color:
                     index % 2 == 0 ? Colors.blue.shade600 : Colors.redAccent);
-            _trailingIcon = Icon(Icons.open_in_new, color: Colors.black);
+            _trailingIcon = const Icon(Icons.open_in_new, color: Colors.black);
           } catch (e) {
             _leadingIcon = null;
             _trailingIcon = null;
@@ -72,7 +80,10 @@ class SearchBoxDelegate extends SearchDelegate<Widget> {
                 fontSize: 20,
               ),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(
+                  context, _featureNavigationCorrespondence[index]);
+            },
           );
         });
   }

@@ -22,22 +22,6 @@ class FlightsCheckNotifierButton extends StatelessWidget {
             Radius.circular(5),
           ),
           color: Colors.white,
-          // gradient: LinearGradient(
-          //   begin: Alignment.topLeft,
-          //   end: Alignment.bottomRight,
-          //   colors: [
-          //     Colors.blue.shade700,
-          //     Colors.blue.shade500,
-          //     Colors.blue.shade500,
-          //     Colors.blue.shade700,
-          //   ],
-          //   stops: const [
-          //     0.1,
-          //     0.3,
-          //     0.6,
-          //     0.9,
-          //   ],
-          // ),
         ),
         child: ElevatedButton(
           child: Text(

@@ -15,41 +15,69 @@ class SignUpButton extends StatefulWidget {
 class _SignUpButtonState extends State<SignUpButton> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        child: context.read<SignupBloc>().state.internalStateValue == 1
-            ? const Icon(
-                Icons.done,
-                color: Colors.white,
-              )
-            : context.read<SignupBloc>().state.isFormSubmitted
-                ? const Text(
-                    "sign up",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: Colors.white),
-                  )
-                : const SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                    )),
-        style: TextButton.styleFrom(
-          minimumSize: const Size(230, 45),
-          primary: Colors.white,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.elliptical(30, 30),
-            ),
-          ),
-          backgroundColor: CustomColors.signupSwatch,
-          // shape: const StadiumBorder(),
+    return Card(
+      elevation: 5,
+      color: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(30),
         ),
-        onPressed: () {
-          context
-              .read<SignupBloc>()
-              .add(SignUpFormBeingSubmittedEvent(isSignupFormSubmitted: true));
-        });
+      ),
+      child: Container(
+        height: 45,
+        width: 230,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(30),
+          ),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.redAccent.shade400,
+              Colors.redAccent.shade200,
+              Colors.redAccent.shade200,
+              Colors.redAccent.shade400,
+            ],
+            stops: const [
+              0.1,
+              0.3,
+              0.7,
+              0.9,
+            ],
+          ),
+        ),
+        child: ElevatedButton(
+          child: context.read<SignupBloc>().state.internalStateValue == 1
+              ? const Icon(
+                  Icons.done,
+                  color: Colors.white,
+                )
+              : context.read<SignupBloc>().state.isFormSubmitted
+                  ? const Text(
+                      "sign up",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: Colors.white),
+                    )
+                  : const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      )),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.transparent,
+            shadowColor: Colors.transparent,
+            elevation: 5,
+          ),
+          onPressed: () {
+            context.read<SignupBloc>().add(
+                SignUpFormBeingSubmittedEvent(isSignupFormSubmitted: true));
+          },
+        ),
+      ),
+    );
   }
 }

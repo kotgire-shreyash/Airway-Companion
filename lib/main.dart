@@ -1,12 +1,9 @@
 import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/checklist_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/FlightsScreenBloc/flights_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import 'Logic/Bloc/AuthenticationBloc/login_bloc.dart';
 import 'Logic/Bloc/HomeBloc/home_screen_bloc.dart';
 
@@ -35,7 +32,6 @@ class _AirwayCompanionAppState extends State<AirwayCompanionApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => LoginBloc()),
         BlocProvider(create: (context) => HomeScreenBloc()),
         BlocProvider(create: (context) => FlightScreenBloc()),
         BlocProvider(
@@ -46,7 +42,7 @@ class _AirwayCompanionAppState extends State<AirwayCompanionApp> {
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
         onGenerateRoute: _authPageRouter.onGenerateRoute,
-        initialRoute: "/home",
+        initialRoute: "login",
       ),
     );
   }
