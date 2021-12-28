@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:airwaycompanion/Modules/Checklist/Events/checklist_screen_event.dart';
 import 'package:airwaycompanion/Modules/Checklist/Screens/checklist_screen_states.dart';
+import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CheckListScreenBloc
@@ -8,9 +12,11 @@ class CheckListScreenBloc
     on<AddCard>(_onAddCardEvent);
     on<CheckBoxPressed>(_onCheckBoxPressedEvent);
     on<DeleteCard>(_onDeleteCardEvent);
+    on<AzureTableCardAddition>(_onAzureTableCardAdditionEvent);
   }
 
   void _onAddCardEvent(AddCard event, Emitter<CheckListScreenState> emit) {
+    print("NO ISSUES");
     emit(state.copyWith(taskWidgets: state.taskWidgets + [event.newTaskCard]));
   }
 
@@ -31,4 +37,39 @@ class CheckListScreenBloc
 
     emit(state.copyWith(taskWidgets: state.taskWidgets));
   }
+
+// AZURE DATABASE
+// ##########################################################################################################################
+  void _onAzureTableCardAdditionEvent(
+      AzureTableCardAddition event, Emitter<CheckListScreenState> emit) async {
+    state.uploadCheckListCardData(event.checkListCardMap);
+    var result = await state.getAzureCardTable();
+    var jsonData = await jsonDecode(result);
+    print(jsonData.runtimeType);
+
+    _onAddCardEvent(
+        AddCard(
+          newTaskCard: Dismissible(
+            key: UniqueKey(),
+            child: TaskCard(
+              cardIndex: jsonData['cardIndex'],
+              taskClassObject: TaskClass(
+                isChecked: jsonData["isChecked"],
+                title: jsonData["title"],
+                iconData: Icons.task_rounded,
+                todolist: [
+                  [jsonData["a"], false],
+                  [jsonData["b"], false],
+                  [jsonData["a"], false],
+                  [jsonData["b"], false],
+                  [jsonData["a"], false],
+                ],
+              ),
+            ),
+            onDismissed: (direction) {},
+          ),
+        ),
+        emit);
+  }
 }
+// ##########################################################################################################################

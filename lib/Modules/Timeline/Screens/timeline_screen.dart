@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:airwaycompanion/Modules/Timeline/widgets/timeline_card.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:airwaycompanion/Modules/Timeline/widgets/structure_class.dart';
 import 'package:flutter_svg/svg.dart';
@@ -55,23 +56,33 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
             ),
             Flexible(
               child: Container(
-                height: 80,
+                height: 100,
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 child: Center(
-                  child: Text("Track Your Journey With Us",
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontFamily:
-                            GoogleFonts.lato(fontWeight: FontWeight.w800)
-                                .fontFamily,
-                        fontSize: 25,
-                      )),
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      TypewriterAnimatedText(
+                        "Track your journey with us!",
+                        textStyle: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontSize: 25,
+                            fontFamily:
+                                GoogleFonts.lato(fontWeight: FontWeight.w900)
+                                    .fontFamily,
+                            fontWeight: FontWeight.w900),
+                        speed: const Duration(milliseconds: 60),
+                      )
+                    ],
+                    repeatForever: true,
+                    pause: const Duration(seconds: 2),
+                    stopPauseOnTap: false,
+                  ),
                 ),
               ),
             ),
             Flexible(
-              flex: 15,
+              flex: 13,
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 child: ListView.builder(

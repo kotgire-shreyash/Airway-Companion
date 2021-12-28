@@ -2,6 +2,7 @@ import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/checklist_bloc.dart';
 import 'package:airwaycompanion/Modules/Checklist/Events/checklist_screen_event.dart';
 import 'package:airwaycompanion/Modules/Checklist/Screens/checklist_screen_states.dart';
 import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -56,34 +57,51 @@ class _CheckListScreenState extends State<CheckListScreen> {
                     margin: const EdgeInsets.only(right: 20),
                     alignment: Alignment.centerRight,
                     child: IconButton(
-                        onPressed: () {
+                        onPressed: () async {
                           var _uniqueKey = UniqueKey();
+
+                          Map<String, dynamic> dataMap = {
+                            "cardIndex": state.taskWidgets.length,
+                            "isChecked": false,
+                            "title": "something",
+                            "a": "aadhar",
+                            "b": "pancard",
+                          };
+
                           context.read<CheckListScreenBloc>().add(
-                                AddCard(
-                                  newTaskCard: Dismissible(
-                                    key: _uniqueKey,
-                                    child: TaskCard(
-                                      cardIndex: state.taskWidgets.length,
-                                      taskClassObject: TaskClass(
-                                        isChecked: false,
-                                        title: "Something",
-                                        iconData: Icons.task_rounded,
-                                        todolist: [
-                                          ['aadhar', false],
-                                          ['pancard', false],
-                                          ['passport', false],
-                                          ['gate pass', false],
-                                          ['vaccination Certificate', false],
-                                        ],
-                                      ),
-                                    ),
-                                    onDismissed: (direction) {
-                                      context.read<CheckListScreenBloc>().add(
-                                          DeleteCard(uniqueKey: _uniqueKey));
-                                    },
-                                  ),
+                                AzureTableCardAddition(
+                                  checkListCardMap: dataMap,
                                 ),
                               );
+
+                          // var result = await state.getAzureCardTable();
+                          // print(result);
+                          // context.read<CheckListScreenBloc>().add(
+                          //       AddCard(
+                          //         newTaskCard: Dismissible(
+                          //           key: _uniqueKey,
+                          //           child: TaskCard(
+                          //             cardIndex: result['cardIndex'],
+                          //             taskClassObject: TaskClass(
+                          //               isChecked: result["isChecked"],
+                          //               title: result["title"],
+                          //               iconData: Icons.task_rounded,
+                          //               todolist: [
+                          //                 [result["a"], false],
+                          //                 [result["b"], false],
+                          //                 [result["a"], false],
+                          //                 [result["b"], false],
+                          //                 [result["a"], false],
+                          //               ],
+                          //             ),
+                          //           ),
+                          //           onDismissed: (direction) {
+                          //             context.read<CheckListScreenBloc>().add(
+                          //                 DeleteCard(uniqueKey: _uniqueKey));
+                          //           },
+                          //         ),
+                          //       ),
+                          //     );
                         },
                         icon: const Icon(
                           Icons.add,
@@ -117,18 +135,27 @@ class _CheckListScreenState extends State<CheckListScreen> {
                   ),
                   Flexible(
                     child: Container(
-                      height: 80,
+                      // height: 80,
                       width: MediaQuery.of(context).size.width / 1.2,
                       alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        "Complete the following tasks for hassle-free travel!",
-                        style: TextStyle(
-                            color: Colors.grey.shade600,
-                            fontSize: 15,
-                            fontFamily: _latoBoldFontFamily,
-                            fontWeight: FontWeight.w900),
-                        textScaleFactor: 1.4,
+                      child: Center(
+                        child: AnimatedTextKit(
+                          animatedTexts: [
+                            TypewriterAnimatedText(
+                              "Complete the following tasks for hassle-free travel!",
+                              textStyle: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontSize: 20,
+                                  fontFamily: _latoBoldFontFamily,
+                                  fontWeight: FontWeight.w900),
+                              speed: const Duration(milliseconds: 60),
+                            )
+                          ],
+                          repeatForever: true,
+                          pause: const Duration(seconds: 2),
+                          stopPauseOnTap: false,
+                        ),
                       ),
                     ),
                   ),
@@ -138,22 +165,24 @@ class _CheckListScreenState extends State<CheckListScreen> {
                     child: SizedBox(
                       child: SingleChildScrollView(
                         physics: const BouncingScrollPhysics(),
-                        child: Column(
-                          children: [
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: const BouncingScrollPhysics(),
-                              itemCount: state.taskWidgets.length,
-                              itemBuilder: (context, int index) {
-                                return BlocBuilder<CheckListScreenBloc,
-                                    CheckListScreenState>(
-                                  builder: (context, state) {
-                                    return state.taskWidgets[index];
-                                  },
-                                );
-                              },
-                            ),
-                          ],
+                        child: Center(
+                          child: Column(
+                            children: [
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: state.taskWidgets.length,
+                                itemBuilder: (context, int index) {
+                                  return BlocBuilder<CheckListScreenBloc,
+                                      CheckListScreenState>(
+                                    builder: (context, state) {
+                                      return state.taskWidgets[index];
+                                    },
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
