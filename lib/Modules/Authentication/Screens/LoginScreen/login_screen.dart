@@ -245,10 +245,11 @@ class _LoginPageViewState extends State<LoginPageView> {
       child: Text(
         "Forgot password?",
         style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w900,
-            fontFamily: _latoFontFamily,
-            color: CustomColors.loginSwatch),
+          fontSize: 15,
+          fontWeight: FontWeight.w900,
+          fontFamily: _latoBoldFontFamily,
+          color: CustomColors.loginSwatch,
+        ),
       ),
     );
   }

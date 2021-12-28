@@ -17,11 +17,9 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart'
     as bottomBar;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -288,7 +286,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
 
   // Search Box
   Widget _searchWidget() {
-return Container(
+    return Container(
       height: 60,
       width: MediaQuery.of(context).size.width - 50,
       decoration: BoxDecoration(
@@ -379,13 +377,13 @@ return Container(
                           shape: BoxShape.circle,
                           color: Colors.white,
                         ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.person,
-                            size: 60,
-                            color: Colors.grey,
-                          ),
-                        ),
+                        child: Center(
+                            child: Image.asset(
+                          "assets/images/user.jpg",
+                          fit: BoxFit.cover,
+                          height: 70,
+                          width: 70,
+                        )),
                       ),
                     ),
                     Container(
