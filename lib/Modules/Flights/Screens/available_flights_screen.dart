@@ -97,11 +97,25 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                           height: MediaQuery.of(context).size.height / 2.8,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            // color: Colors.deepPurpleAccent.shade200,
-                            color: Colors.blue.shade500,
                             borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(20),
                               bottomRight: Radius.circular(20),
+                            ),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.blue.shade500,
+                                Colors.blue.shade400,
+                                Colors.blue.shade400,
+                                Colors.blue.shade500,
+                              ],
+                              stops: const [
+                                0.1,
+                                0.3,
+                                0.6,
+                                0.9,
+                              ],
                             ),
                           ),
                           child: Column(
@@ -175,22 +189,61 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                                             height: 15,
                                           ),
                                           Center(
-                                            child: ElevatedButton(
-                                              onPressed: () {},
-                                              child: Text(
-                                                "Search",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily: GoogleFonts.lato(
-                                                          fontWeight:
-                                                              FontWeight.w900)
-                                                      .fontFamily,
+                                            child: Card(
+                                              elevation: 5,
+                                              color: Colors.white,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(5),
                                                 ),
                                               ),
-                                              style: TextButton.styleFrom(
-                                                backgroundColor: Colors.blue,
-                                                minimumSize:
-                                                    const Size(130, 40),
+                                              child: Container(
+                                                height: 40,
+                                                width: 120,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                    Radius.circular(5),
+                                                  ),
+                                                  gradient: LinearGradient(
+                                                    begin: Alignment.topLeft,
+                                                    end: Alignment.bottomRight,
+                                                    colors: [
+                                                      Colors.blue.shade500,
+                                                      Colors.blue.shade400,
+                                                      Colors.blue.shade400,
+                                                      Colors.blue.shade500,
+                                                    ],
+                                                    stops: const [
+                                                      0.1,
+                                                      0.3,
+                                                      0.7,
+                                                      0.9,
+                                                    ],
+                                                  ),
+                                                ),
+                                                child: ElevatedButton(
+                                                  child: Text(
+                                                    "Search",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontFamily:
+                                                            GoogleFonts.lato(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w900)
+                                                                .fontFamily),
+                                                  ),
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    primary: Colors.transparent,
+                                                    shadowColor:
+                                                        Colors.transparent,
+                                                    elevation: 5,
+                                                  ),
+                                                  onPressed: () {},
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -207,6 +260,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                     ),
                   ];
                 },
+
                 body: Flexible(
                   child: Column(
                     children: [

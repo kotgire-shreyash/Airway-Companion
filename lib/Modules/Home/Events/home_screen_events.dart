@@ -12,6 +12,12 @@ class SearchBoxTextFieldPressed extends HomeScreenEvent {
   SearchBoxTextFieldPressed({this.isSearchBoxTextFieldEnabled = false});
 }
 
+//? Timeline button pressed
+class TimeLineButtonPressed extends HomeScreenEvent {
+  bool isTimeLineButtonPressed;
+  TimeLineButtonPressed({this.isTimeLineButtonPressed = false});
+}
+
 // Drawer Navigations
 //? Check list tile pressed
 class CheckListTilePressed extends HomeScreenEvent {

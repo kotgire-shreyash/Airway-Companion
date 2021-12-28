@@ -22,6 +22,11 @@ class SignUpFormBeingSubmittedEvent extends SignupEvent {
   SignUpFormBeingSubmittedEvent({this.isSignupFormSubmitted = false});
 }
 
+class BackToLoginNavigationEvent extends SignupEvent {
+  bool isBackToNavigationButtonPressed;
+  BackToLoginNavigationEvent({this.isBackToNavigationButtonPressed = false});
+}
+
 class SignupFormSuccesfulSubmissionEvent extends SignupEvent {}
 
 class SignupFormFailureSubmissionEvent extends SignupEvent {}

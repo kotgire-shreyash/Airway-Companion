@@ -49,6 +49,9 @@ dependencies:
   flutter_svg:
   pull_to_refresh:
   animated_text_kit:
+  timelines:
+  flutter_highlight: 
+  timeline_tile:
   font_awesome_flutter:
   bottom_bar_with_sheet:
   flutter_google_street_view:
@@ -58,7 +61,8 @@ dependencies:
   google_maps_flutter:
   flutter_slidable:
   fluttericon:
-  material_floating_search_bar: ^0.3.6
+  showcaseview:
+  shared_preferences:
   
 dev_dependencies:
   flutter_test:

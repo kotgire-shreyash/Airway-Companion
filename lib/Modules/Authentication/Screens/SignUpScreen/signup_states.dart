@@ -3,6 +3,7 @@ class SignupState {
   var password;
   var mail;
   bool isFormSubmitted;
+  bool isBackToNavigationButtonPressed;
 
   // 0 => neutral state, 1 => success state, 2 => failure state
   var internalStateValue;
@@ -18,21 +19,26 @@ class SignupState {
     this.password,
     this.isFormSubmitted = true,
     this.internalStateValue = 0,
+    this.isBackToNavigationButtonPressed = false,
   });
 
   // Copywith constructor
-  SignupState copyWith(
-      {var username,
-      var mail,
-      var password,
-      var isFormSubmitted,
-      var displayToastByValue}) {
+  SignupState copyWith({
+    var username,
+    var mail,
+    var password,
+    var isFormSubmitted,
+    var displayToastByValue,
+    var isBackToNavigationButtonPressed,
+  }) {
     return SignupState(
       username: username ?? this.username,
       mail: mail ?? this.mail,
       password: password ?? this.password,
       isFormSubmitted: isFormSubmitted ?? this.isFormSubmitted,
-      internalStateValue: displayToastByValue ?? this.internalStateValue,
+      internalStateValue: displayToastByValue ?? internalStateValue,
+      isBackToNavigationButtonPressed: isBackToNavigationButtonPressed ??
+          this.isBackToNavigationButtonPressed,
     );
   }
 }

@@ -7,6 +7,7 @@ import 'package:airwaycompanion/Modules/Home/Screens/home_screen_states.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/drawer_widget.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/flights_check_button.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
+import 'package:airwaycompanion/Modules/Home/Widgets/search_delegate.dart';
 import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,6 +21,8 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart'
     as bottomBar;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -30,39 +33,252 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalRouter _homeScreenPageRouter = GlobalRouter();
+
+  @override
+  Widget build(BuildContext buildContext) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ShowCaseWidget(
+        builder: Builder(builder: (context) => const HomeScreenBody()),
+      ),
+      onGenerateRoute: _homeScreenPageRouter.onGenerateRoute,
+    );
+  }
+}
+
+class HomeScreenBody extends StatefulWidget {
+  const HomeScreenBody({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenBodyState createState() => _HomeScreenBodyState();
+}
+
+class _HomeScreenBodyState extends State<HomeScreenBody> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   final _latoFontFamily = GoogleFonts.lato().fontFamily;
   final _latoBoldFontFamily =
       GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
 
+  final GlobalKey _searchKey = GlobalKey();
+  final GlobalKey _flightsKey = GlobalKey();
+  final GlobalKey _trackKey = GlobalKey();
+  final GlobalKey _botKey = GlobalKey();
+
   @override
-  Widget build(BuildContext buildContext) {
+  Widget build(BuildContext context) {
     return BlocConsumer<HomeScreenBloc, HomeScreenState>(
-      listener: (context, state) {
-        if (state.isSearchBoxTextFieldEnabled && !state.isSearchIconPressed) {
-          context.read<HomeScreenBloc>().add(
-              SearchBoxTextFieldPressed(isSearchBoxTextFieldEnabled: false));
-        } else if (state.isChecklistTilePressed) {
-          context
-              .read<HomeScreenBloc>()
-              .add(CheckListTilePressed(isChecklistTilePressed: false));
-          Navigator.pushNamed(context, "checklistPage");
-        } else if (state.isNavigationTilePressed) {
-          context
-              .read<HomeScreenBloc>()
-              .add(NavigationTilePressed(isNavigationTilePressed: false));
-          Navigator.pushNamed(context, "navigationPage");
-        }
-      },
-      builder: (context, state) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: _home(context),
-          onGenerateRoute: _homeScreenPageRouter.onGenerateRoute,
-        );
-      },
-    );
+        listener: (context, state) {
+      if (state.isSearchBoxTextFieldEnabled) {
+        context
+            .read<HomeScreenBloc>()
+            .add(SearchBoxTextFieldPressed(isSearchBoxTextFieldEnabled: false));
+        showSearch(context: context, delegate: SearchBoxDelegate());
+      } else if (state.isChecklistTilePressed) {
+        context
+            .read<HomeScreenBloc>()
+            .add(CheckListTilePressed(isChecklistTilePressed: false));
+        Navigator.pushNamed(context, "checklistPage");
+      } else if (state.isNavigationTilePressed) {
+        context
+            .read<HomeScreenBloc>()
+            .add(NavigationTilePressed(isNavigationTilePressed: false));
+        Navigator.pushNamed(context, "navigationPage");
+      } else if (state.isTimeLineButtonPressed) {
+        context
+            .read<HomeScreenBloc>()
+            .add(TimeLineButtonPressed(isTimeLineButtonPressed: false));
+        Navigator.pushNamed(context, "timeline");
+      }
+    }, builder: (context, state) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        bottomNavigationBar: const bottomBar.BottomNavigationBar(),
+        endDrawer: _drawer(),
+        floatingActionButton: Showcase(
+            key: _botKey,
+            description: "Tap to chat with your digital assistant!",
+            descTextStyle: TextStyle(
+                fontFamily:
+                    GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily),
+            child: const ChatBot()),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        resizeToAvoidBottomInset: false,
+        body: SafeArea(
+          child: SmartRefresher(
+            controller: _refreshController,
+            physics: const BouncingScrollPhysics(),
+            cacheExtent: 50,
+            header: WaterDropMaterialHeader(
+              distance: 50,
+              backgroundColor: Colors.grey.shade200,
+              color: Colors.black87,
+            ),
+            onRefresh: _onRefresh,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              physics: const BouncingScrollPhysics(),
+              child: Container(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 30, left: 1),
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(left: 20),
+                            height: 50,
+                            width: MediaQuery.of(context).size.width - 150,
+                            // color: Colors.blue,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    "Hi ",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      color: Colors.grey.shade400,
+                                      fontSize: 15,
+                                      fontFamily: GoogleFonts.lato(
+                                              fontWeight: FontWeight.bold)
+                                          .fontFamily,
+                                    ),
+                                    textScaleFactor: 1.6,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    // context.read<LoginBloc>().state.username
+                                    "Ninad07",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontFamily: _latoBoldFontFamily,
+                                        fontWeight: FontWeight.w900),
+                                    textScaleFactor: 1.6,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Flexible(
+                            child: Container(
+                              color: Colors.white,
+                              alignment: Alignment.center,
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.info,
+                                  size: 35,
+                                  color: Colors.grey.shade800,
+                                ),
+                                onPressed: () {
+                                  ShowCaseWidget.of(context)!.startShowCase([
+                                    _searchKey,
+                                    _flightsKey,
+                                    _trackKey,
+                                    _botKey,
+                                  ]);
+                                },
+                              ),
+                            ),
+                          ),
+                          Container(
+                            color: Colors.white,
+                            alignment: Alignment.center,
+                            margin: const EdgeInsets.only(
+                              right: 25,
+                            ),
+                            child: Showcase(
+                              key: _searchKey,
+                              description:
+                                  "Tap to search for the required widget",
+                              descTextStyle: TextStyle(
+                                  fontFamily: GoogleFonts.lato(
+                                          fontWeight: FontWeight.w900)
+                                      .fontFamily),
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.search,
+                                  size: 35,
+                                  color: context
+                                          .read<HomeScreenBloc>()
+                                          .state
+                                          .isSearchIconPressed
+                                      ? Colors.grey.shade600
+                                      : Colors.black,
+                                ),
+                                onPressed: () {
+                                  print("pressed");
+                                  context.read<HomeScreenBloc>().add(
+                                      SearchIconPressed(
+                                          isSearchIconPressed: context
+                                                  .read<HomeScreenBloc>()
+                                                  .state
+                                                  .isSearchIconPressed
+                                              ? false
+                                              : true));
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: context
+                              .read<HomeScreenBloc>()
+                              .state
+                              .isSearchIconPressed
+                          ? 15
+                          : 0,
+                    ),
+                    context.read<HomeScreenBloc>().state.isSearchIconPressed
+                        ? AnimationConfiguration.synchronized(
+                            child: ScaleAnimation(child: _searchWidget()),
+                          )
+                        : const SizedBox(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    _flightsCheckNotifier(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    _timeLineNotifierCard(),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      margin: const EdgeInsets.only(left: 20),
+                      child: Text(
+                        "Services For You",
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily:
+                              GoogleFonts.lato(fontWeight: FontWeight.w400)
+                                  .fontFamily,
+                          fontSize: 25,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    _servicesWidget(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    });
   }
 
   void _onRefresh() async {
@@ -70,372 +286,74 @@ class _HomeScreenState extends State<HomeScreen> {
     _refreshController.refreshCompleted();
   }
 
-  // Home Page Layout
-  Widget _home(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      bottomNavigationBar: const bottomBar.BottomNavigationBar(),
-      endDrawer: _drawer(),
-      body: SafeArea(
-        child: SmartRefresher(
-          controller: _refreshController,
-          physics: const BouncingScrollPhysics(),
-          cacheExtent: 50,
-          header: WaterDropMaterialHeader(
-            distance: 50,
-            backgroundColor: Colors.grey.shade200,
-            color: Colors.black87,
-          ),
-          onRefresh: _onRefresh,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            physics: const BouncingScrollPhysics(),
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 30, left: 1),
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 20),
-                          height: 50,
-                          width: MediaQuery.of(context).size.width - 110,
-                          // color: Colors.blue,
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5),
-                                child: Text(
-                                  "Hi ",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      color: Colors.grey.shade400,
-                                      fontSize: 15,
-                                      fontFamily: _latoBoldFontFamily,
-                                      fontWeight: FontWeight.w700),
-                                  textScaleFactor: 1.6,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5),
-                                child: Text(
-                                  // context.read<LoginBloc>().state.username
-                                  "Ninad07",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontFamily: _latoBoldFontFamily,
-                                      fontWeight: FontWeight.w900),
-                                  textScaleFactor: 1.6,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Flexible(
-                          child: Container(
-                            color: Colors.white,
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.only(right: 10),
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.search,
-                                size: 35,
-                                color: context
-                                        .read<HomeScreenBloc>()
-                                        .state
-                                        .isSearchIconPressed
-                                    ? Colors.grey.shade600
-                                    : Colors.black,
-                              ),
-                              onPressed: () {
-                                context.read<HomeScreenBloc>().add(
-                                    SearchIconPressed(
-                                        isSearchIconPressed: context
-                                                .read<HomeScreenBloc>()
-                                                .state
-                                                .isSearchIconPressed
-                                            ? false
-                                            : true));
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height:
-                        context.read<HomeScreenBloc>().state.isSearchIconPressed
-                            ? 15
-                            : 0,
-                  ),
-                  context.read<HomeScreenBloc>().state.isSearchIconPressed
-                      ? AnimationConfiguration.synchronized(
-                          child: ScaleAnimation(child: _searchWidget()),
-                        )
-                      : const SizedBox(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  _flightsCheckNotifier(),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.only(left: 20),
-                    child: Text(
-                      "Services For You",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily:
-                            GoogleFonts.lato(fontWeight: FontWeight.w400)
-                                .fontFamily,
-                        fontSize: 25,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  _servicesWidget(),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-      floatingActionButton: const ChatBot(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      resizeToAvoidBottomInset: false,
-    );
-  }
-
   // Search Box
   Widget _searchWidget() {
-    return context.read<HomeScreenBloc>().state.isSearchBoxTextFieldEnabled
-        ? Expanded(
-            child: Container(
-              height: 60,
-              width: MediaQuery.of(context).size.width - 50,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.all(Radius.elliptical(30, 30)),
-                border: Border.all(
-                  width: 0.8,
-                  color: Colors.grey.shade700,
-                ),
-              ),
-              child: Center(
-                child: FloatingSearchBar(
-                  elevation: 0,
-                  autocorrect: false,
-                  borderRadius:
-                      const BorderRadius.all(Radius.elliptical(30, 30)),
-                  shadowColor: Colors.transparent,
-                  backdropColor: Colors.transparent,
-                  accentColor: Colors.transparent,
-                  builder: (context, transition) {
-                    // return Container();
-                    return SizedBox(
-                      height: 250,
-                      width: MediaQuery.of(context).size.width - 60,
-                      child: ListView.builder(
-                        itemCount: 200,
-                        itemBuilder: (context, index) {
-                          return Text(
-                            '$index',
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  body: Container(
-                    height: 250,
-                    width: 100,
-                  ),
-                  actions: [],
-                ),
-              ),
-            ),
-          )
-
-        /*
-            TextField(
-              autofocus: true,
-              textAlign: TextAlign.center,
-              autocorrect: false,
-              decoration: InputDecoration(
-                hintText: "Explore",
-                hintStyle: TextStyle(
-                    color: Colors.grey.shade300, fontWeight: FontWeight.bold),
-                contentPadding: const EdgeInsets.only(
-                  top: 1,
-                  bottom: 1,
-                  left: 20,
-                  right: 20,
-                ),
-
-                // icon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade300,
-                    width: 3,
-                  ),
-                  borderRadius:
-                      const BorderRadius.all(Radius.elliptical(30, 30)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade800,
-                    width: 1.6,
-                  ),
-                  borderRadius:
-                      const BorderRadius.all(Radius.elliptical(30, 30)),
-                ),
-                fillColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-              ),
-              cursorColor: Colors.grey.shade600,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                overflow: TextOverflow.visible,
-                color: Colors.grey.shade900,
-              ),
-            ))
-              */
-
-        // Animated Search Text Guide
-        : Container(
-            height: 60,
-            width: MediaQuery.of(context).size.width - 50,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.elliptical(30, 30)),
-              border: Border.all(
-                width: 0.8,
-                color: Colors.grey.shade700,
-              ),
-            ),
-            child: InkWell(
-              child: Center(
-                child: AnimatedTextKit(
-                  animatedTexts: [
-                    TypewriterAnimatedText(
-                      "What are you searching for?",
-                      textStyle: TextStyle(
-                        color: Colors.grey.shade400,
-                        fontSize: 15,
-                        fontFamily: _latoFontFamily,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      speed: const Duration(milliseconds: 60),
-                    ),
-                    TypewriterAnimatedText(
-                      "Airport Navigation?",
-                      textStyle: TextStyle(
-                        color: Colors.grey.shade400,
-                        fontSize: 15,
-                        fontFamily: _latoFontFamily,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      speed: const Duration(milliseconds: 60),
-                    ),
-                    TypewriterAnimatedText(
-                      "Pre-Fly Guidelines?",
-                      textStyle: TextStyle(
-                        color: Colors.grey.shade400,
-                        fontSize: 15,
-                        fontFamily: _latoFontFamily,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      speed: const Duration(milliseconds: 60),
-                    ),
-                  ],
-                  repeatForever: true,
-                  pause: const Duration(seconds: 2),
-                  stopPauseOnTap: true,
-                  onTap: () {
-                    context.read<HomeScreenBloc>().add(
-                        SearchBoxTextFieldPressed(
-                            isSearchBoxTextFieldEnabled: true));
-                  },
-                ),
-              ),
-
-              // Second onTap necessary for when the space other than the animated text is tapped
-              onTap: () {
-                context.read<HomeScreenBloc>().add(SearchBoxTextFieldPressed(
-                    isSearchBoxTextFieldEnabled: true));
-              },
-            ),
-          );
-  }
-
-  // Flight-Booking verification card
-  Widget _flightsCheckNotifier() {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      elevation: 10,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+return Container(
+      height: 60,
+      width: MediaQuery.of(context).size.width - 50,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: const BorderRadius.all(Radius.elliptical(30, 30)),
+        border: Border.all(
+          width: 0.8,
+          color: Colors.grey.shade700,
+        ),
       ),
-      child: Container(
-        height: 280,
-        width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          color: Colors.white, //Colors.blue.shade700,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              height: 140,
-              width: 250,
-              child: SvgPicture.asset(
-                "assets/images/flight_booking_grey.svg",
-                fit: BoxFit.fill,
-              ),
-              // child: Image.asset(
-              //   "assets/images/airplane2.jpg",
-              //   fit: BoxFit.contain,
-              // ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              child: Text(
-                "Available Flights",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: GoogleFonts.lato(
-                          fontWeight: FontWeight.bold, fontSize: 35)
-                      .fontFamily,
-                  fontSize: 25,
+      child: InkWell(
+        child: Center(
+          child: AnimatedTextKit(
+            animatedTexts: [
+              TypewriterAnimatedText(
+                "What are you searching for?",
+                textStyle: TextStyle(
+                  color: Colors.grey.shade400,
+                  fontSize: 15,
+                  fontFamily: _latoFontFamily,
+                  fontWeight: FontWeight.bold,
                 ),
+                speed: const Duration(milliseconds: 60),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const FlightsCheckNotifierButton(),
-          ],
+              TypewriterAnimatedText(
+                "Airport Navigation?",
+                textStyle: TextStyle(
+                  color: Colors.grey.shade400,
+                  fontSize: 15,
+                  fontFamily: _latoFontFamily,
+                  fontWeight: FontWeight.bold,
+                ),
+                speed: const Duration(milliseconds: 60),
+              ),
+              TypewriterAnimatedText(
+                "Pre-Fly Guidelines?",
+                textStyle: TextStyle(
+                  color: Colors.grey.shade400,
+                  fontSize: 15,
+                  fontFamily: _latoFontFamily,
+                  fontWeight: FontWeight.bold,
+                ),
+                speed: const Duration(milliseconds: 60),
+              ),
+            ],
+            repeatForever: true,
+            pause: const Duration(seconds: 2),
+            stopPauseOnTap: true,
+            onTap: () {
+              context.read<HomeScreenBloc>().add(
+                  SearchBoxTextFieldPressed(isSearchBoxTextFieldEnabled: true));
+            },
+          ),
         ),
+
+        // Second onTap necessary for when the space other than the animated text is tapped
+        onTap: () {
+          context.read<HomeScreenBloc>().add(
+              SearchBoxTextFieldPressed(isSearchBoxTextFieldEnabled: true));
+        },
       ),
     );
   }
 
-  // Drawer
+// Drawer
   Widget _drawer() {
     return SafeArea(
       child: SizedBox(
@@ -515,7 +433,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 //     .read<HomeScreenBloc>()
                 //     .add(NavigationTilePressed(isNavigationTilePressed: true));
               }),
-              _drawerListTile("Settings", CupertinoIcons.settings, () {}),
+              _drawerListTile("Settings", CupertinoIcons.settings, () {
+                Navigator.pushNamed(context, "timeline");
+              }),
             ],
           ),
         ),
@@ -541,28 +461,227 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Flight-Booking verification card
+  Widget _flightsCheckNotifier() {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      elevation: 10,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Container(
+        height: 280,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.blue.shade700,
+              Colors.blue.shade500,
+              Colors.blue.shade500,
+              Colors.blue.shade700,
+            ],
+            stops: const [
+              0.1,
+              0.4,
+              0.6,
+              0.9,
+            ],
+          ),
+        ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 15,
+            ),
+            SizedBox(
+              height: 140,
+              width: 220,
+              child: SvgPicture.asset(
+                "assets/images/airplane4.svg",
+                fit: BoxFit.scaleDown,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              child: Text(
+                "Available Flights",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: GoogleFonts.lato(
+                          fontWeight: FontWeight.bold, fontSize: 35)
+                      .fontFamily,
+                  fontSize: 25,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Showcase(
+                key: _flightsKey,
+                description: "Tap to view and book available flights!",
+                descTextStyle: TextStyle(
+                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w900)
+                        .fontFamily),
+                child: const FlightsCheckNotifierButton()),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _timeLineNotifierCard() {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      elevation: 10,
+      color: Colors.yellow.shade600,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Container(
+        height: 200,
+        width: MediaQuery.of(context).size.width,
+        // margin: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.yellow.shade700,
+              Colors.yellow.shade600,
+              Colors.yellow.shade600,
+              Colors.yellow.shade700,
+            ],
+            stops: const [
+              0.1,
+              0.4,
+              0.6,
+              0.9,
+            ],
+          ),
+        ),
+        child: Row(
+          children: [
+            Flexible(
+              child: Container(
+                margin: const EdgeInsets.all(5),
+                height: 200,
+                width: MediaQuery.of(context).size.width / 2.6,
+                child: SvgPicture.asset(
+                  "assets/images/timeline_2.svg",
+                  color: Colors.white,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            Flexible(
+              child: Container(
+                  height: 200,
+                  width: MediaQuery.of(context).size.width / 2.2,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Center(
+                              child: Text(
+                            "Track Your",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily:
+                                  GoogleFonts.lato(fontWeight: FontWeight.w500)
+                                      .fontFamily,
+                              fontSize: 20,
+                            ),
+                          )),
+                        ),
+                        Container(
+                          child: Center(
+                              child: Text(
+                            "Journey",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily:
+                                  GoogleFonts.lato(fontWeight: FontWeight.w900)
+                                      .fontFamily,
+                              fontSize: 32,
+                            ),
+                          )),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        SizedBox(
+                            height: 60,
+                            child: Center(
+                              child: Showcase(
+                                key: _trackKey,
+                                description:
+                                    "Tap to track progress on your next flight!",
+                                descTextStyle: TextStyle(
+                                    fontFamily: GoogleFonts.lato(
+                                            fontWeight: FontWeight.bold)
+                                        .fontFamily),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    context.read<HomeScreenBloc>().add(
+                                          TimeLineButtonPressed(
+                                              isTimeLineButtonPressed: true),
+                                        );
+                                  },
+                                  child: Text("Catch up!",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: GoogleFonts.lato(
+                                                fontWeight: FontWeight.w900)
+                                            .fontFamily,
+                                      )),
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    elevation: 5,
+                                  ),
+                                ),
+                              ),
+                            )),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   // Services Widget
+
   Widget _servicesWidget() {
     return Center(
         child: Column(
       children: [
         _serviceRowLayout(
-          _serviceCard(Colors.deepPurpleAccent.shade400,
-              Colors.deepPurpleAccent.shade200),
-          _serviceCard(Colors.deepPurpleAccent.shade200,
-              Colors.deepPurpleAccent.shade100),
+          _serviceCard(
+              Colors.deepPurpleAccent.shade400, Colors.yellow.shade600),
+          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
         ),
         const SizedBox(height: 15),
         _serviceRowLayout(
-          _serviceCard(Colors.deepPurpleAccent.shade200,
-              Colors.deepPurpleAccent.shade100),
-          _serviceCard(Colors.deepPurpleAccent.shade200,
-              Colors.deepPurpleAccent.shade100),
+          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
+          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
         ),
         const SizedBox(height: 15),
         Center(
-            child: _serviceCard(Colors.deepPurpleAccent.shade400,
-                Colors.deepPurpleAccent.shade100)),
+            child: _serviceCard(
+                Colors.deepPurpleAccent.shade400, Colors.yellow.shade600)),
         const SizedBox(height: 15),
       ],
     ));
