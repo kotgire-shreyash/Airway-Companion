@@ -3,6 +3,7 @@ import 'package:airwaycompanion/Data/Repositories/FlightsRepository/flights_repo
 import 'package:airwaycompanion/Logic/Bloc/FlightsScreenBloc/flights_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Flights/Events/flights_screen_events.dart';
+import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/custom_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,12 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'flights_screen_states.dart';
 
 class AvailableFlights extends StatefulWidget {
-  const AvailableFlights({Key? key, required this.chatbot}) : super(key: key);
+  const AvailableFlights(
+      {Key? key, required this.chatbot, required this.bottomBar})
+      : super(key: key);
   final ChatBot chatbot;
+  final CustomBottomNavigationBar bottomBar;
+
   @override
   _AvailableFlightsState createState() => _AvailableFlightsState();
 }
@@ -67,6 +72,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
               floatingActionButton: widget.chatbot,
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.endFloat,
+              bottomNavigationBar: widget.bottomBar,
               appBar: AppBar(
                 elevation: 0,
                 backgroundColor: Colors.blue.shade500,

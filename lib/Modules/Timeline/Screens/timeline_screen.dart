@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
+import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart';
 import 'package:airwaycompanion/Modules/Timeline/widgets/timeline_card.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TimeLineScreen extends StatefulWidget {
-  const TimeLineScreen({Key? key, required this.chatbot}) : super(key: key);
+  const TimeLineScreen(
+      {Key? key, required this.chatbot, required this.bottomBar})
+      : super(key: key);
   final ChatBot chatbot;
+  final CustomBottomNavigationBar bottomBar;
   @override
   _TimeLineScreenState createState() => _TimeLineScreenState();
 }
@@ -22,6 +26,7 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
       backgroundColor: Colors.white,
       floatingActionButton: widget.chatbot,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      bottomNavigationBar: widget.bottomBar,
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
@@ -59,7 +64,7 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
             ),
             Flexible(
               child: Container(
-                height: 100,
+                height: 110,
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 child: Center(
@@ -85,7 +90,7 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
               ),
             ),
             Flexible(
-              flex: 13,
+              flex: 10,
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 child: ListView.builder(

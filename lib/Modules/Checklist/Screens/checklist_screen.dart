@@ -3,6 +3,7 @@ import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Checklist/Events/checklist_screen_event.dart';
 import 'package:airwaycompanion/Modules/Checklist/Screens/checklist_screen_states.dart';
 import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
+import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,8 +11,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CheckListScreen extends StatefulWidget {
-  const CheckListScreen({Key? key, required this.chatbot}) : super(key: key);
+  const CheckListScreen(
+      {Key? key, required this.chatbot, required this.bottomBar})
+      : super(key: key);
   final ChatBot chatbot;
+  final CustomBottomNavigationBar bottomBar;
   @override
   _CheckListScreenState createState() => _CheckListScreenState();
 }
@@ -35,6 +39,7 @@ class _CheckListScreenState extends State<CheckListScreen> {
           floatingActionButton: widget.chatbot,
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           backgroundColor: Colors.white,
+          bottomNavigationBar: widget.bottomBar,
           body: NestedScrollView(
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) => [

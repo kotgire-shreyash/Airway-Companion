@@ -18,13 +18,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart'
-    as bottomBar;
+import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key, required this.chatbot}) : super(key: key);
+  const HomeScreen({Key? key, required this.chatbot, required this.bottomBar})
+      : super(key: key);
   final ChatBot chatbot;
+  final CustomBottomNavigationBar bottomBar;
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -39,7 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
       debugShowCheckedModeBanner: false,
       home: ShowCaseWidget(
         builder: Builder(
-            builder: (context) => HomeScreenBody(chatbot: widget.chatbot)),
+            builder: (context) => HomeScreenBody(
+                chatbot: widget.chatbot, bottomBar: widget.bottomBar)),
       ),
       onGenerateRoute: _homeScreenPageRouter.onGenerateRoute,
     );
@@ -47,8 +49,11 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeScreenBody extends StatefulWidget {
-  const HomeScreenBody({Key? key, required this.chatbot}) : super(key: key);
+  const HomeScreenBody(
+      {Key? key, required this.chatbot, required this.bottomBar})
+      : super(key: key);
   final ChatBot chatbot;
+  final CustomBottomNavigationBar bottomBar;
 
   @override
   _HomeScreenBodyState createState() => _HomeScreenBodyState();
@@ -94,7 +99,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
     }, builder: (context, state) {
       return Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: const bottomBar.BottomNavigationBar(),
+        bottomNavigationBar: widget.bottomBar,
         endDrawer: _drawer(),
         floatingActionButton: Showcase(
             key: _botKey,
