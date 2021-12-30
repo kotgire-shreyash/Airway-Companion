@@ -62,7 +62,7 @@ dependencies:
   flutter_slidable:
   fluttericon:
   showcaseview:
-  shared_preferences:
+  azstore: 
   
 dev_dependencies:
   flutter_test:

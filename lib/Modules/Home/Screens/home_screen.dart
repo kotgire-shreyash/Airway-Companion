@@ -17,15 +17,14 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart'
     as bottomBar;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key, required this.chatbot}) : super(key: key);
+  final ChatBot chatbot;
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -39,7 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: ShowCaseWidget(
-        builder: Builder(builder: (context) => const HomeScreenBody()),
+        builder: Builder(
+            builder: (context) => HomeScreenBody(chatbot: widget.chatbot)),
       ),
       onGenerateRoute: _homeScreenPageRouter.onGenerateRoute,
     );
@@ -47,7 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeScreenBody extends StatefulWidget {
-  const HomeScreenBody({Key? key}) : super(key: key);
+  const HomeScreenBody({Key? key, required this.chatbot}) : super(key: key);
+  final ChatBot chatbot;
 
   @override
   _HomeScreenBodyState createState() => _HomeScreenBodyState();
@@ -101,7 +102,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
             descTextStyle: TextStyle(
                 fontFamily:
                     GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily),
-            child: const ChatBot()),
+            child: widget.chatbot),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -288,7 +289,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
 
   // Search Box
   Widget _searchWidget() {
-return Container(
+    return Container(
       height: 60,
       width: MediaQuery.of(context).size.width - 50,
       decoration: BoxDecoration(
@@ -379,13 +380,13 @@ return Container(
                           shape: BoxShape.circle,
                           color: Colors.white,
                         ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.person,
-                            size: 60,
-                            color: Colors.grey,
-                          ),
-                        ),
+                        child: Center(
+                            child: Image.asset(
+                          "assets/images/user.jpg",
+                          fit: BoxFit.cover,
+                          height: 70,
+                          width: 70,
+                        )),
                       ),
                     ),
                     Container(

@@ -10,7 +10,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../Events/login_events.dart';
 
 class LoginPageView extends StatefulWidget {
-  const LoginPageView({Key? key}) : super(key: key);
+  const LoginPageView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _LoginPageViewState createState() => _LoginPageViewState();
@@ -245,10 +247,11 @@ class _LoginPageViewState extends State<LoginPageView> {
       child: Text(
         "Forgot password?",
         style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w900,
-            fontFamily: _latoFontFamily,
-            color: CustomColors.loginSwatch),
+          fontSize: 15,
+          fontWeight: FontWeight.w900,
+          fontFamily: _latoBoldFontFamily,
+          color: CustomColors.loginSwatch,
+        ),
       ),
     );
   }
