@@ -167,7 +167,7 @@ class _ChatBotState extends State<ChatBot> {
                           ),
                           decoration: BoxDecoration(
                               color: Colors.grey.shade100,
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(18),
                                   topRight: Radius.circular(18),
                                   bottomRight: Radius.circular(18),
@@ -175,7 +175,7 @@ class _ChatBotState extends State<ChatBot> {
                           // width: 120,
                           // height: 50,
                           margin: const EdgeInsets.only(
-                              right: 180, top: 10, left: 10, bottom: 10),
+                              right: 150, top: 10, left: 10, bottom: 10),
                           alignment: Alignment.center,
                           //color: color,
                           child: Container(
@@ -206,12 +206,7 @@ class _ChatBotState extends State<ChatBot> {
                       child: SingleChildScrollView(
                         physics: const BouncingScrollPhysics(),
                         child: Column(
-                          children: queryList +
-                              [
-                                const SizedBox(
-                                  height: 5,
-                                )
-                              ],
+                          children: queryList,
                         ),
                       ),
                     );
@@ -294,7 +289,7 @@ class _ChatBotState extends State<ChatBot> {
                     // width: 120,
                     // height: 50,
                     margin: const EdgeInsets.only(
-                        left: 180, top: 10, right: 10, bottom: 10),
+                        left: 150, top: 10, right: 10, bottom: 10),
                     alignment: Alignment.center,
                     child: Container(
                       margin: const EdgeInsets.all(10),
