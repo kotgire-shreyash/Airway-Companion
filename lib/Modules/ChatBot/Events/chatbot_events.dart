@@ -6,3 +6,8 @@ class MessageQueryRequestToAzure extends AzureBotEvent {
 }
 
 class ClearAzureQueryResponse extends AzureBotEvent {}
+
+class AddResponse extends AzureBotEvent {
+  var responseWidget;
+  AddResponse({required this.responseWidget});
+}

@@ -9,6 +9,7 @@ class AzureBotBloc extends Bloc<AzureBotEvent, AzureBotState> {
   AzureBotBloc() : super(AzureBotState()) {
     on<MessageQueryRequestToAzure>(_onMessageQueryRequestToAzureEvent);
     on<ClearAzureQueryResponse>(_onClearAzureQueryResponseEvent);
+    on<AddResponse>(_onAddResponseEvent);
   }
 
   void _onMessageQueryRequestToAzureEvent(
@@ -28,5 +29,9 @@ class AzureBotBloc extends Bloc<AzureBotEvent, AzureBotState> {
   void _onClearAzureQueryResponseEvent(
       ClearAzureQueryResponse event, Emitter<AzureBotState> emit) {
     emit(state.copyWith(azureBotQueryResponse: ""));
+  }
+
+  void _onAddResponseEvent(AddResponse event, Emitter<AzureBotState> emit) {
+    emit(state.copyWith(queryList: state.queryList + [event.responseWidget]));
   }
 }

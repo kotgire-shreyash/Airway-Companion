@@ -23,7 +23,8 @@ import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20
 import 'package:showcaseview/showcaseview.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key, required this.chatbot}) : super(key: key);
+  final ChatBot chatbot;
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -37,7 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: ShowCaseWidget(
-        builder: Builder(builder: (context) => const HomeScreenBody()),
+        builder: Builder(
+            builder: (context) => HomeScreenBody(chatbot: widget.chatbot)),
       ),
       onGenerateRoute: _homeScreenPageRouter.onGenerateRoute,
     );
@@ -45,7 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeScreenBody extends StatefulWidget {
-  const HomeScreenBody({Key? key}) : super(key: key);
+  const HomeScreenBody({Key? key, required this.chatbot}) : super(key: key);
+  final ChatBot chatbot;
 
   @override
   _HomeScreenBodyState createState() => _HomeScreenBodyState();
@@ -99,7 +102,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
             descTextStyle: TextStyle(
                 fontFamily:
                     GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily),
-            child: const ChatBot()),
+            child: widget.chatbot),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         resizeToAvoidBottomInset: false,
         body: SafeArea(

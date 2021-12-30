@@ -13,6 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+// Azure Bot
 class ChatBot extends StatefulWidget {
   const ChatBot({Key? key}) : super(key: key);
 
@@ -22,6 +23,7 @@ class ChatBot extends StatefulWidget {
 
 class _ChatBotState extends State<ChatBot> {
   final List<Widget> queryList = [];
+  final ScrollController _scrollController = ScrollController();
   String question = "";
 
   @override
@@ -160,55 +162,53 @@ class _ChatBotState extends State<ChatBot> {
 
                     if (message != "") {
                       try {
-                        queryList.add(Container(
-                          constraints: const BoxConstraints(
-                            minHeight: 60,
-                            minWidth: 180,
-                          ),
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(18),
-                                  topRight: Radius.circular(18),
-                                  bottomRight: Radius.circular(18),
-                                  bottomLeft: Radius.circular(4))),
-                          // width: 120,
-                          // height: 50,
-                          margin: const EdgeInsets.only(
-                              right: 150, top: 10, left: 10, bottom: 10),
-                          alignment: Alignment.center,
-                          //color: color,
-                          child: Container(
-                            margin: const EdgeInsets.all(10),
-                            child: state.azureBotQueryStatus
-                                ? LoadingAnimationWidget.staggeredDotWave(
-                                    color: Colors.black, size: 35)
-                                : Text(
-                                    message,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                          ),
-                        ));
+                        context.read<AzureBotBloc>().add(AddResponse(
+                                responseWidget: Container(
+                              constraints: const BoxConstraints(
+                                minHeight: 60,
+                                minWidth: 180,
+                                maxWidth: 220,
+                              ),
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade100,
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(18),
+                                      topRight: Radius.circular(18),
+                                      bottomRight: Radius.circular(18),
+                                      bottomLeft: Radius.circular(4))),
+                              margin: const EdgeInsets.only(
+                                  right: 120, left: 10, bottom: 10),
+                              alignment: Alignment.center,
+                              child: Container(
+                                margin: const EdgeInsets.all(10),
+                                child: state.azureBotQueryStatus
+                                    ? LoadingAnimationWidget.staggeredDotWave(
+                                        color: Colors.black, size: 35)
+                                    : Text(
+                                        message,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                              ),
+                            )));
                       } catch (e) {
-                        print(e);
                         rethrow;
                       }
                     }
-                    // state.azureBotQueryResponse = "";
+
                     context.read<AzureBotBloc>().add(ClearAzureQueryResponse());
                     return Container(
                       width: 300,
                       height: 290,
                       color: Colors.white,
                       child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(
-                          children: queryList,
-                        ),
-                      ),
+                          physics: const BouncingScrollPhysics(),
+                          controller: _scrollController,
+                          child: Column(
+                            children: state.queryList,
+                          )),
                     );
                   },
                 ),
@@ -246,6 +246,7 @@ class _ChatBotState extends State<ChatBot> {
               style: TextStyle(
                   color: Colors.grey.shade800, fontWeight: FontWeight.bold),
               decoration: InputDecoration(
+                isDense: true,
                 hintText: 'Send a query...',
                 hintStyle: TextStyle(
                     color: Colors.grey.shade400,
@@ -274,42 +275,47 @@ class _ChatBotState extends State<ChatBot> {
               onPressed: () async {
                 print(question);
                 if (question != "") {
-                  queryList.add(Container(
-                    constraints: const BoxConstraints(
-                      minHeight: 60,
-                      minWidth: 180,
-                    ),
-                    decoration: const BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(18),
-                            topRight: Radius.circular(18),
-                            bottomLeft: Radius.circular(18),
-                            bottomRight: Radius.circular(4))),
-                    // width: 120,
-                    // height: 50,
-                    margin: const EdgeInsets.only(
-                        left: 150, top: 10, right: 10, bottom: 10),
-                    alignment: Alignment.center,
-                    child: Container(
-                      margin: const EdgeInsets.all(10),
-                      child: Text(
-                        question,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: GoogleFonts.lato().fontFamily,
+                  context.read<AzureBotBloc>().add(AddResponse(
+                          responseWidget: Container(
+                        constraints: const BoxConstraints(
+                          minHeight: 60,
+                          minWidth: 180,
+                          maxWidth: 220,
                         ),
-                      ),
-                    ),
-                  ));
+                        decoration: BoxDecoration(
+                            color: Colors.redAccent.shade200,
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(18),
+                                topRight: Radius.circular(18),
+                                bottomLeft: Radius.circular(18),
+                                bottomRight: Radius.circular(4))),
+                        margin: const EdgeInsets.only(
+                            left: 120, right: 10, bottom: 10),
+                        alignment: Alignment.center,
+                        child: Container(
+                          margin: const EdgeInsets.all(10),
+                          child: Text(
+                            question,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: GoogleFonts.lato().fontFamily,
+                            ),
+                          ),
+                        ),
+                      )));
 
                   context.read<AzureBotBloc>().add(
                         MessageQueryRequestToAzure(question: question),
                       );
 
                   question = "";
+                  await _scrollController.animateTo(
+                    _scrollController.position.maxScrollExtent,
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.fastOutSlowIn,
+                  );
                 }
               },
               child: const Center(

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Timeline/widgets/timeline_card.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TimeLineScreen extends StatefulWidget {
-  const TimeLineScreen({Key? key}) : super(key: key);
-
+  const TimeLineScreen({Key? key, required this.chatbot}) : super(key: key);
+  final ChatBot chatbot;
   @override
   _TimeLineScreenState createState() => _TimeLineScreenState();
 }
@@ -19,6 +20,8 @@ class _TimeLineScreenState extends State<TimeLineScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: widget.chatbot,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(

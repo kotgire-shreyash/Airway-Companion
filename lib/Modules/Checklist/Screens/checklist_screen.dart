@@ -1,4 +1,5 @@
 import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/checklist_bloc.dart';
+import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Checklist/Events/checklist_screen_event.dart';
 import 'package:airwaycompanion/Modules/Checklist/Screens/checklist_screen_states.dart';
 import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
@@ -9,8 +10,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CheckListScreen extends StatefulWidget {
-  const CheckListScreen({Key? key}) : super(key: key);
-
+  const CheckListScreen({Key? key, required this.chatbot}) : super(key: key);
+  final ChatBot chatbot;
   @override
   _CheckListScreenState createState() => _CheckListScreenState();
 }
@@ -31,6 +32,8 @@ class _CheckListScreenState extends State<CheckListScreen> {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
+          floatingActionButton: widget.chatbot,
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           backgroundColor: Colors.white,
           body: NestedScrollView(
             headerSliverBuilder:

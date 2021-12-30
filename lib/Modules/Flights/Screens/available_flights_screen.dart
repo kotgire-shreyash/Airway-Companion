@@ -1,6 +1,7 @@
 import 'package:airwaycompanion/Data/Repositories/FlightsRepository/flights_data_provider.dart';
 import 'package:airwaycompanion/Data/Repositories/FlightsRepository/flights_repository.dart';
 import 'package:airwaycompanion/Logic/Bloc/FlightsScreenBloc/flights_screen_bloc.dart';
+import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Flights/Events/flights_screen_events.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/custom_colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,8 +18,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'flights_screen_states.dart';
 
 class AvailableFlights extends StatefulWidget {
-  const AvailableFlights({Key? key}) : super(key: key);
-
+  const AvailableFlights({Key? key, required this.chatbot}) : super(key: key);
+  final ChatBot chatbot;
   @override
   _AvailableFlightsState createState() => _AvailableFlightsState();
 }
@@ -63,6 +64,9 @@ class _AvailableFlightsState extends State<AvailableFlights> {
             onRefresh: _onRefresh,
             child: Scaffold(
               backgroundColor: Colors.white,
+              floatingActionButton: widget.chatbot,
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.endFloat,
               appBar: AppBar(
                 elevation: 0,
                 backgroundColor: Colors.blue.shade500,
