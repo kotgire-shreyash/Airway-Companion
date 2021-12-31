@@ -189,7 +189,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     color: Colors.grey.shade400,
-                                    fontSize: 15,
+                                    fontSize: 14,
                                     fontFamily: GoogleFonts.lato(
                                             fontWeight: FontWeight.bold)
                                         .fontFamily,
@@ -202,7 +202,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 15,
+                                    fontSize: 14,
                                     fontFamily: GoogleFonts.lato(
                                             fontWeight: FontWeight.w800)
                                         .fontFamily,
