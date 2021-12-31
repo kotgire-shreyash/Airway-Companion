@@ -184,97 +184,97 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                             // color: Colors.blue,
                             child: Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Text(
-                                    "Hi ",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Colors.grey.shade400,
-                                      fontSize: 15,
-                                      fontFamily: GoogleFonts.lato(
-                                              fontWeight: FontWeight.bold)
-                                          .fontFamily,
-                                    ),
-                                    textScaleFactor: 1.6,
+                                Text(
+                                  "Hi ",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Colors.grey.shade400,
+                                    fontSize: 15,
+                                    fontFamily: GoogleFonts.lato(
+                                            fontWeight: FontWeight.bold)
+                                        .fontFamily,
                                   ),
+                                  textScaleFactor: 1.6,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Text(
-                                    // context.read<LoginBloc>().state.username
-                                    "Ninad07!",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontFamily: GoogleFonts.lato(
-                                              fontWeight: FontWeight.w800)
-                                          .fontFamily,
-                                    ),
-                                    textScaleFactor: 1.6,
+                                Text(
+                                  // context.read<LoginBloc>().state.username
+                                  "Ninad07!",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontFamily: GoogleFonts.lato(
+                                            fontWeight: FontWeight.w800)
+                                        .fontFamily,
                                   ),
+                                  textScaleFactor: 1.6,
                                 ),
                               ],
                             ),
                           ),
                           Flexible(
                             child: Container(
+                              height: 50,
                               color: Colors.white,
                               alignment: Alignment.center,
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.info_outline,
-                                  size: 30,
-                                  color: Colors.grey.shade800,
+                              child: Center(
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.info_outline,
+                                    size: 28,
+                                    color: Colors.grey.shade800,
+                                  ),
+                                  onPressed: () {
+                                    ShowCaseWidget.of(context)!.startShowCase([
+                                      _searchKey,
+                                      _flightsKey,
+                                      _trackKey,
+                                      _botKey,
+                                    ]);
+                                  },
                                 ),
-                                onPressed: () {
-                                  ShowCaseWidget.of(context)!.startShowCase([
-                                    _searchKey,
-                                    _flightsKey,
-                                    _trackKey,
-                                    _botKey,
-                                  ]);
-                                },
                               ),
                             ),
                           ),
                           Container(
+                            height: 50,
                             color: Colors.white,
                             alignment: Alignment.center,
                             margin: const EdgeInsets.only(
                               right: 25,
                             ),
-                            child: Showcase(
-                              key: _searchKey,
-                              description:
-                                  "Tap to search for the required widget",
-                              descTextStyle: TextStyle(
-                                  fontFamily: GoogleFonts.lato(
-                                          fontWeight: FontWeight.w900)
-                                      .fontFamily),
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.search,
-                                  size: 35,
-                                  color: context
-                                          .read<HomeScreenBloc>()
-                                          .state
-                                          .isSearchIconPressed
-                                      ? Colors.grey.shade600
-                                      : Colors.black,
+                            child: Center(
+                              child: Showcase(
+                                key: _searchKey,
+                                description:
+                                    "Tap to search for the required widget",
+                                descTextStyle: TextStyle(
+                                    fontFamily: GoogleFonts.lato(
+                                            fontWeight: FontWeight.w900)
+                                        .fontFamily),
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.search,
+                                    size: 30,
+                                    color: context
+                                            .read<HomeScreenBloc>()
+                                            .state
+                                            .isSearchIconPressed
+                                        ? Colors.grey.shade600
+                                        : Colors.black,
+                                  ),
+                                  onPressed: () {
+                                    print("pressed");
+                                    context.read<HomeScreenBloc>().add(
+                                        SearchIconPressed(
+                                            isSearchIconPressed: context
+                                                    .read<HomeScreenBloc>()
+                                                    .state
+                                                    .isSearchIconPressed
+                                                ? false
+                                                : true));
+                                  },
                                 ),
-                                onPressed: () {
-                                  print("pressed");
-                                  context.read<HomeScreenBloc>().add(
-                                      SearchIconPressed(
-                                          isSearchIconPressed: context
-                                                  .read<HomeScreenBloc>()
-                                                  .state
-                                                  .isSearchIconPressed
-                                              ? false
-                                              : true));
-                                },
                               ),
                             ),
                           ),
@@ -314,9 +314,9 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily:
-                              GoogleFonts.lato(fontWeight: FontWeight.w400)
+                              GoogleFonts.lato(fontWeight: FontWeight.w500)
                                   .fontFamily,
-                          fontSize: 25,
+                          fontSize: 21,
                         ),
                       ),
                     ),
@@ -343,7 +343,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
   // Search Box for searching and navigating features in the app
   Widget _searchWidget() {
     return Container(
-      height: 60,
+      height: 45,
       width: MediaQuery.of(context).size.width - 50,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -361,7 +361,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 "What are you searching for?",
                 textStyle: TextStyle(
                   color: Colors.grey.shade400,
-                  fontSize: 15,
+                  fontSize: 13,
                   fontFamily: _latoFontFamily,
                   fontWeight: FontWeight.bold,
                 ),
@@ -371,7 +371,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 "Airport Navigation?",
                 textStyle: TextStyle(
                   color: Colors.grey.shade400,
-                  fontSize: 15,
+                  fontSize: 13,
                   fontFamily: _latoFontFamily,
                   fontWeight: FontWeight.bold,
                 ),
@@ -381,7 +381,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 "Pre-Fly Guidelines?",
                 textStyle: TextStyle(
                   color: Colors.grey.shade400,
-                  fontSize: 15,
+                  fontSize: 13,
                   fontFamily: _latoFontFamily,
                   fontWeight: FontWeight.bold,
                 ),
@@ -524,7 +524,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       child: Container(
-        height: 280,
+        height: 250,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -551,8 +551,8 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
               height: 15,
             ),
             SizedBox(
-              height: 140,
-              width: 220,
+              height: 120,
+              width: 200,
               child: SvgPicture.asset(
                 "assets/images/airplane4.svg",
                 fit: BoxFit.scaleDown,
@@ -570,7 +570,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                   fontFamily: GoogleFonts.lato(
                           fontWeight: FontWeight.bold, fontSize: 35)
                       .fontFamily,
-                  fontSize: 25,
+                  fontSize: 21,
                 ),
               ),
             ),
@@ -599,9 +599,8 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       child: Container(
-        height: 200,
+        height: 160,
         width: MediaQuery.of(context).size.width,
-        // margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(20)),
           gradient: LinearGradient(
@@ -626,12 +625,13 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
             Flexible(
               child: Container(
                 margin: const EdgeInsets.all(5),
-                height: 200,
+                height: 140,
                 width: MediaQuery.of(context).size.width / 2.6,
                 child: SvgPicture.asset(
                   "assets/images/timeline_2.svg",
                   color: Colors.white,
                   fit: BoxFit.contain,
+                  height: 140,
                 ),
               ),
             ),
@@ -653,7 +653,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                               fontFamily:
                                   GoogleFonts.lato(fontWeight: FontWeight.w500)
                                       .fontFamily,
-                              fontSize: 20,
+                              fontSize: 16,
                             ),
                           )),
                         ),
@@ -667,12 +667,9 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                               fontFamily:
                                   GoogleFonts.lato(fontWeight: FontWeight.w900)
                                       .fontFamily,
-                              fontSize: 32,
+                              fontSize: 24,
                             ),
                           )),
-                        ),
-                        const SizedBox(
-                          height: 5,
                         ),
                         SizedBox(
                             height: 60,
@@ -698,6 +695,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                         fontFamily: GoogleFonts.lato(
                                                 fontWeight: FontWeight.w900)
                                             .fontFamily,
+                                        fontSize: 13,
                                       )),
                                   style: TextButton.styleFrom(
                                     backgroundColor: Colors.white,

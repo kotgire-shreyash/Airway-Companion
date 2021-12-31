@@ -15,8 +15,8 @@ class FlightsCheckNotifierButton extends StatelessWidget {
         ),
       ),
       child: Container(
-        height: 40,
-        width: 150,
+        height: 35,
+        width: 130,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(5),
@@ -28,6 +28,7 @@ class FlightsCheckNotifierButton extends StatelessWidget {
             "Check",
             style: TextStyle(
                 color: Colors.black,
+                fontSize: 13,
                 fontFamily:
                     GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily),
           ),
