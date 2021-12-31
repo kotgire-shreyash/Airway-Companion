@@ -105,6 +105,7 @@ class HomeScreenBody extends StatefulWidget {
 }
 
 class _HomeScreenBodyState extends State<HomeScreenBody> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   final _latoFontFamily = GoogleFonts.lato().fontFamily;
@@ -143,7 +144,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
       }
     }, builder: (context, state) {
       return Scaffold(
-        // backgroundColor: Colors.white,
+        key: _scaffoldKey,
         bottomNavigationBar: widget.bottomBar,
         endDrawer: _drawer(),
         floatingActionButton: Showcase(
@@ -176,12 +177,19 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                     Container(
                       margin: const EdgeInsets.only(top: 30, left: 1),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          // IconButton(
+                          //     onPressed: () {
+                          //       _scaffoldKey.currentState!.openEndDrawer();
+                          //     },
+                          //     icon:
+                          //         const Icon(Icons.menu, color: Colors.black)),
                           Container(
                             margin: const EdgeInsets.only(left: 20),
                             height: 50,
                             width: MediaQuery.of(context).size.width - 150,
-                            // color: Colors.blue,
+                            alignment: Alignment.centerLeft,
                             child: Row(
                               children: [
                                 Text(
@@ -216,7 +224,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                             child: Container(
                               height: 50,
                               color: Colors.white,
-                              alignment: Alignment.center,
+                              alignment: Alignment.centerRight,
                               child: Center(
                                 child: IconButton(
                                   icon: Icon(
@@ -239,7 +247,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                           Container(
                             height: 50,
                             color: Colors.white,
-                            alignment: Alignment.center,
+                            alignment: Alignment.centerRight,
                             margin: const EdgeInsets.only(
                               right: 25,
                             ),
