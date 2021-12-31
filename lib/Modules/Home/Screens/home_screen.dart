@@ -1,10 +1,8 @@
 import 'dart:ui';
 
-import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/login_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/HomeBloc/home_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Home/Events/home_screen_events.dart';
 import 'package:airwaycompanion/Modules/Home/Screens/home_screen_states.dart';
-import 'package:airwaycompanion/Modules/Home/Widgets/drawer_widget.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/flights_check_button.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/search_delegate.dart';
@@ -12,6 +10,8 @@ import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,15 +36,60 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext buildContext) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ShowCaseWidget(
-        builder: Builder(
-            builder: (context) => HomeScreenBody(
-                chatbot: widget.chatbot, bottomBar: widget.bottomBar)),
+    CustomBottomNavigationBar.index = 1;
+
+    return WillPopScope(
+      onWillPop: _onbackpressed,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: ShowCaseWidget(
+          builder: Builder(
+              builder: (context) => HomeScreenBody(
+                  chatbot: widget.chatbot, bottomBar: widget.bottomBar)),
+        ),
+        onGenerateRoute: _homeScreenPageRouter.onGenerateRoute,
       ),
-      onGenerateRoute: _homeScreenPageRouter.onGenerateRoute,
     );
+  }
+
+  // System Back Navigation Method
+  Future<bool> _onbackpressed() async {
+    bool _toBeExitted = false;
+    await showAnimatedDialog(
+        curve: Curves.fastOutSlowIn,
+        duration: const Duration(milliseconds: 500),
+        barrierDismissible: true,
+        animationType: DialogTransitionType.scale,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: Text(
+              'Are you sure ?',
+              style: TextStyle(fontFamily: GoogleFonts.lato().fontFamily),
+            ),
+            content: Text(
+              'You will be exiting the app',
+              style: TextStyle(fontFamily: GoogleFonts.lato().fontFamily),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                  onPressed: () {
+                    _toBeExitted = true;
+                    SystemNavigator.pop();
+                  },
+                  child: const Text('Yes')),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: const Text('No')),
+            ],
+          );
+        });
+
+    return _toBeExitted;
   }
 }
 
@@ -98,7 +143,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
       }
     }, builder: (context, state) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         bottomNavigationBar: widget.bottomBar,
         endDrawer: _drawer(),
         floatingActionButton: Showcase(
@@ -158,13 +203,15 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                   padding: const EdgeInsets.only(top: 5),
                                   child: Text(
                                     // context.read<LoginBloc>().state.username
-                                    "Ninad07",
+                                    "Ninad07!",
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                        fontFamily: _latoBoldFontFamily,
-                                        fontWeight: FontWeight.w900),
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontFamily: GoogleFonts.lato(
+                                              fontWeight: FontWeight.w800)
+                                          .fontFamily,
+                                    ),
                                     textScaleFactor: 1.6,
                                   ),
                                 ),
@@ -177,8 +224,8 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                               alignment: Alignment.center,
                               child: IconButton(
                                 icon: Icon(
-                                  Icons.info,
-                                  size: 35,
+                                  Icons.info_outline,
+                                  size: 30,
                                   color: Colors.grey.shade800,
                                 ),
                                 onPressed: () {
@@ -287,12 +334,13 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
     });
   }
 
+  // Screen Refresh Action
   void _onRefresh() async {
     await Future.delayed(const Duration(seconds: 1));
     _refreshController.refreshCompleted();
   }
 
-  // Search Box
+  // Search Box for searching and navigating features in the app
   Widget _searchWidget() {
     return Container(
       height: 60,

@@ -142,8 +142,8 @@ class _CheckListScreenState extends State<CheckListScreen> {
                     height: 20,
                   ),
                   Flexible(
+                    flex: 2,
                     child: Container(
-                      // height: 80,
                       width: MediaQuery.of(context).size.width / 1.2,
                       alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.only(left: 20),

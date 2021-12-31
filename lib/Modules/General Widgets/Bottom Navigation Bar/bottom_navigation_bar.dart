@@ -3,10 +3,12 @@ import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   const CustomBottomNavigationBar({Key? key}) : super(key: key);
+  static int index = 1;
 
   @override
   _CustomBottomNavigationBarState createState() =>
@@ -18,7 +20,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   Widget build(BuildContext context) {
     return BottomBarWithSheet(
       sheetChild: const Center(child: Text("Content")),
-      selectedIndex: 1,
+      selectedIndex: CustomBottomNavigationBar.index,
       disableMainActionButton: true,
       bottomBarTheme: BottomBarTheme(
         contentPadding: const EdgeInsets.only(top: 15),
@@ -44,10 +46,24 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       onSelectItem: (index) {
         // Available flights
         if (index == 0) {
-          Navigator.pushNamed(context, 'availableFlights');
-        }
-        if (index == 2) {
+          if (CustomBottomNavigationBar.index != index) {
+            CustomBottomNavigationBar.index = index;
+            Navigator.pushNamed(context, 'availableFlights');
+          }
+
+          // Home Screen
+        } else if (index == 1) {
+          if (CustomBottomNavigationBar.index != index) {
+            CustomBottomNavigationBar.index = index;
+            Navigator.pushNamed(context, 'home');
+          }
+        } else if (index == 2) {
           // Navigator.pushNamed(context, 'timeline');
+        } else if (index == 3) {
+          if (CustomBottomNavigationBar.index != index) {
+            CustomBottomNavigationBar.index = index;
+            Navigator.pushNamed(context, 'guidelines');
+          }
         }
       },
     );
@@ -59,5 +75,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     const BottomBarWithSheetItem(icon: CupertinoIcons.home, label: "Home"),
     const BottomBarWithSheetItem(
         icon: CupertinoIcons.settings, label: "Settings"),
+    const BottomBarWithSheetItem(
+        icon: CupertinoIcons.book, label: "Guidelines"),
   ];
 }

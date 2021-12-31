@@ -42,7 +42,7 @@ class _LoginPageViewState extends State<LoginPageView> {
         } else if (state.internalStateValue == 1) {
           FlutterToast.display("Logged in");
           await Future.delayed(const Duration(seconds: 2));
-          Navigator.pushNamed(context, "home");
+          Navigator.pushReplacementNamed(context, "home");
 
           // Login failure
         } else if (state.internalStateValue == 2) {

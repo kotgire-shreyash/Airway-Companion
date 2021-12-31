@@ -76,7 +76,7 @@ class _LoginButtonState extends State<LoginButton> {
             // context.read<LoginBloc>().add(
             //     LoginFormBeingSubmittedEvent(isLoginFormSubmitted: true));
 
-            Navigator.pushNamed(context, "home");
+            Navigator.pushReplacementNamed(context, "home");
           },
         ),
       ),
