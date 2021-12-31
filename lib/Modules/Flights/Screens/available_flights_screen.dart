@@ -95,7 +95,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                   return <Widget>[
                     SliverAppBar(
                       automaticallyImplyLeading: false,
-                      expandedHeight: MediaQuery.of(context).size.height / 2.8,
+                      expandedHeight: MediaQuery.of(context).size.height / 3.2,
                       floating: true,
                       pinned: true,
                       shape: const RoundedRectangleBorder(
@@ -106,7 +106,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                       ),
                       flexibleSpace: Flexible(
                         child: Container(
-                          height: MediaQuery.of(context).size.height / 2.8,
+                          height: MediaQuery.of(context).size.height / 3.2,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             borderRadius: const BorderRadius.only(
@@ -134,133 +134,131 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                             children: [
                               Container(
                                 margin:
-                                    const EdgeInsets.symmetric(horizontal: 20),
+                                    const EdgeInsets.symmetric(horizontal: 25),
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   "Search Flights",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: GoogleFonts.lato(
-                                            fontWeight: FontWeight.w900)
+                                            fontWeight: FontWeight.w800)
                                         .fontFamily,
-                                    fontSize: 20,
+                                    fontSize: 18,
                                   ),
                                 ),
                               ),
                               const SizedBox(
-                                height: 20,
+                                height: 10,
                               ),
                               Center(
-                                child: Flexible(
-                                  child: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 25),
-                                    height: MediaQuery.of(context).size.height /
-                                        3.8,
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(17.0),
-                                      child: Column(
-                                        children: [
-                                          TextFormField(
-                                            decoration: InputDecoration(
-                                              hintText: "source",
-                                              hintStyle: TextStyle(
-                                                  fontFamily: GoogleFonts.lato()
-                                                      .fontFamily,
-                                                  fontSize: 13),
-                                              icon: Icon(
-                                                FontAwesomeIcons.sourcetree,
-                                                color: Colors.grey.shade900,
-                                                size: 22,
-                                              ),
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 25),
+                                  height:
+                                      MediaQuery.of(context).size.height / 4.2,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(17.0),
+                                    child: Column(
+                                      children: [
+                                        TextFormField(
+                                          decoration: InputDecoration(
+                                            hintText: "source",
+                                            hintStyle: TextStyle(
+                                                fontFamily: GoogleFonts.lato()
+                                                    .fontFamily,
+                                                fontSize: 12),
+                                            icon: Icon(
+                                              FontAwesomeIcons.sourcetree,
+                                              color: Colors.grey.shade900,
+                                              size: 18,
                                             ),
                                           ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          TextFormField(
-                                            decoration: InputDecoration(
-                                              hintText: "destination",
-                                              hintStyle: TextStyle(
-                                                  fontFamily: GoogleFonts.lato()
-                                                      .fontFamily,
-                                                  fontSize: 13),
-                                              icon: Icon(
-                                                CupertinoIcons.airplane,
-                                                color: Colors.grey.shade900,
-                                              ),
+                                        ),
+                                        const SizedBox(
+                                          height: 2,
+                                        ),
+                                        TextFormField(
+                                          decoration: InputDecoration(
+                                            hintText: "destination",
+                                            hintStyle: TextStyle(
+                                                fontFamily: GoogleFonts.lato()
+                                                    .fontFamily,
+                                                fontSize: 12),
+                                            icon: Icon(
+                                              CupertinoIcons.airplane,
+                                              color: Colors.grey.shade900,
+                                              size: 18,
                                             ),
                                           ),
-                                          const SizedBox(
-                                            height: 15,
-                                          ),
-                                          Center(
-                                            child: Card(
-                                              elevation: 5,
-                                              color: Colors.white,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Center(
+                                          child: Card(
+                                            elevation: 5,
+                                            color: Colors.white,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(5),
+                                              ),
+                                            ),
+                                            child: Container(
+                                              height: 35,
+                                              width: 100,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    const BorderRadius.all(
                                                   Radius.circular(5),
                                                 ),
+                                                gradient: LinearGradient(
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight,
+                                                  colors: [
+                                                    Colors.blue.shade500,
+                                                    Colors.blue.shade400,
+                                                    Colors.blue.shade400,
+                                                    Colors.blue.shade500,
+                                                  ],
+                                                  stops: const [
+                                                    0.1,
+                                                    0.3,
+                                                    0.7,
+                                                    0.9,
+                                                  ],
+                                                ),
                                               ),
-                                              child: Container(
-                                                height: 40,
-                                                width: 120,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                    Radius.circular(5),
-                                                  ),
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment.topLeft,
-                                                    end: Alignment.bottomRight,
-                                                    colors: [
-                                                      Colors.blue.shade500,
-                                                      Colors.blue.shade400,
-                                                      Colors.blue.shade400,
-                                                      Colors.blue.shade500,
-                                                    ],
-                                                    stops: const [
-                                                      0.1,
-                                                      0.3,
-                                                      0.7,
-                                                      0.9,
-                                                    ],
-                                                  ),
+                                              child: ElevatedButton(
+                                                child: Text(
+                                                  "Search",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 13,
+                                                      fontFamily:
+                                                          GoogleFonts.lato(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w900)
+                                                              .fontFamily),
                                                 ),
-                                                child: ElevatedButton(
-                                                  child: Text(
-                                                    "Search",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontFamily:
-                                                            GoogleFonts.lato(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w900)
-                                                                .fontFamily),
-                                                  ),
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    primary: Colors.transparent,
-                                                    shadowColor:
-                                                        Colors.transparent,
-                                                    elevation: 5,
-                                                  ),
-                                                  onPressed: () {},
+                                                style: ElevatedButton.styleFrom(
+                                                  primary: Colors.transparent,
+                                                  shadowColor:
+                                                      Colors.transparent,
+                                                  elevation: 5,
                                                 ),
+                                                onPressed: () {},
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -289,9 +287,9 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily:
-                                GoogleFonts.lato(fontWeight: FontWeight.w400)
+                                GoogleFonts.lato(fontWeight: FontWeight.w500)
                                     .fontFamily,
-                            fontSize: 25,
+                            fontSize: 20,
                           ),
                         ),
                       ),
@@ -328,12 +326,12 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                                   child: state.isFlightAPIDataLoading
                                       ? Center(
                                           child: SizedBox(
-                                            height: 50,
-                                            width: 50,
+                                            height: 30,
+                                            width: 30,
                                             child: LoadingAnimationWidget
                                                 .staggeredDotWave(
                                                     color: Colors.black,
-                                                    size: 50),
+                                                    size: 30),
                                           ),
                                         )
                                       : _flightDetailsCard(index),

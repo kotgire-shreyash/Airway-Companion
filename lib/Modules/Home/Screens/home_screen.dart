@@ -151,7 +151,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
             description: "Tap to chat with your digital assistant!",
             descTextStyle: TextStyle(
                 fontFamily:
-                    GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily),
+                    GoogleFonts.lato(fontWeight: FontWeight.w800).fontFamily),
             child: widget.chatbot),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         resizeToAvoidBottomInset: false,
@@ -250,7 +250,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                     "Tap to search for the required widget",
                                 descTextStyle: TextStyle(
                                     fontFamily: GoogleFonts.lato(
-                                            fontWeight: FontWeight.w900)
+                                            fontWeight: FontWeight.w800)
                                         .fontFamily),
                                 child: IconButton(
                                   icon: Icon(
@@ -581,7 +581,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 key: _flightsKey,
                 description: "Tap to view and book available flights!",
                 descTextStyle: TextStyle(
-                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w900)
+                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w800)
                         .fontFamily),
                 child: const FlightsCheckNotifierButton()),
           ],
@@ -680,7 +680,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                     "Tap to track progress on your next flight!",
                                 descTextStyle: TextStyle(
                                     fontFamily: GoogleFonts.lato(
-                                            fontWeight: FontWeight.bold)
+                                            fontWeight: FontWeight.w800)
                                         .fontFamily),
                                 child: ElevatedButton(
                                   onPressed: () {
