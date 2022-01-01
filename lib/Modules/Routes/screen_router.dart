@@ -38,12 +38,11 @@ class GlobalRouter {
       case 'timeline':
         return MaterialPageRoute(builder: (_) => const TimeLineScreen());
 
-      // case 'navigationPage':
-      //   return MaterialPageRoute(builder: (_) => MapNavigation());
-
       default:
         //return MaterialPageRoute(builder: (_) => const LoginPageView());
-        return MaterialPageRoute(builder: (_) => const LoginPageView());
+        //  return MaterialPageRoute(builder: (_) => const LoginPageView());
+        return MaterialPageRoute(builder: (_) => const NavigationScreen());
+      // return MaterialPageRoute(builder: (_) => HomePage());
     }
   }
 }
