@@ -3,6 +3,7 @@ import 'package:airwaycompanion/Logic/Bloc/GuidelineScreenBloc/guideline_screen_
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart';
 import 'package:airwaycompanion/Modules/Guidelines/Events/guideline_events.dart';
+import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,20 @@ class GuidelineScreen extends StatefulWidget {
 }
 
 class _GuidelineScreenState extends State<GuidelineScreen> {
+  final List<Map<String, String>> _languagesList = [
+    {"English": "en"},
+    {"Italian": "it"},
+    {"Arabic": "ar"},
+    {"Chinese": "zh-Hans"},
+    {"Dutch": "nl"},
+    {"French": "fr"},
+    {"German": "de"},
+    {"Greek": "el"},
+    {"Hindi": "hi"},
+    {"Japanese": "ja"},
+    {"Russian": "ru"},
+    {"Swedish": "sv"},
+  ];
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GuidelineScreenBloc, GuidelineScreenState>(
@@ -44,15 +59,65 @@ class _GuidelineScreenState extends State<GuidelineScreen> {
                     color: Colors.black,
                   )),
               actions: [
-                IconButton(
-                  onPressed: () async {
-                    // Translate the entire guidelines
-                    context.read<GuidelineScreenBloc>().add(TranslateEvent(
-                          to: "it",
-                          content: state.guidelineCardList,
-                        ));
+                CustomPopupMenu(
+                  verticalMargin: 0,
+                  child: Container(
+                    height: 50,
+                    width: 100,
+                    color: Colors.transparent,
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.translate,
+                          color: Colors.black,
+                          semanticLabel: "Translate",
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Translate",
+                          style: TextStyle(color: Colors.black),
+                        )
+                      ],
+                    ),
+                  ),
+                  menuBuilder: () {
+                    return Container(
+                      height: 300,
+                      width: 200,
+                      color: Colors.white,
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: _languagesList.length,
+                        itemBuilder: (_, int index) {
+                          return ListTile(
+                            selectedTileColor: Colors.blue,
+                            focusColor: Colors.blue,
+                            hoverColor: Colors.blue,
+                            title: Center(
+                              child: Text(
+                                _languagesList[index].keys.first,
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            ),
+                            onTap: () {
+                              context
+                                  .read<GuidelineScreenBloc>()
+                                  .add(TranslateEvent(
+                                    to: _languagesList[index].values.first,
+                                    content: state.guidelineCardList,
+                                  ));
+                            },
+                          );
+                        },
+                      ),
+                    );
                   },
-                  icon: Icon(Icons.translate, color: Colors.black),
+                  pressType: PressType.singleClick,
+                ),
+                const SizedBox(
+                  width: 15,
                 ),
               ],
             ),
@@ -61,18 +126,28 @@ class _GuidelineScreenState extends State<GuidelineScreen> {
                 iconColor: Colors.black,
                 useInkWell: true,
               ),
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: state.guidelineCardList.length,
-                itemBuilder: (context, int index) {
-                  return GuideCard(
-                    imageData: state.guidelineCardList[index]['image'],
-                    title: state.guidelineCardList[index]['title'],
-                    collapsedBody: state.guidelineCardList[index]
-                        ['collapsedBody'],
-                    body: state.guidelineCardList[index]['body'],
-                  );
-                },
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    Flexible(
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: state.guidelineCardList.length,
+                        itemBuilder: (context, int index) {
+                          return GuideCard(
+                            imageData: state.guidelineCardList[index]['image'],
+                            title: state.guidelineCardList[index]['title'],
+                            collapsedBody: state.guidelineCardList[index]
+                                ['collapsedBody'],
+                            body: state.guidelineCardList[index]['body'],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -90,9 +165,9 @@ class GuideCard extends StatelessWidget {
       required this.title,
       required this.collapsedBody,
       required this.body});
-  final imageData;
-  final title;
-  final body, collapsedBody;
+  final String imageData;
+  final String title;
+  final String body, collapsedBody;
 
   @override
   Widget build(BuildContext context) {

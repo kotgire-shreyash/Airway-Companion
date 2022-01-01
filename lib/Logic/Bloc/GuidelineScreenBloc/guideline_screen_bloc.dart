@@ -17,9 +17,11 @@ class GuidelineScreenBloc
     emit(state.copyWith(isBeingTranslated: true));
 
     var translatedList = await _azureTranslatorRepository.getTranslatedList(
-        "en", event.to, event.content);
+        state.prevLanguage, event.to, event.content);
 
     emit(state.copyWith(
-        guidelineCardList: translatedList, isBeingTranslated: false));
+        guidelineCardList: translatedList,
+        isBeingTranslated: false,
+        prevLanguage: event.to));
   }
 }

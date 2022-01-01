@@ -14,7 +14,7 @@ class AzureTranslatorRepository {
     return azureTranslatorResponseJSON;
   }
 
-  Future<List> getTranslatedList(String from, String to, var content) async {
+  Future getTranslatedList(String from, String to, var content) async {
     List<Map<String, String>> translatedList = [];
 
     for (var body in content) {

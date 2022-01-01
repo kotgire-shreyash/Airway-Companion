@@ -4,6 +4,7 @@ class GuidelineScreenState {
   var guidelineCardList;
 
   bool isBeingTranslated;
+  String prevLanguage;
 
   GuidelineScreenState({
     this.guidelineCardList = const [
@@ -111,13 +112,15 @@ Voila, Here you go! Enjoy your flight journey.
       },
     ],
     this.isBeingTranslated = false,
+    this.prevLanguage = "en",
   });
 
   GuidelineScreenState copyWith(
-      {var guidelineCardList, var isBeingTranslated}) {
+      {var guidelineCardList, var isBeingTranslated, var prevLanguage}) {
     return GuidelineScreenState(
       guidelineCardList: guidelineCardList ?? this.guidelineCardList,
       isBeingTranslated: isBeingTranslated ?? this.isBeingTranslated,
+      prevLanguage: prevLanguage ?? this.prevLanguage,
     );
   }
 }
