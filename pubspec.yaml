@@ -49,10 +49,21 @@ dependencies:
   flutter_svg:
   pull_to_refresh:
   animated_text_kit:
+  timelines:
+  flutter_highlight: 
+  timeline_tile:
   font_awesome_flutter:
   bottom_bar_with_sheet:
   flutter_google_street_view:
   custom_pop_up_menu:
+  pinput:
+  geolocator:
+  google_maps_flutter:
+  flutter_slidable:
+  fluttericon:
+  showcaseview:
+  azstore: 
+  expandable:
   
 dev_dependencies:
   flutter_test:
