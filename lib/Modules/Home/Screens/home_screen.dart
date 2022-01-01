@@ -1,10 +1,8 @@
 import 'dart:ui';
 
-import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/login_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/HomeBloc/home_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Home/Events/home_screen_events.dart';
 import 'package:airwaycompanion/Modules/Home/Screens/home_screen_states.dart';
-import 'package:airwaycompanion/Modules/Home/Widgets/drawer_widget.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/flights_check_button.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/search_delegate.dart';
@@ -12,19 +10,22 @@ import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart'
-    as bottomBar;
+import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key, required this.chatbot}) : super(key: key);
+  const HomeScreen({Key? key, required this.chatbot, required this.bottomBar})
+      : super(key: key);
   final ChatBot chatbot;
+  final CustomBottomNavigationBar bottomBar;
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -35,26 +36,76 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext buildContext) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ShowCaseWidget(
-        builder: Builder(
-            builder: (context) => HomeScreenBody(chatbot: widget.chatbot)),
+    CustomBottomNavigationBar.index = 1;
+
+    return WillPopScope(
+      onWillPop: _onbackpressed,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: ShowCaseWidget(
+          builder: Builder(
+              builder: (context) => HomeScreenBody(
+                  chatbot: widget.chatbot, bottomBar: widget.bottomBar)),
+        ),
+        onGenerateRoute: _homeScreenPageRouter.onGenerateRoute,
       ),
-      onGenerateRoute: _homeScreenPageRouter.onGenerateRoute,
     );
+  }
+
+  // System Back Navigation Method
+  Future<bool> _onbackpressed() async {
+    bool _toBeExitted = false;
+    await showAnimatedDialog(
+        curve: Curves.fastOutSlowIn,
+        duration: const Duration(milliseconds: 500),
+        barrierDismissible: true,
+        animationType: DialogTransitionType.scale,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: Text(
+              'Are you sure ?',
+              style: TextStyle(fontFamily: GoogleFonts.lato().fontFamily),
+            ),
+            content: Text(
+              'You will be exiting the app',
+              style: TextStyle(fontFamily: GoogleFonts.lato().fontFamily),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                  onPressed: () {
+                    _toBeExitted = true;
+                    SystemNavigator.pop();
+                  },
+                  child: const Text('Yes')),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: const Text('No')),
+            ],
+          );
+        });
+
+    return _toBeExitted;
   }
 }
 
 class HomeScreenBody extends StatefulWidget {
-  const HomeScreenBody({Key? key, required this.chatbot}) : super(key: key);
+  const HomeScreenBody(
+      {Key? key, required this.chatbot, required this.bottomBar})
+      : super(key: key);
   final ChatBot chatbot;
+  final CustomBottomNavigationBar bottomBar;
 
   @override
   _HomeScreenBodyState createState() => _HomeScreenBodyState();
 }
 
 class _HomeScreenBodyState extends State<HomeScreenBody> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   final _latoFontFamily = GoogleFonts.lato().fontFamily;
@@ -93,15 +144,15 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
       }
     }, builder: (context, state) {
       return Scaffold(
-        backgroundColor: Colors.white,
-        bottomNavigationBar: const bottomBar.BottomNavigationBar(),
+        key: _scaffoldKey,
+        bottomNavigationBar: widget.bottomBar,
         endDrawer: _drawer(),
         floatingActionButton: Showcase(
             key: _botKey,
             description: "Tap to chat with your digital assistant!",
             descTextStyle: TextStyle(
                 fontFamily:
-                    GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily),
+                    GoogleFonts.lato(fontWeight: FontWeight.w800).fontFamily),
             child: widget.chatbot),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         resizeToAvoidBottomInset: false,
@@ -126,103 +177,112 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                     Container(
                       margin: const EdgeInsets.only(top: 30, left: 1),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          // IconButton(
+                          //     onPressed: () {
+                          //       _scaffoldKey.currentState!.openEndDrawer();
+                          //     },
+                          //     icon:
+                          //         const Icon(Icons.menu, color: Colors.black)),
                           Container(
                             margin: const EdgeInsets.only(left: 20),
                             height: 50,
                             width: MediaQuery.of(context).size.width - 150,
-                            // color: Colors.blue,
+                            alignment: Alignment.centerLeft,
                             child: Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Text(
-                                    "Hi ",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Colors.grey.shade400,
-                                      fontSize: 15,
-                                      fontFamily: GoogleFonts.lato(
-                                              fontWeight: FontWeight.bold)
-                                          .fontFamily,
-                                    ),
-                                    textScaleFactor: 1.6,
+                                Text(
+                                  "Hi ",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Colors.grey.shade400,
+                                    fontSize: 14,
+                                    fontFamily: GoogleFonts.lato(
+                                            fontWeight: FontWeight.bold)
+                                        .fontFamily,
                                   ),
+                                  textScaleFactor: 1.6,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Text(
-                                    // context.read<LoginBloc>().state.username
-                                    "Ninad07",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                        fontFamily: _latoBoldFontFamily,
-                                        fontWeight: FontWeight.w900),
-                                    textScaleFactor: 1.6,
+                                Text(
+                                  // context.read<LoginBloc>().state.username
+                                  "Ninad07!",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontFamily: GoogleFonts.lato(
+                                            fontWeight: FontWeight.w800)
+                                        .fontFamily,
                                   ),
+                                  textScaleFactor: 1.6,
                                 ),
                               ],
                             ),
                           ),
                           Flexible(
                             child: Container(
+                              height: 50,
                               color: Colors.white,
-                              alignment: Alignment.center,
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.info,
-                                  size: 35,
-                                  color: Colors.grey.shade800,
+                              alignment: Alignment.centerRight,
+                              child: Center(
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.info_outline,
+                                    size: 28,
+                                    color: Colors.grey.shade800,
+                                  ),
+                                  onPressed: () {
+                                    ShowCaseWidget.of(context)!.startShowCase([
+                                      _searchKey,
+                                      _flightsKey,
+                                      _trackKey,
+                                      _botKey,
+                                    ]);
+                                  },
                                 ),
-                                onPressed: () {
-                                  ShowCaseWidget.of(context)!.startShowCase([
-                                    _searchKey,
-                                    _flightsKey,
-                                    _trackKey,
-                                    _botKey,
-                                  ]);
-                                },
                               ),
                             ),
                           ),
                           Container(
+                            height: 50,
                             color: Colors.white,
-                            alignment: Alignment.center,
+                            alignment: Alignment.centerRight,
                             margin: const EdgeInsets.only(
                               right: 25,
                             ),
-                            child: Showcase(
-                              key: _searchKey,
-                              description:
-                                  "Tap to search for the required widget",
-                              descTextStyle: TextStyle(
-                                  fontFamily: GoogleFonts.lato(
-                                          fontWeight: FontWeight.w900)
-                                      .fontFamily),
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.search,
-                                  size: 35,
-                                  color: context
-                                          .read<HomeScreenBloc>()
-                                          .state
-                                          .isSearchIconPressed
-                                      ? Colors.grey.shade600
-                                      : Colors.black,
+                            child: Center(
+                              child: Showcase(
+                                key: _searchKey,
+                                description:
+                                    "Tap to search for the required widget",
+                                descTextStyle: TextStyle(
+                                    fontFamily: GoogleFonts.lato(
+                                            fontWeight: FontWeight.w800)
+                                        .fontFamily),
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.search,
+                                    size: 30,
+                                    color: context
+                                            .read<HomeScreenBloc>()
+                                            .state
+                                            .isSearchIconPressed
+                                        ? Colors.grey.shade600
+                                        : Colors.black,
+                                  ),
+                                  onPressed: () {
+                                    print("pressed");
+                                    context.read<HomeScreenBloc>().add(
+                                        SearchIconPressed(
+                                            isSearchIconPressed: context
+                                                    .read<HomeScreenBloc>()
+                                                    .state
+                                                    .isSearchIconPressed
+                                                ? false
+                                                : true));
+                                  },
                                 ),
-                                onPressed: () {
-                                  print("pressed");
-                                  context.read<HomeScreenBloc>().add(
-                                      SearchIconPressed(
-                                          isSearchIconPressed: context
-                                                  .read<HomeScreenBloc>()
-                                                  .state
-                                                  .isSearchIconPressed
-                                              ? false
-                                              : true));
-                                },
                               ),
                             ),
                           ),
@@ -262,9 +322,9 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily:
-                              GoogleFonts.lato(fontWeight: FontWeight.w400)
+                              GoogleFonts.lato(fontWeight: FontWeight.w500)
                                   .fontFamily,
-                          fontSize: 25,
+                          fontSize: 21,
                         ),
                       ),
                     ),
@@ -282,15 +342,16 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
     });
   }
 
+  // Screen Refresh Action
   void _onRefresh() async {
     await Future.delayed(const Duration(seconds: 1));
     _refreshController.refreshCompleted();
   }
 
-  // Search Box
+  // Search Box for searching and navigating features in the app
   Widget _searchWidget() {
     return Container(
-      height: 60,
+      height: 45,
       width: MediaQuery.of(context).size.width - 50,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -308,7 +369,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 "What are you searching for?",
                 textStyle: TextStyle(
                   color: Colors.grey.shade400,
-                  fontSize: 15,
+                  fontSize: 13,
                   fontFamily: _latoFontFamily,
                   fontWeight: FontWeight.bold,
                 ),
@@ -318,7 +379,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 "Airport Navigation?",
                 textStyle: TextStyle(
                   color: Colors.grey.shade400,
-                  fontSize: 15,
+                  fontSize: 13,
                   fontFamily: _latoFontFamily,
                   fontWeight: FontWeight.bold,
                 ),
@@ -328,7 +389,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 "Pre-Fly Guidelines?",
                 textStyle: TextStyle(
                   color: Colors.grey.shade400,
-                  fontSize: 15,
+                  fontSize: 13,
                   fontFamily: _latoFontFamily,
                   fontWeight: FontWeight.bold,
                 ),
@@ -471,7 +532,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       child: Container(
-        height: 280,
+        height: 250,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -498,8 +559,8 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
               height: 15,
             ),
             SizedBox(
-              height: 140,
-              width: 220,
+              height: 120,
+              width: 200,
               child: SvgPicture.asset(
                 "assets/images/airplane4.svg",
                 fit: BoxFit.scaleDown,
@@ -517,7 +578,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                   fontFamily: GoogleFonts.lato(
                           fontWeight: FontWeight.bold, fontSize: 35)
                       .fontFamily,
-                  fontSize: 25,
+                  fontSize: 21,
                 ),
               ),
             ),
@@ -528,7 +589,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 key: _flightsKey,
                 description: "Tap to view and book available flights!",
                 descTextStyle: TextStyle(
-                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w900)
+                    fontFamily: GoogleFonts.lato(fontWeight: FontWeight.w800)
                         .fontFamily),
                 child: const FlightsCheckNotifierButton()),
           ],
@@ -546,9 +607,8 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       child: Container(
-        height: 200,
+        height: 160,
         width: MediaQuery.of(context).size.width,
-        // margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(20)),
           gradient: LinearGradient(
@@ -573,12 +633,13 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
             Flexible(
               child: Container(
                 margin: const EdgeInsets.all(5),
-                height: 200,
+                height: 140,
                 width: MediaQuery.of(context).size.width / 2.6,
                 child: SvgPicture.asset(
                   "assets/images/timeline_2.svg",
                   color: Colors.white,
                   fit: BoxFit.contain,
+                  height: 140,
                 ),
               ),
             ),
@@ -600,7 +661,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                               fontFamily:
                                   GoogleFonts.lato(fontWeight: FontWeight.w500)
                                       .fontFamily,
-                              fontSize: 20,
+                              fontSize: 16,
                             ),
                           )),
                         ),
@@ -614,12 +675,9 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                               fontFamily:
                                   GoogleFonts.lato(fontWeight: FontWeight.w900)
                                       .fontFamily,
-                              fontSize: 32,
+                              fontSize: 24,
                             ),
                           )),
-                        ),
-                        const SizedBox(
-                          height: 5,
                         ),
                         SizedBox(
                             height: 60,
@@ -630,7 +688,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                     "Tap to track progress on your next flight!",
                                 descTextStyle: TextStyle(
                                     fontFamily: GoogleFonts.lato(
-                                            fontWeight: FontWeight.bold)
+                                            fontWeight: FontWeight.w800)
                                         .fontFamily),
                                 child: ElevatedButton(
                                   onPressed: () {
@@ -645,6 +703,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                         fontFamily: GoogleFonts.lato(
                                                 fontWeight: FontWeight.w900)
                                             .fontFamily,
+                                        fontSize: 13,
                                       )),
                                   style: TextButton.styleFrom(
                                     backgroundColor: Colors.white,
