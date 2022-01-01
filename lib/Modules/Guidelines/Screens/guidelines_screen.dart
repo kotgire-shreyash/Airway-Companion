@@ -1,13 +1,13 @@
-// https://www.newdelhiairport.in/passenger-guide/first-time-flyer
-
+import 'package:airwaycompanion/Data/Repositories/AzureTranslatorRepository/azure_translator_repository.dart';
 import 'package:airwaycompanion/Logic/Bloc/GuidelineScreenBloc/guideline_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart';
-import 'package:airwaycompanion/Modules/General%20Widgets/custom_colors.dart';
+import 'package:airwaycompanion/Modules/Guidelines/Events/guideline_events.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'guideline_states.dart';
 
@@ -43,6 +43,18 @@ class _GuidelineScreenState extends State<GuidelineScreen> {
                     Icons.arrow_back,
                     color: Colors.black,
                   )),
+              actions: [
+                IconButton(
+                  onPressed: () async {
+                    // Translate the entire guidelines
+                    context.read<GuidelineScreenBloc>().add(TranslateEvent(
+                          to: "it",
+                          content: state.guidelineCardList,
+                        ));
+                  },
+                  icon: Icon(Icons.translate, color: Colors.black),
+                ),
+              ],
             ),
             body: ExpandableTheme(
               data: const ExpandableThemeData(
@@ -54,11 +66,11 @@ class _GuidelineScreenState extends State<GuidelineScreen> {
                 itemCount: state.guidelineCardList.length,
                 itemBuilder: (context, int index) {
                   return GuideCard(
-                    imageData: state.guidelineCardList[index]['image'] ?? "",
-                    title: state.guidelineCardList[index]['title'] ?? "",
-                    collapsedBody:
-                        state.guidelineCardList[index]['collapsedBody'] ?? "",
-                    body: state.guidelineCardList[index]['body'] ?? "",
+                    imageData: state.guidelineCardList[index]['image'],
+                    title: state.guidelineCardList[index]['title'],
+                    collapsedBody: state.guidelineCardList[index]
+                        ['collapsedBody'],
+                    body: state.guidelineCardList[index]['body'],
                   );
                 },
               ),
@@ -68,15 +80,19 @@ class _GuidelineScreenState extends State<GuidelineScreen> {
   }
 }
 
+Widget _constantLoadingAnimation() {
+  return LoadingAnimationWidget.staggeredDotWave(color: Colors.black, size: 25);
+}
+
 class GuideCard extends StatelessWidget {
   GuideCard(
       {required this.imageData,
       required this.title,
       required this.collapsedBody,
       required this.body});
-  final String imageData;
-  final String title;
-  final String body, collapsedBody;
+  final imageData;
+  final title;
+  final body, collapsedBody;
 
   @override
   Widget build(BuildContext context) {
@@ -107,29 +123,46 @@ class GuideCard extends StatelessWidget {
                 header: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      title,
+                      context
+                              .read<GuidelineScreenBloc>()
+                              .state
+                              .isBeingTranslated
+                          ? ""
+                          : title,
                       style: TextStyle(
                           fontFamily:
                               GoogleFonts.lato(fontWeight: FontWeight.bold)
                                   .fontFamily),
                     )),
-                collapsed: Text(
-                  collapsedBody,
-                  softWrap: true,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                expanded: Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    body,
-                    softWrap: true,
-                    overflow: TextOverflow.fade,
-                  ),
-                ),
+                collapsed:
+                    context.read<GuidelineScreenBloc>().state.isBeingTranslated
+                        ? SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: _constantLoadingAnimation())
+                        : Text(
+                            collapsedBody,
+                            softWrap: true,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                expanded:
+                    context.read<GuidelineScreenBloc>().state.isBeingTranslated
+                        ? SizedBox(
+                            height: 200,
+                            child: Center(child: _constantLoadingAnimation()))
+                        : Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              body,
+                              softWrap: true,
+                              overflow: TextOverflow.fade,
+                            ),
+                          ),
                 builder: (_, collapsed, expanded) {
                   return Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                    padding:
+                        const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                     child: Expandable(
                       collapsed: collapsed,
                       expanded: expanded,

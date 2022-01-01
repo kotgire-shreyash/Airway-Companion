@@ -5,6 +5,7 @@ import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Flights/Events/flights_screen_events.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/custom_colors.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:airwaycompanion/Modules/General Widgets/Bottom Navigation Bar/bottom_navigation_bar.dart'
@@ -95,7 +96,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                   return <Widget>[
                     SliverAppBar(
                       automaticallyImplyLeading: false,
-                      expandedHeight: MediaQuery.of(context).size.height / 3.2,
+                      expandedHeight: MediaQuery.of(context).size.height / 3.6,
                       floating: true,
                       pinned: true,
                       shape: const RoundedRectangleBorder(
@@ -104,114 +105,114 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                           bottomRight: Radius.circular(20),
                         ),
                       ),
-                      flexibleSpace: Flexible(
-                        child: Container(
-                          height: MediaQuery.of(context).size.height / 3.2,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20),
-                            ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.blue.shade500,
-                                Colors.blue.shade400,
-                                Colors.blue.shade400,
-                                Colors.blue.shade500,
-                              ],
-                              stops: const [
-                                0.1,
-                                0.3,
-                                0.6,
-                                0.9,
-                              ],
-                            ),
+                      flexibleSpace: Container(
+                        height: MediaQuery.of(context).size.height / 3.5,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
                           ),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 25),
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "Search Flights",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: GoogleFonts.lato(
-                                            fontWeight: FontWeight.w800)
-                                        .fontFamily,
-                                    fontSize: 18,
-                                  ),
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.blue.shade500,
+                              Colors.blue.shade400,
+                              Colors.blue.shade400,
+                              Colors.blue.shade500,
+                            ],
+                            stops: const [
+                              0.1,
+                              0.3,
+                              0.6,
+                              0.9,
+                            ],
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 25),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Search Flights",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: GoogleFonts.lato(
+                                          fontWeight: FontWeight.w800)
+                                      .fontFamily,
+                                  fontSize: 18,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Center(
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 25),
-                                  height:
-                                      MediaQuery.of(context).size.height / 4.2,
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(17.0),
-                                    child: Column(
-                                      children: [
-                                        TextFormField(
-                                          decoration: InputDecoration(
-                                            hintText: "source",
-                                            hintStyle: TextStyle(
-                                                fontFamily: GoogleFonts.lato()
-                                                    .fontFamily,
-                                                fontSize: 12),
-                                            icon: Icon(
-                                              FontAwesomeIcons.sourcetree,
-                                              color: Colors.grey.shade900,
-                                              size: 18,
-                                            ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Center(
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 25),
+                                height:
+                                    MediaQuery.of(context).size.height / 4.8,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                    children: [
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                          hintText: "source",
+                                          hintStyle: TextStyle(
+                                              fontFamily:
+                                                  GoogleFonts.lato().fontFamily,
+                                              fontSize: 12),
+                                          icon: Icon(
+                                            FontAwesomeIcons.sourcetree,
+                                            color: Colors.grey.shade900,
+                                            size: 18,
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 2,
-                                        ),
-                                        TextFormField(
-                                          decoration: InputDecoration(
-                                            hintText: "destination",
-                                            hintStyle: TextStyle(
-                                                fontFamily: GoogleFonts.lato()
-                                                    .fontFamily,
-                                                fontSize: 12),
-                                            icon: Icon(
-                                              CupertinoIcons.airplane,
-                                              color: Colors.grey.shade900,
-                                              size: 18,
-                                            ),
+                                      ),
+                                      const SizedBox(
+                                        height: 2,
+                                      ),
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                          hintText: "destination",
+                                          hintStyle: TextStyle(
+                                              fontFamily:
+                                                  GoogleFonts.lato().fontFamily,
+                                              fontSize: 12),
+                                          icon: Icon(
+                                            CupertinoIcons.airplane,
+                                            color: Colors.grey.shade900,
+                                            size: 18,
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 8,
-                                        ),
-                                        Center(
-                                          child: Card(
-                                            elevation: 5,
-                                            color: Colors.white,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(5),
-                                              ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Center(
+                                        child: Card(
+                                          elevation: 5,
+                                          color: Colors.white,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(5),
                                             ),
+                                          ),
+                                          child: Flexible(
                                             child: Container(
-                                              height: 35,
-                                              width: 100,
+                                              height: 25,
+                                              width: 90,
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     const BorderRadius.all(
@@ -248,6 +249,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                                                               .fontFamily),
                                                 ),
                                                 style: ElevatedButton.styleFrom(
+                                                  fixedSize: const Size(90, 25),
                                                   primary: Colors.transparent,
                                                   shadowColor:
                                                       Colors.transparent,
@@ -258,13 +260,13 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -316,7 +318,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                                       BorderRadius.all(Radius.circular(20)),
                                 ),
                                 child: Container(
-                                  height: 330,
+                                  height: 250,
                                   width: 200,
                                   decoration: const BoxDecoration(
                                     color: Colors.white,
@@ -362,9 +364,8 @@ class _AvailableFlightsState extends State<AvailableFlights> {
     return Column(
       children: <Widget>[
             const SizedBox(
-              height: 25,
+              height: 20,
             ),
-            // _widgets(dataModel, index),
           ] +
           _widgets(dataModel, index) +
           [
@@ -373,12 +374,12 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                 margin: const EdgeInsets.only(top: 15, left: 10, right: 10),
                 // color: Colors.blue,
                 width: MediaQuery.of(context).size.width,
-                height: 70,
+                height: 50,
                 child: Flexible(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 5),
                       SizedBox(
                         child: FittedBox(
                           child: Text(
@@ -388,7 +389,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                               fontFamily:
                                   GoogleFonts.lato(fontWeight: FontWeight.w900)
                                       .fontFamily,
-                              fontSize: 25,
+                              fontSize: 20,
                             ),
                           ),
                         ),
@@ -432,10 +433,12 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                         child: Center(
                           child: Text("More info",
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: GoogleFonts.lato(
-                                          fontWeight: FontWeight.w800)
-                                      .fontFamily)),
+                                color: Colors.white,
+                                fontFamily: GoogleFonts.lato(
+                                        fontWeight: FontWeight.w800)
+                                    .fontFamily,
+                                fontSize: 12,
+                              )),
                         ),
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.yellow.shade700,
@@ -451,10 +454,12 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                               child: Text(
                                 "Book",
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: GoogleFonts.lato(
-                                            fontWeight: FontWeight.w800)
-                                        .fontFamily),
+                                  color: Colors.white,
+                                  fontFamily: GoogleFonts.lato(
+                                          fontWeight: FontWeight.w800)
+                                      .fontFamily,
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
                           ),
@@ -789,7 +794,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
   List<Widget> _widgets(var dataModel, int index) {
     return <Widget>[
       SizedBox(
-        height: 75,
+        height: 50,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -805,7 +810,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                         fontFamily:
                             GoogleFonts.lato(fontWeight: FontWeight.w900)
                                 .fontFamily,
-                        fontSize: 30,
+                        fontSize: 25,
                       ),
                     ),
                   ),
@@ -827,7 +832,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                             fontFamily:
                                 GoogleFonts.lato(fontWeight: FontWeight.w900)
                                     .fontFamily,
-                            fontSize: 12,
+                            fontSize: 10,
                           ),
                         ),
                       ),
@@ -837,15 +842,15 @@ class _AvailableFlightsState extends State<AvailableFlights> {
               ),
             ),
             const SizedBox(
-              width: 20,
+              width: 30,
             ),
             Icon(
               CupertinoIcons.airplane,
-              size: 35,
+              size: 30,
               color: Colors.blue.shade500,
             ),
             const SizedBox(
-              width: 20,
+              width: 30,
             ),
             Center(
               child: Column(
@@ -864,7 +869,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                         fontFamily:
                             GoogleFonts.lato(fontWeight: FontWeight.w900)
                                 .fontFamily,
-                        fontSize: 30,
+                        fontSize: 25,
                       ),
                     ),
                   ),
@@ -891,7 +896,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                             fontFamily:
                                 GoogleFonts.lato(fontWeight: FontWeight.w900)
                                     .fontFamily,
-                            fontSize: 12,
+                            fontSize: 10,
                           ),
                         ),
                       ),
@@ -917,7 +922,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
               Flexible(
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2 - 30,
-                  height: 50,
+                  height: 35,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey, width: 0.5),
                   ),
@@ -931,6 +936,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                           fontFamily:
                               GoogleFonts.lato(fontWeight: FontWeight.bold)
                                   .fontFamily,
+                          fontSize: 11,
                         ),
                       ),
                       const SizedBox(
@@ -961,7 +967,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
               Flexible(
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2 - 30,
-                  height: 50,
+                  height: 35,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey, width: 0.5),
                   ),
@@ -975,6 +981,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                           fontFamily:
                               GoogleFonts.lato(fontWeight: FontWeight.bold)
                                   .fontFamily,
+                          fontSize: 11,
                         ),
                       ),
                       const SizedBox(
@@ -1013,7 +1020,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
               Flexible(
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2 - 30,
-                  height: 50,
+                  height: 35,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey, width: 0.5),
                   ),
@@ -1027,6 +1034,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                           fontFamily:
                               GoogleFonts.lato(fontWeight: FontWeight.bold)
                                   .fontFamily,
+                          fontSize: 11,
                         ),
                       ),
                       const SizedBox(
@@ -1041,7 +1049,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                             fontFamily:
                                 GoogleFonts.lato(fontWeight: FontWeight.w900)
                                     .fontFamily,
-                            fontSize: 15,
+                            fontSize: 10,
                           ),
                         ),
                       ),
@@ -1055,7 +1063,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
               Flexible(
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2 - 30,
-                  height: 50,
+                  height: 35,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey, width: 0.5),
                   ),
@@ -1069,6 +1077,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                           fontFamily:
                               GoogleFonts.lato(fontWeight: FontWeight.bold)
                                   .fontFamily,
+                          fontSize: 11,
                         ),
                       ),
                       const SizedBox(
@@ -1083,7 +1092,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                             fontFamily:
                                 GoogleFonts.lato(fontWeight: FontWeight.w900)
                                     .fontFamily,
-                            fontSize: 15,
+                            fontSize: 10,
                           ),
                         ),
                       ),
@@ -1099,14 +1108,14 @@ class _AvailableFlightsState extends State<AvailableFlights> {
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
           width: MediaQuery.of(context).size.width,
-          height: 40,
+          height: 30,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width / 2 - 30,
-                  height: 50,
+                  height: 30,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -1128,6 +1137,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                                 fontFamily: GoogleFonts.lato(
                                         fontWeight: FontWeight.bold)
                                     .fontFamily,
+                                fontSize: 11,
                               ),
                             ),
                           ),
@@ -1149,6 +1159,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                                 fontFamily: GoogleFonts.lato(
                                         fontWeight: FontWeight.bold)
                                     .fontFamily,
+                                fontSize: 11,
                               ),
                             ),
                           ),
@@ -1164,7 +1175,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
               Flexible(
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2 - 30,
-                  height: 50,
+                  height: 30,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -1184,6 +1195,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                                 fontFamily: GoogleFonts.lato(
                                         fontWeight: FontWeight.bold)
                                     .fontFamily,
+                                fontSize: 11,
                               ),
                             ),
                           ),
@@ -1207,6 +1219,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                                 fontFamily: GoogleFonts.lato(
                                         fontWeight: FontWeight.bold)
                                     .fontFamily,
+                                fontSize: 11,
                               ),
                             ),
                           ),
@@ -1223,3 +1236,156 @@ class _AvailableFlightsState extends State<AvailableFlights> {
     ];
   }
 }
+
+/*class Card2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    buildImg(Color color, double height) {
+      return SizedBox(
+          height: height,
+          child: Container(
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.rectangle,
+            ),
+          ));
+    }
+
+    buildCollapsed1() {
+      return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Expandable",
+                  ),
+                ],
+              ),
+            ),
+          ]);
+    }
+
+    buildCollapsed2() {
+      return buildImg(Colors.lightGreenAccent, 150);
+    }
+
+    buildCollapsed3() {
+      return Container();
+    }
+
+    buildExpanded1() {
+      return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Expandable",
+                  ),
+                  Text(
+                    "3 Expandable widgets",
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                ],
+              ),
+            ),
+          ]);
+    }
+
+    buildExpanded2() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(child: buildImg(Colors.lightGreenAccent, 100)),
+              Expanded(child: buildImg(Colors.orange, 100)),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(child: buildImg(Colors.lightBlue, 100)),
+              Expanded(child: buildImg(Colors.cyan, 100)),
+            ],
+          ),
+        ],
+      );
+    }
+
+    buildExpanded3() {
+      return Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "sa",
+              softWrap: true,
+            ),
+          ],
+        ),
+      );
+    }
+
+    return ExpandableNotifier(
+        child: Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      child: ScrollOnExpand(
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expandable(
+                collapsed: buildCollapsed1(),
+                expanded: buildExpanded1(),
+              ),
+              Expandable(
+                collapsed: buildCollapsed2(),
+                expanded: buildExpanded2(),
+              ),
+              Expandable(
+                collapsed: buildCollapsed3(),
+                expanded: buildExpanded3(),
+              ),
+              Divider(
+                height: 1,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Builder(
+                    builder: (context) {
+                      var controller =
+                          ExpandableController.of(context, required: true)!;
+                      return TextButton(
+                        child: Text(
+                          controller.expanded ? "COLLAPSE" : "EXPAND",
+                          style: Theme.of(context)
+                              .textTheme
+                              .button!
+                              .copyWith(color: Colors.deepPurple),
+                        ),
+                        onPressed: () {
+                          controller.toggle();
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    ));
+  }
+}
+*/
