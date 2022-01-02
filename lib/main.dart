@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Logic/Bloc/AuthenticationBloc/login_bloc.dart';
 import 'Logic/Bloc/HomeBloc/home_screen_bloc.dart';
+import 'Modules/General Widgets/Bottom Navigation Bar/bottom_navigation_bar.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 class CustomBottomNavigationBar extends StatefulWidget {
   const CustomBottomNavigationBar({Key? key}) : super(key: key);
   static int index = 1;
+  static int prevIndex = -1;
 
   @override
   _CustomBottomNavigationBarState createState() =>
@@ -58,7 +59,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             Navigator.pushNamed(context, 'home');
           }
         } else if (index == 2) {
-          // Navigator.pushNamed(context, 'timeline');
         } else if (index == 3) {
           if (CustomBottomNavigationBar.index != index) {
             CustomBottomNavigationBar.index = index;

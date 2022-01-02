@@ -15,7 +15,7 @@ class CheckListScreen extends StatefulWidget {
       {Key? key, required this.chatbot, required this.bottomBar})
       : super(key: key);
   final ChatBot chatbot;
-  final CustomBottomNavigationBar bottomBar;
+  final bottomBar;
   @override
   _CheckListScreenState createState() => _CheckListScreenState();
 }

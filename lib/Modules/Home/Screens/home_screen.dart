@@ -25,7 +25,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.chatbot, required this.bottomBar})
       : super(key: key);
   final ChatBot chatbot;
-  final CustomBottomNavigationBar bottomBar;
+  final bottomBar;
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -36,8 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext buildContext) {
-    CustomBottomNavigationBar.index = 1;
-
     return WillPopScope(
       onWillPop: _onbackpressed,
       child: MaterialApp(

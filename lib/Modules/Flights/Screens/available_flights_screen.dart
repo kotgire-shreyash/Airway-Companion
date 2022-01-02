@@ -24,7 +24,7 @@ class AvailableFlights extends StatefulWidget {
       {Key? key, required this.chatbot, required this.bottomBar})
       : super(key: key);
   final ChatBot chatbot;
-  final CustomBottomNavigationBar bottomBar;
+  final bottomBar;
 
   @override
   _AvailableFlightsState createState() => _AvailableFlightsState();
@@ -80,7 +80,11 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                 elevation: 0,
                 backgroundColor: Colors.blue.shade500,
                 leading: IconButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      CustomBottomNavigationBar.index = 1;
+
+                      Navigator.pop(context);
+                    },
                     icon: const Icon(
                       Icons.arrow_back,
                       color: Colors.white,
