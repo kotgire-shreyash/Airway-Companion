@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, deprecated_member_use
+
 import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/checklist_bloc.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Checklist/Events/checklist_screen_event.dart';
@@ -5,10 +7,17 @@ import 'package:airwaycompanion/Modules/Checklist/Screens/checklist_screen_state
 import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:azstore/azstore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+var azureStorage = AzureStorage.parse(
+      "DefaultEndpointsProtocol=https;AccountName=airwaycompanionblob;AccountKey=z8NIVphTTdxv7ja06UvpU7Gyhyms4UWdVozkV/5kxvL61wxlEIE0VyVq2Fr8p3CPRwHLG/lX5/i3TLTrG0/+0A==;EndpointSuffix=core.windows.net");
+TextEditingController TableName = new TextEditingController();
+// ignore: non_constant_identifier_names
+var Entity=[];
 
 class CheckListScreen extends StatefulWidget {
   const CheckListScreen(
@@ -24,10 +33,29 @@ class _CheckListScreenState extends State<CheckListScreen> {
   static int cardIndex = 0;
   final _latoBoldFontFamily =
       GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
+  // TextEditingController TableName = new TextEditingController();
+  // TextEditingController EntityName = new TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    super.initState();
+    _nameController =  TextEditingController();
+    // EntityName=TextEditingController();
+    TableName=TextEditingController();
+  }
+
+  final _formKey = GlobalKey<FormState>();
+  late TextEditingController _nameController;
+  // late TextEditingController EntityName;
+  late TextEditingController TableName;
+  // ignore: unused_field
+  static List<String> documentList = [""];
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
   }
 
   @override
@@ -66,22 +94,168 @@ class _CheckListScreenState extends State<CheckListScreen> {
                     alignment: Alignment.centerRight,
                     child: IconButton(
                         onPressed: () async {
-                          var _uniqueKey = UniqueKey();
+                          // var tableName = "";
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Dialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                elevation: 16,
+                                child: Container(
+                                  child: ListView(
+                                    shrinkWrap: true,
+                                    // ignore: prefer_const_literals_to_create_immutables
+                                    children: <Widget>[
+                                      SizedBox(height: 20),
+                                      Center(child: Text('Add Documents')),
+                                      SizedBox(height: 20),
 
-                          Map<String, dynamic> dataMap = {
-                            "cardIndex": state.taskWidgets.length,
-                            "isChecked": false,
-                            "title": "something",
-                            "a": "aadhar",
-                            "b": "pancard",
-                          };
 
-                          context.read<CheckListScreenBloc>().add(
-                                AzureTableCardAddition(
-                                  checkListCardMap: dataMap,
+                                      // TextField(
+                                      //   controller: TableName,
+                                      //   maxLines: 1,
+                                      //   style: TextStyle(fontSize: 17),
+                                      //   textAlignVertical:
+                                      //       TextAlignVertical.center,
+                                      //   decoration: InputDecoration(
+                                      //     filled: true,
+                                      //     prefixIcon: Icon(
+                                      //         Icons.document_scanner,
+                                      //         color: Theme.of(context)
+                                      //             .iconTheme
+                                      //             .color),
+                                      //     border: OutlineInputBorder(
+                                      //         borderSide: BorderSide.none,
+                                      //         borderRadius: BorderRadius.all(
+                                      //             Radius.circular(30))),
+                                      //     fillColor: Theme.of(context)
+                                      //         .inputDecorationTheme
+                                      //         .fillColor,
+                                      //     contentPadding: EdgeInsets.zero,
+                                      //     hintText: 'Document Type',
+                                      //   ),
+                                      //   // ignore: avoid_print
+                                      // ),
+
+
+
+
+                                      Container(
+                                        child: Form(
+                                          key: _formKey,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                // name textfield
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 32.0),
+                                                  child: TextFormField(
+                                                    // controller: _nameController,
+                                                    controller: TableName,
+                                                    decoration: InputDecoration(
+                                                        hintText:
+                                                            'Enter Document Type'),
+                                                    validator: (v) {
+                                                      if (v!.trim().isEmpty)
+                                                        // ignore: curly_braces_in_flow_control_structures
+                                                        return 'Please enter something';
+                                                      return null;
+                                                    },
+                                                  ),
+                                                ),
+                                                
+                                                SizedBox(
+                                                  height: 20,
+                                                ),
+                                                Text(
+                                                  'Add Documents',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontSize: 16),
+                                                ),
+                                                ..._getDocuments(TableName),
+                                                SizedBox(
+                                                  height: 40,
+                                                ),
+                                                FlatButton(
+                                                  onPressed: () {
+                                                    azureStorage.createTable(TableName.text);
+                                                    var len=Entity.length;
+                                                    // Map<String,dynamic>mp={};
+                                                    for(var i=0;i<len;i++)
+                                                    {
+                                                      Map<String, dynamic> dataMap={"name":Entity[i].toString()};
+                                                      // ignore: non_constant_identifier_names
+                                                      String? PartitionKey=Entity[i];
+                                                      String? dcnum=(i+1).toString();
+                                                      azureStorage.putTableRow(tableName: TableName.text,partitionKey:PartitionKey,rowKey: dcnum,bodyMap: dataMap);
+                                                      // azureStorage.putTableRow(tableName: TableName.text,partitionKey:PartitionKey,rowKey: dcnum,bodyMap: dataMap);
+                                                      print(Entity[i]);
+                                                      // print(' ');
+                                                    }
+                                                    
+                                                    // for(var i=0;i<len;i++)
+                                                    // {
+                                                    //   print('object');
+                                                    //   Map<String, dynamic> dataMap={"name":Entity[i].toString()};
+                                                    //   // ignore: non_constant_identifier_names
+                                                    //   String? PartitionKey=Entity[i];
+                                                    //   String? dcnum=(i+1).toString();
+                                                    //   azureStorage.putTableRow(tableName: TableName.text,partitionKey:PartitionKey,rowKey: dcnum,bodyMap: dataMap);
+                                                    //   // azureStorage.putTableRow(tableName: TableName.text,partitionKey:PartitionKey,rowKey: dcnum,bodyMap: dataMap);
+                                                    //   print(Entity[i]);
+                                                    //   // print(' ');
+                                                    // }
+
+                                                    if (_formKey.currentState!
+                                                        .validate()) {
+                                                      _formKey.currentState!
+                                                          .save();
+                                                    }
+                                                  },
+                                                  child: Text('Save'),
+                                                  color: Colors.green,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+
+
+                                      
+                                    ],
+                                  ),
                                 ),
                               );
+                            },
+                          );
 
+                          // var _uniqueKey = UniqueKey();
+
+                          // Map<String, dynamic> dataMap = {
+                          //   "cardIndex": state.taskWidgets.length,
+                          //   "isChecked": false,
+                          //   "title": "something",
+                          //   "a": "aadhar",
+                          //   "b": "pancard",
+                          // };
+
+                          // context.read<CheckListScreenBloc>().add(
+                          //       AzureTableCardAddition(
+                          //         checkListCardMap: dataMap,
+                          //       ),
+                          //     );
+
+                          // print(TableName.text);
                           // var result = await state.getAzureCardTable();
                           // print(result);
                           // context.read<CheckListScreenBloc>().add(
@@ -261,4 +435,103 @@ class _CheckListScreenState extends State<CheckListScreen> {
       onDismissed: (direction) {},
     ),
   ];
+
+ // get documents text-fields
+  List<Widget> _getDocuments(TextEditingController _name){
+    print(_name.text);
+    azureStorage.createTable(_name.text);
+    List<Widget> documentsTextFields = [];
+    for(int i=0; i<documentList.length; i++){
+      documentsTextFields.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: Row(
+            children: [
+              Expanded(child: DocumentTextFields(i)),
+              SizedBox(width: 16,),
+              // we need add button at last friends row
+              _addRemoveButton(i == documentList.length-1, i),
+            ],
+          ),
+        )
+      );
+    }
+    return documentsTextFields;
+  }
+
+  /// add / remove button
+  Widget _addRemoveButton(bool add, int index){
+    return InkWell(
+      onTap: (){
+        if(add){
+          // add new text-fields at the top of all friends textfields
+          documentList.insert(0, "");
+        }
+        else documentList.removeAt(index);
+        setState((){});
+      },
+      child: Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+          color: (add) ? Colors.green : Colors.red,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Icon((add) ? Icons.add : Icons.remove, color: Colors.white,),
+      ),
+    );
+  }
+
+
+}
+
+class DocumentTextFields extends StatefulWidget {
+  final int index;
+  DocumentTextFields(this.index);
+  @override
+  _DocumentTextFieldsState createState() => _DocumentTextFieldsState();
+}
+
+class _DocumentTextFieldsState extends State<DocumentTextFields> {
+  late TextEditingController _nameController;
+  
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      _nameController.text = _CheckListScreenState.documentList[widget.index];
+    });
+
+    return TextFormField(
+      controller: _nameController,
+      // controller: EntityName,
+      onChanged: (v) => _CheckListScreenState.documentList[widget.index] = v,
+      decoration: InputDecoration(
+        hintText: 'Enter Document Name'
+      ),
+      validator: (v){
+        if(v!.trim().isEmpty) return 'Please enter something';
+        else{
+          print(_nameController.text);
+          // azureStorage.putTableRow(tableName: TableName.text,);
+          Entity.add(_nameController.text);
+        }
+        return null;
+      },
+    );
+    // ignore: dead_code
+    
+  }
 }
