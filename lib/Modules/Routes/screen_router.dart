@@ -54,7 +54,8 @@ class GlobalRouter {
         return MaterialPageRoute(
             builder: (_) =>
                 TimeLineScreen(chatbot: _chatBot, bottomBar: _bottomBar));
-
+      case 'navigation':
+        return MaterialPageRoute(builder: (_) => const NavigationScreen());
       case 'guidelines':
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
