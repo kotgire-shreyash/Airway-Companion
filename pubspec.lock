@@ -415,6 +415,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.10"
+  material_floating_search_bar:
+    dependency: "direct main"
+    description:
+      name: material_floating_search_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.6"
   meta:
     dependency: transitive
     description:
@@ -686,13 +693,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.1"
-  vector_map_tiles:
-    dependency: "direct main"
-    description:
-      name: vector_map_tiles
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.38"
   universal_io:
     dependency: transitive
     description:
@@ -700,6 +700,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
+  vector_map_tiles:
+    dependency: "direct main"
+    description:
+      name: vector_map_tiles
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.38"
   vector_math:
     dependency: transitive
     description:
