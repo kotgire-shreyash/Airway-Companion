@@ -13,10 +13,10 @@ class DismissCard extends CheckListScreenEvent {
   DismissCard({this.isCardDismissed = false});
 }
 
-// Add Card
-class AddCard extends CheckListScreenEvent {
-  var newTaskCard;
-  AddCard({required this.newTaskCard});
+// Retrieve Data From Azure
+class AzureDataRetrieveEvent extends CheckListScreenEvent {
+  bool isDataBeingUpdated;
+  AzureDataRetrieveEvent({this.isDataBeingUpdated = false});
 }
 
 // Delete Card
@@ -29,11 +29,9 @@ class DeleteCard extends CheckListScreenEvent {
 
 // CheckBox pressed
 class CheckBoxPressed extends CheckListScreenEvent {
-  bool isCheckBoxPressed;
   int index;
   int cardIndex;
-  CheckBoxPressed(
-      {this.isCheckBoxPressed = false, this.index = -1, this.cardIndex = -1});
+  CheckBoxPressed({this.index = -1, this.cardIndex = -1});
 }
 
 class AddFieldsEvent extends CheckListScreenEvent {
