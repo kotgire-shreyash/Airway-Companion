@@ -2,6 +2,11 @@ import 'package:airwaycompanion/Modules/Checklist/widgets/task_card.dart';
 
 abstract class CheckListScreenEvent {}
 
+class AzureTableCardAddition extends CheckListScreenEvent {
+  var checkListCardMap;
+  AzureTableCardAddition({this.checkListCardMap});
+}
+
 // Dismiss Card
 class DismissCard extends CheckListScreenEvent {
   bool isCardDismissed;
@@ -16,8 +21,10 @@ class AddCard extends CheckListScreenEvent {
 
 // Delete Card
 class DeleteCard extends CheckListScreenEvent {
-  int index;
-  DeleteCard({required this.index});
+  // int cardIndex;
+  // DeleteCard({required this.cardIndex});
+  var uniqueKey;
+  DeleteCard({required this.uniqueKey});
 }
 
 // CheckBox pressed

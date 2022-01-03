@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class FlightAPI {
-  final accessKey = "738cde56fe083ab79cf14188df151175";
+  final accessKey = "96ff231edea6f72576f01eb9c5454263";
   Future<http.Response> getFlightDataEncoded() async {
     try {
       var response = await http.get(

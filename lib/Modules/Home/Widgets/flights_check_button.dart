@@ -6,28 +6,42 @@ class FlightsCheckNotifierButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      child: Text(
-        "Check",
-        style: TextStyle(
-            color: Colors.white,
-            fontFamily:
-                GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily),
+    return Card(
+      elevation: 5,
+      color: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(5),
+        ),
       ),
-      style: TextButton.styleFrom(
-        minimumSize: const Size(150, 40),
-        primary: Colors.white,
-        shape: const RoundedRectangleBorder(
+      child: Container(
+        height: 35,
+        width: 130,
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(5),
           ),
+          color: Colors.white,
         ),
-        backgroundColor: Colors.blue.shade700,
-        // shape: const StadiumBorder(),
+        child: ElevatedButton(
+          child: Text(
+            "Check",
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 13,
+                fontFamily:
+                    GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.transparent,
+            shadowColor: Colors.transparent,
+            elevation: 5,
+          ),
+          onPressed: () {
+            Navigator.pushNamed(context, "availableFlights");
+          },
+        ),
       ),
-      onPressed: () {
-        Navigator.pushNamed(context, "availableFlights");
-      },
     );
   }
 }

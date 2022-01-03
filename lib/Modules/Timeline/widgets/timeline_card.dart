@@ -17,25 +17,25 @@ class TimeLineCardHeader extends StatelessWidget {
       children: [
         Icon(
           Icons.transit_enterexit,
-          color: Colors.green,
+          color: Colors.yellow.shade700,
         ),
         Text(
           stepObject.name,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        Spacer(),
+        const Spacer(),
         Text(
           '${stepObject.date.day}/${stepObject.date.month}/${stepObject.date.year}',
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xffb6b2b2),
           ),
         ),
-        Spacer(),
+        const Spacer(),
         IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.checklist_rounded,
               color: Colors.lightBlue,
             ))
@@ -51,7 +51,7 @@ class TimeLineCardBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(
-      style: TextStyle(
+      style: const TextStyle(
         color: Color(0xff9b9b9b),
         fontSize: 12.5,
       ),
@@ -60,12 +60,12 @@ class TimeLineCardBody extends StatelessWidget {
         child: FixedTimeline.tileBuilder(
           theme: TimelineThemeData(
             nodePosition: 0,
-            color: Color(0xff989898),
-            indicatorTheme: IndicatorThemeData(
+            color: const Color(0xff989898),
+            indicatorTheme: const IndicatorThemeData(
               position: 0,
               size: 20.0,
             ),
-            connectorTheme: ConnectorThemeData(
+            connectorTheme: const ConnectorThemeData(
               thickness: 2.5,
             ),
           ),
@@ -76,7 +76,7 @@ class TimeLineCardBody extends StatelessWidget {
               if (stages[index].isCompleted) return null;
 
               return Padding(
-                padding: EdgeInsets.only(left: 8.0),
+                padding: const EdgeInsets.only(left: 8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -95,21 +95,21 @@ class TimeLineCardBody extends StatelessWidget {
             indicatorBuilder: (_, index) {
               if (stages[index].isCompleted) {
                 return DotIndicator(
-                  color: Color(0xff66c97f),
-                  child: Icon(
+                  color: Colors.yellow.shade700,
+                  child: const Icon(
                     Icons.check,
                     color: Colors.white,
                     size: 12.0,
                   ),
                 );
               } else {
-                return OutlinedDotIndicator(
+                return const OutlinedDotIndicator(
                   borderWidth: 2.5,
                 );
               }
             },
             connectorBuilder: (_, index, ___) => SolidLineConnector(
-              color: stages[index].isCompleted ? Color(0xff66c97f) : null,
+              color: stages[index].isCompleted ? Colors.yellow.shade700 : null,
             ),
           ),
         ),
@@ -130,23 +130,23 @@ class TimeLineCardFooter extends StatelessWidget {
         MaterialButton(
           onPressed: () {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 content: Text('On-time!'),
               ),
             );
           },
           elevation: 0,
-          shape: StadiumBorder(),
-          color: Color(0xff66c97f),
+          shape: const StadiumBorder(),
+          color: Colors.yellow.shade700,
           textColor: Colors.white,
-          child: Text('On-time'),
+          child: const Text('On-time'),
         ),
-        Spacer(),
+        const Spacer(),
         IconButton(
             onPressed: () {},
             icon: Icon(
               Icons.gps_fixed_outlined,
-              color: Colors.teal,
+              color: Colors.blue.shade900,
             ))
       ],
     );

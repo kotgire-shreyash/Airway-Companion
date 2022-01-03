@@ -63,6 +63,9 @@ dependencies:
   flutter_map: 
   vector_map_tiles: ^1.2.38
   group_button: ^3.3.1
+  showcaseview:
+  azstore: 
+  expandable:
   
 dev_dependencies:
   flutter_test:
