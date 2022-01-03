@@ -70,4 +70,5 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation platform('com.google.firebase:firebase-bom:29.0.1')
     implementation 'com.google.firebase:firebase-analytics' // OR ...-ktx
+    implementation "com.azure.android:azure-maps-control:1.1.0"
 }
