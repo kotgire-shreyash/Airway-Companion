@@ -35,3 +35,8 @@ class CheckBoxPressed extends CheckListScreenEvent {
   CheckBoxPressed(
       {this.isCheckBoxPressed = false, this.index = -1, this.cardIndex = -1});
 }
+
+class AddFieldsEvent extends CheckListScreenEvent {
+  var fieldTitle;
+  AddFieldsEvent({this.fieldTitle});
+}

@@ -82,8 +82,9 @@ class _TaskCardState extends State<TaskCard> {
                   return BlocBuilder<CheckListScreenBloc, CheckListScreenState>(
                     builder: (context, state) {
                       return CheckboxListTile(
-                        value: state.taskWidgets[widget.cardIndex].child
-                            .taskClassObject.todolist[index][1],
+                        // value: state.taskWidgets[widget.cardIndex].child
+                        //     .taskClassObject.todolist[index][1],
+                        value: false,
                         activeColor: Colors.red,
                         onChanged: (value) {
                           context.read<CheckListScreenBloc>().add(
@@ -94,7 +95,8 @@ class _TaskCardState extends State<TaskCard> {
                                 ),
                               );
                         },
-                        title: Text(widget.taskClassObject.todolist[index][0]),
+                        // title: Text(widget.taskClassObject.todolist[index][0]),
+                        title: Text("SOMETHING"),
                         controlAffinity: ListTileControlAffinity.leading,
                       );
                     },
@@ -116,8 +118,8 @@ class TaskClass {
       required this.todolist,
       this.iconData,
       this.isChecked = false});
-  final title;
-  final todolist;
-  final iconData;
+  var title;
+  var todolist;
+  var iconData;
   bool isChecked;
 }

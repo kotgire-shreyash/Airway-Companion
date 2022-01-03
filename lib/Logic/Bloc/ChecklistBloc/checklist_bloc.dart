@@ -13,11 +13,58 @@ class CheckListScreenBloc
     on<CheckBoxPressed>(_onCheckBoxPressedEvent);
     on<DeleteCard>(_onDeleteCardEvent);
     on<AzureTableCardAddition>(_onAzureTableCardAdditionEvent);
+    on<AddFieldsEvent>(_onAddFieldsEvent);
   }
 
   void _onAddCardEvent(AddCard event, Emitter<CheckListScreenState> emit) {
     print("NO ISSUES");
     emit(state.copyWith(taskWidgets: state.taskWidgets + [event.newTaskCard]));
+  }
+
+  void _onAddFieldsEvent(
+      AddFieldsEvent event, Emitter<CheckListScreenState> emit) {
+    emit(state.copyWith(
+        fieldsList: state.fieldsList +
+            [
+              Container(
+                height: 50,
+                width: 300,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 15, left: 10),
+                        width: 250,
+                        height: 50,
+                        child: Text(
+                          event.fieldTitle,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      child: InkWell(
+                        onTap: () {},
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Icon(
+                            Icons.remove,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ]));
   }
 
   void _onDeleteCardEvent(
@@ -72,4 +119,6 @@ class CheckListScreenBloc
         emit);
   }
 }
+
+
 // ##########################################################################################################################
