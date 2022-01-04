@@ -4,6 +4,7 @@ import 'package:airwaycompanion/Data/Repositories/RoutesRepository/route_data_pr
 import 'package:airwaycompanion/Data/Repositories/SearchRepository/search_model.dart';
 import 'package:airwaycompanion/Modules/Navigation/Widgets/custom_marker.dart';
 import 'package:airwaycompanion/Modules/Navigation/Widgets/explore_widget.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -24,7 +25,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   final MapController _mapController = MapController();
   //final _intialPostion = LatLng(13.199165, 77.707984);
   final List<Marker> _markers = [];
-  var _origin = LatLng(13.199165, 77.707984);
+  final _origin = LatLng(13.199165, 77.707984);
   var points = <LatLng>[];
 
   set result(List<SearchModel> searchResultList) {
@@ -39,91 +40,88 @@ class _NavigationScreenState extends State<NavigationScreen> {
   }
 
   @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: MapWidget(),
-          ),
-          ExploreWidget(),
-          serchBar(),
-        ],
-      ),
-    );
-  }
-
-  FlutterMap MapWidget() {
-    return FlutterMap(
-      mapController: _mapController,
-      options: MapOptions(
-        onMapCreated: (mapController) {
-          _markers.add(
-              CustomMarker(point: _origin, color: Colors.redAccent.shade700));
-        },
-        center: _origin, zoom: 10, //range in 0 to 21
-        // onTap: _addmarker,
-        plugins: [
-          VectorMapTilesPlugin(),
-        ],
-      ),
-      layers: [
-        TileLayerOptions(
-          minZoom: 2,
-          maxZoom: 22,
-          errorTileCallback: (tile, error) => print(error),
-          urlTemplate:
-              // "https://atlas.microsoft.com/map/tile/png?api-version=1&layer=hybrid&style=main&tileSize=512&view=Auto&zoom={z}&x={x}&y={y}&subscription-key={subscriptionKey}",
-              "https://atlas.microsoft.com/map/tile?subscription-key={subscriptionKey}&api-version=2.1&tileSize=512&tilesetId={tilesetId}&zoom={z}&x={x}&y={y}",
-          additionalOptions: {
-            'subscriptionKey': 'OmHax9byGsCpudWRxU0lYnTgw81r6Eq9nlCqRk3EnGI',
-            'tilesetId': 'microsoft.base.road'
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
           },
-          tileProvider: const NonCachingNetworkTileProvider(),
-          //errorImage: image to be displayed when map not loaded
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
         ),
-        // For building Polylines
-        PolylineLayerOptions(
-          polylines: [
-            Polyline(
-              points: points,
-              strokeWidth: 4.0,
-              isDotted: true,
-              colorsStop: [5, 10],
-              color: Colors.blue.shade700,
-            ),
-          ],
+      ),
+      body: SlidingUpPanel(
+        panelBuilder: (sc) => ExploreWidget(
+          scrollController: sc,
         ),
-        MarkerLayerOptions(
-          markers: _markers,
+        body: mapWidget(),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
         ),
-      ],
+        backdropEnabled: false,
+      ),
     );
   }
 
-  // void _addmarker(tapposition, point) {
-  //   if (_origin == null || (_origin != null && _destination != null)) {
-  //     setState(() {
-  //       points.clear();
-  //       _markers.clear();
-  //       _origin = point;
-  //       _destination = null;
-  //       _markers.add(CustomMarker(point: point, color: Colors.red));
-  //     });
-  //   } else {
-  //     setState(() {
-  //       _destination = point;
-  //       _markers.add(CustomMarker(point: point, color: Colors.green));
-  //       // drawPolyline();
-  //     });
-  //   }
-  // }
+  Widget mapWidget() {
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: FlutterMap(
+        mapController: _mapController,
+        options: MapOptions(
+          onMapCreated: (mapController) {
+            _markers.add(
+                CustomMarker(point: _origin, color: Colors.redAccent.shade700));
+          },
+          center: _origin,
+          zoom: 10,
+          plugins: [
+            VectorMapTilesPlugin(),
+          ],
+          minZoom: 5.0,
+          maxZoom: 30.0,
+          interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+        ),
+        layers: [
+          TileLayerOptions(
+            minZoom: 2,
+            maxZoom: 22,
+            errorTileCallback: (tile, error) => print(error),
+            urlTemplate:
+                "https://atlas.microsoft.com/map/tile?subscription-key={subscriptionKey}&api-version=2.1&tileSize=512&tilesetId={tilesetId}&zoom={z}&x={x}&y={y}",
+            additionalOptions: {
+              'subscriptionKey': 'OmHax9byGsCpudWRxU0lYnTgw81r6Eq9nlCqRk3EnGI',
+              'tilesetId': 'microsoft.base.road'
+            },
+            tileProvider: const NonCachingNetworkTileProvider(),
+            //errorImage: image to be displayed when map not loaded
+          ),
+          // For building Polylines
+          PolylineLayerOptions(
+            polylines: [
+              Polyline(
+                points: points,
+                strokeWidth: 4.0,
+                isDotted: true,
+                colorsStop: [5, 10],
+                color: Colors.blue.shade700,
+              ),
+            ],
+          ),
+          MarkerLayerOptions(
+            markers: _markers,
+          ),
+        ],
+      ),
+    );
+  }
 
   void drawPolyline(destination) async {
     Routes _Routes = Routes(origin: _origin, destination: destination);

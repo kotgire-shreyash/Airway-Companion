@@ -66,6 +66,7 @@ dependencies:
   showcaseview:
   azstore: 
   expandable:
+  sliding_up_panel:
   
 dev_dependencies:
   flutter_test:

@@ -8,7 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
 
 class ExploreWidget extends StatefulWidget {
-  const ExploreWidget({Key? key}) : super(key: key);
+  const ExploreWidget({Key? key, required this.scrollController})
+      : super(key: key);
+  final ScrollController scrollController;
 
   @override
   _ExploreWidgetState createState() => _ExploreWidgetState();
@@ -21,37 +23,32 @@ class _ExploreWidgetState extends State<ExploreWidget> {
   List<SearchModel> searchResultList = [];
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 450),
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
-          color: Colors.white),
-      child: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 15, left: 15),
-            child: Text(
-              "Explore",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  color: Colors.grey.shade700,
-                  fontSize: 15,
-                  fontFamily: _latoBoldFontFamily,
-                  fontWeight: FontWeight.w900),
-              textScaleFactor: 1.6,
-            ),
+    return ListView(
+      controller: widget.scrollController,
+      physics: const BouncingScrollPhysics(),
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 15),
+          child: Text(
+            "Explore",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.grey.shade700,
+                fontSize: 15,
+                fontFamily: _latoBoldFontFamily,
+                fontWeight: FontWeight.w900),
+            textScaleFactor: 1.6,
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          optionslist(),
-          SizedBox(
-            height: 10,
-          ),
-          searchResultList.isEmpty ? Container() : itemlist()
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        optionslist(),
+        SizedBox(
+          height: 10,
+        ),
+        searchResultList.isEmpty ? Container() : itemlist()
+      ],
     );
   }
 

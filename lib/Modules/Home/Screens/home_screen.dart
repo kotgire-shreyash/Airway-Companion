@@ -133,7 +133,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
         context
             .read<HomeScreenBloc>()
             .add(NavigationTilePressed(isNavigationTilePressed: false));
-        Navigator.pushNamed(context, "navigationPage");
+        Navigator.pushNamed(context, "navigation");
       } else if (state.isTimeLineButtonPressed) {
         context
             .read<HomeScreenBloc>()
@@ -489,9 +489,9 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                     .add(CheckListTilePressed(isChecklistTilePressed: true));
               }),
               _drawerListTile("Navigation", FontAwesomeIcons.globe, () {
-                // context
-                //     .read<HomeScreenBloc>()
-                //     .add(NavigationTilePressed(isNavigationTilePressed: true));
+                context
+                    .read<HomeScreenBloc>()
+                    .add(NavigationTilePressed(isNavigationTilePressed: true));
               }),
               _drawerListTile("Settings", CupertinoIcons.settings, () {
                 Navigator.pushNamed(context, "timeline");
