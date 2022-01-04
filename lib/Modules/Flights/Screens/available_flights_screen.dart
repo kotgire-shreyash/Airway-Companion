@@ -78,7 +78,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
               bottomNavigationBar: widget.bottomBar,
               appBar: AppBar(
                 elevation: 0,
-                backgroundColor: Colors.blue.shade500,
+                backgroundColor: Colors.blue.shade800,
                 leading: IconButton(
                     onPressed: () {
                       CustomBottomNavigationBar.index = 1;
@@ -121,14 +121,14 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.blue.shade500,
-                              Colors.blue.shade400,
-                              Colors.blue.shade400,
-                              Colors.blue.shade500,
+                              Colors.blue.shade800,
+                              Colors.blue.shade600,
+                              Colors.blue.shade600,
+                              Colors.blue.shade800,
                             ],
                             stops: const [
                               0.1,
-                              0.3,
+                              0.2,
                               0.6,
                               0.9,
                             ],
@@ -1128,7 +1128,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                           height: 25,
                           width: MediaQuery.of(context).size.width / 2 - 120,
                           decoration: BoxDecoration(
-                            color: Colors.deepPurpleAccent.shade100,
+                            color: Colors.blue.shade700,
                             border: Border.all(color: Colors.grey),
                           ),
 
@@ -1210,7 +1210,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                           height: 25,
                           width: MediaQuery.of(context).size.width / 2 - 120,
                           decoration: BoxDecoration(
-                            color: Colors.deepPurpleAccent.shade100,
+                            color: Colors.blue.shade700,
                             border: Border.all(color: Colors.grey),
                           ),
 
