@@ -1,7 +1,10 @@
 import 'package:airwaycompanion/Data/Repositories/RoutesRepository/route_data_provider.dart';
 import 'package:airwaycompanion/Data/Repositories/SearchRepository/search_model.dart';
+import 'package:airwaycompanion/Logic/Bloc/NavigationScreenBloc/navigation_screen_bloc.dart';
+import 'package:airwaycompanion/Modules/Navigation/Events/navigation_screen_events.dart';
 import 'package:airwaycompanion/Modules/Navigation/Widgets/custom_marker.dart';
 import 'package:airwaycompanion/Modules/Navigation/Widgets/explore_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
@@ -9,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
+
+import 'navigation_screen_states.dart';
 
 final List<Marker> markers = [];
 
@@ -26,55 +31,48 @@ class NavigationScreen extends StatefulWidget {
 class _NavigationScreenState extends State<NavigationScreen> {
   final MapController _mapController = MapController();
   final _origin = LatLng(13.199165, 77.707984);
-  var points = <LatLng>[];
-
-  set result(List<SearchModel> searchResultList) {
-    setState(() {
-      markers.clear();
-      for (var item in searchResultList) {
-        markers.add(CustomMarker(point: _origin, color: Colors.red));
-        markers.add(CustomMarker(point: LatLng(item.latitude, item.longitude)));
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: widget.bottomBar,
-      body: Stack(
-        children: [
-          SlidingUpPanel(
-            panelBuilder: (sc) => ExploreWidget(
-              scrollController: sc,
+    return BlocConsumer<NavigationScreenBloc, NavigationScreenState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Scaffold(
+            bottomNavigationBar: widget.bottomBar,
+            body: Stack(
+              children: [
+                SlidingUpPanel(
+                  panelBuilder: (sc) => ExploreWidget(
+                    scrollController: sc,
+                  ),
+                  minHeight: 80,
+                  body: mapWidget(),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                  backdropEnabled: false,
+                ),
+                SafeArea(
+                  child: Container(
+                      alignment: Alignment.topCenter,
+                      margin: const EdgeInsets.only(left: 10, right: 10),
+                      child: _searchBar()),
+                ),
+                SafeArea(
+                  child: Container(
+                      alignment: Alignment.topCenter,
+                      margin: EdgeInsets.only(
+                          top: 60,
+                          bottom: MediaQuery.of(context).size.height - 230,
+                          left: 5,
+                          right: 5),
+                      child: const QuickSelect()),
+                ),
+              ],
             ),
-            minHeight: 80,
-            body: mapWidget(),
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-            backdropEnabled: false,
-          ),
-          SafeArea(
-            child: Container(
-                alignment: Alignment.topCenter,
-                margin: const EdgeInsets.only(left: 10, right: 10),
-                child: _searchBar()),
-          ),
-          SafeArea(
-            child: Container(
-                alignment: Alignment.topCenter,
-                margin: EdgeInsets.only(
-                    top: 60,
-                    bottom: MediaQuery.of(context).size.height - 230,
-                    left: 5,
-                    right: 5),
-                child: const QuickSelect()),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 
   Widget mapWidget() {
@@ -82,8 +80,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       mapController: _mapController,
       options: MapOptions(
         onMapCreated: (mapController) {
-          markers.add(
-              CustomMarker(point: _origin, color: Colors.redAccent.shade700));
+          context.read<NavigationScreenBloc>().add(AddMarker());
         },
         center: _origin,
         zoom: 10,
@@ -117,16 +114,16 @@ class _NavigationScreenState extends State<NavigationScreen> {
         PolylineLayerOptions(
           polylines: [
             Polyline(
-              points: points,
+              points: context.read<NavigationScreenBloc>().state.points,
               strokeWidth: 4.0,
               isDotted: true,
               colorsStop: [5, 10],
-              color: Colors.blue.shade700,
+              color: Colors.blue,
             ),
           ],
         ),
         MarkerLayerOptions(
-          markers: markers,
+          markers: context.read<NavigationScreenBloc>().state.markers,
         ),
       ],
     );
@@ -134,7 +131,9 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   void drawPolyline(destination) async {
     Routes _routes = Routes(origin: _origin, destination: destination);
-    points = await _routes.getRouteDetails();
+    context.read<NavigationScreenBloc>().add(
+          DrawPolylines(routes: _routes),
+        );
   }
 
   Widget _searchBar() {
@@ -184,5 +183,3 @@ class _NavigationScreenState extends State<NavigationScreen> {
     );
   }
 }
-
-// https://meet.google.com/tfe-uihw-nke

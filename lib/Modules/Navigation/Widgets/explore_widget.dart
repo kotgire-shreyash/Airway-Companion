@@ -1,36 +1,15 @@
 import 'package:airwaycompanion/Data/Repositories/SearchRepository/search_data_provider.dart';
 import 'package:airwaycompanion/Data/Repositories/SearchRepository/search_model.dart';
+import 'package:airwaycompanion/Logic/Bloc/NavigationScreenBloc/navigation_screen_bloc.dart';
+import 'package:airwaycompanion/Modules/Navigation/Events/navigation_screen_events.dart';
 import 'package:airwaycompanion/Modules/Navigation/Screens/navigation_screen.dart';
+import 'package:airwaycompanion/Modules/Navigation/Screens/navigation_screen_states.dart';
 import 'package:airwaycompanion/Modules/Navigation/Widgets/custom_marker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
 import 'package:latlong2/latlong.dart';
-
-final List<String> _buttons = [
-  'Hotels',
-  'Restaurant',
-  'ATM',
-  'Cafe',
-  'pharmacy',
-  'hospital',
-  'Books',
-  'Taxi',
-];
-
-final List _icons = [
-  Icons.hotel,
-  Icons.restaurant,
-  Icons.atm,
-  Icons.local_cafe,
-  Icons.medical_services,
-  Icons.local_hospital,
-  Icons.library_books,
-  Icons.local_taxi,
-];
-
-List<SearchModel> searchResultList = [];
-final Search _search = Search();
 
 class ExploreWidget extends StatefulWidget {
   const ExploreWidget({Key? key, required this.scrollController})
@@ -46,30 +25,33 @@ class _ExploreWidgetState extends State<ExploreWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      controller: widget.scrollController,
-      physics: const BouncingScrollPhysics(),
-      children: [
-        Text(
-          "Explore nearby",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.grey.shade700,
-              fontSize: 15,
-              fontFamily: GoogleFonts.lato().fontFamily,
-              fontWeight: FontWeight.bold),
-          textScaleFactor: 1.5,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        _getOptionsList(),
-        const SizedBox(
-          height: 10,
-        ),
-        searchResultList.isEmpty ? Container() : _getItemsList()
-      ],
-    );
+    return BlocBuilder<NavigationScreenBloc, NavigationScreenState>(
+        builder: (context, state) {
+      return ListView(
+        controller: widget.scrollController,
+        physics: const BouncingScrollPhysics(),
+        children: [
+          Text(
+            "Explore nearby",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.grey.shade700,
+                fontSize: 15,
+                fontFamily: GoogleFonts.lato().fontFamily,
+                fontWeight: FontWeight.bold),
+            textScaleFactor: 1.5,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          _getOptionsList(),
+          const SizedBox(
+            height: 10,
+          ),
+          state.searchResultList.isEmpty ? Container() : _getItemsList()
+        ],
+      );
+    });
   }
 
   _getOptionsList() {
@@ -77,18 +59,19 @@ class _ExploreWidgetState extends State<ExploreWidget> {
       isRadio: false,
       spacing: 10,
       onSelected: (index, isSelected) async {
-        searchResultList.clear();
-        NavigationScreen.of(context)!.points.clear();
+        // searchResultList.clear();
+        // NavigationScreen.of(context)!.points.clear();
         if (isSelected) {
-          searchResultList.clear();
-          searchResultList =
-              await _search.searchNearby(searchdata: _buttons[index]);
+          context
+              .read<NavigationScreenBloc>()
+              .add(AmenitiesSearchButtonPressed(index: index));
+
           iconIndex = index;
         }
-        NavigationScreen.of(context)!.result = searchResultList;
+        // NavigationScreen.of(context)!.result = searchResultList;
       },
       groupingType: GroupingType.wrap,
-      buttons: _buttons,
+      buttons: context.read<NavigationScreenBloc>().state.buttons,
     );
   }
 
@@ -97,12 +80,16 @@ class _ExploreWidgetState extends State<ExploreWidget> {
     return ListView.builder(
       shrinkWrap: true,
       controller: _listViewScrollController,
-      itemCount: searchResultList.length,
+      itemCount:
+          context.read<NavigationScreenBloc>().state.searchResultList.length,
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
-      itemBuilder: (context, index) {
+      itemBuilder: (ctx, index) {
+        var searchResultList =
+            context.read<NavigationScreenBloc>().state.searchResultList;
         return ListTile(
-          leading: Icon(_icons[iconIndex]),
+          leading:
+              Icon(context.read<NavigationScreenBloc>().state.icons[iconIndex]),
           title: Text(searchResultList[index].name),
           subtitle: Text(searchResultList[index].address),
           trailing: Text(
@@ -116,16 +103,21 @@ class _ExploreWidgetState extends State<ExploreWidget> {
   }
 }
 
-class QuickSelect extends StatelessWidget {
+class QuickSelect extends StatefulWidget {
   const QuickSelect({Key? key}) : super(key: key);
 
+  @override
+  _QuickSelectState createState() => _QuickSelectState();
+}
+
+class _QuickSelectState extends State<QuickSelect> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
       physics: const BouncingScrollPhysics(),
-      itemCount: _buttons.length,
-      itemBuilder: (context, int index) {
+      itemCount: context.read<NavigationScreenBloc>().state.buttons.length,
+      itemBuilder: (ctx, int index) {
         return Row(
           children: [
             Card(
@@ -143,27 +135,22 @@ class QuickSelect extends StatelessWidget {
                   backgroundColor: Colors.white,
                   isExtended: true,
                   onPressed: () async {
-                    searchResultList.clear();
-                    searchResultList =
-                        await _search.searchNearby(searchdata: _buttons[index]);
-                    markers.clear();
-                    for (var item in searchResultList) {
-                      markers.add(CustomMarker(
-                          point: LatLng(13.199165, 77.707984),
-                          color: Colors.red));
-                      markers.add(CustomMarker(
-                          point: LatLng(item.latitude, item.longitude)));
-                    }
+                    context
+                        .read<NavigationScreenBloc>()
+                        .add(AmenitiesSearchButtonPressed(index: index));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Icon(
-                        _icons[index],
+                        context.read<NavigationScreenBloc>().state.icons[index],
                         color: Colors.black,
                       ),
                       Text(
-                        _buttons[index],
+                        context
+                            .read<NavigationScreenBloc>()
+                            .state
+                            .buttons[index],
                         style: const TextStyle(color: Colors.black),
                       ),
                     ],

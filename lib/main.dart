@@ -1,6 +1,7 @@
 import 'package:airwaycompanion/Logic/Bloc/AzureBotBloc/azure_bot_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/checklist_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/FlightsScreenBloc/flights_screen_bloc.dart';
+import 'package:airwaycompanion/Logic/Bloc/NavigationScreenBloc/navigation_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ class _AirwayCompanionAppState extends State<AirwayCompanionApp> {
         BlocProvider(create: (context) => FlightScreenBloc()),
         BlocProvider(create: (context) => CheckListScreenBloc()),
         BlocProvider(create: (context) => AzureBotBloc()),
+        BlocProvider(create: (context) => NavigationScreenBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -16,7 +16,7 @@ class CustomMarker extends Marker {
               NavigationScreen.of(ctx)!.drawPolyline(point);
             },
             icon: Icon(
-              Icons.location_on_outlined,
+              Icons.location_on,
               color: color,
               size: 40,
             ),
