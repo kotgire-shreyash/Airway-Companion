@@ -1,9 +1,11 @@
 import 'package:airwaycompanion/Data/Repositories/SearchRepository/search_data_provider.dart';
 import 'package:airwaycompanion/Data/Repositories/SearchRepository/search_model.dart';
 import 'package:airwaycompanion/Modules/Navigation/Screens/navigation_screen.dart';
+import 'package:airwaycompanion/Modules/Navigation/Widgets/custom_marker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
+import 'package:latlong2/latlong.dart';
 
 final List<String> _buttons = [
   'Hotels',
@@ -27,6 +29,9 @@ final List _icons = [
   Icons.local_taxi,
 ];
 
+List<SearchModel> searchResultList = [];
+final Search _search = Search();
+
 class ExploreWidget extends StatefulWidget {
   const ExploreWidget({Key? key, required this.scrollController})
       : super(key: key);
@@ -37,10 +42,6 @@ class ExploreWidget extends StatefulWidget {
 }
 
 class _ExploreWidgetState extends State<ExploreWidget> {
-  final _latoBoldFontFamily =
-      GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
-  final Search _search = Search();
-  List<SearchModel> searchResultList = [];
   int iconIndex = 0;
 
   @override
@@ -55,9 +56,9 @@ class _ExploreWidgetState extends State<ExploreWidget> {
           style: TextStyle(
               color: Colors.grey.shade700,
               fontSize: 15,
-              fontFamily: _latoBoldFontFamily,
-              fontWeight: FontWeight.w900),
-          textScaleFactor: 1.6,
+              fontFamily: GoogleFonts.lato().fontFamily,
+              fontWeight: FontWeight.bold),
+          textScaleFactor: 1.5,
         ),
         const SizedBox(
           height: 10,
@@ -128,14 +129,32 @@ class QuickSelect extends StatelessWidget {
         return Row(
           children: [
             Card(
+              elevation: 5,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.elliptical(25, 25))),
               child: Container(
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.elliptical(25, 25))),
                 height: 50,
-                width: 120,
+                width: 135,
                 child: FloatingActionButton(
+                  heroTag: "$index",
                   elevation: 0,
                   backgroundColor: Colors.white,
                   isExtended: true,
-                  onPressed: () {},
+                  onPressed: () async {
+                    searchResultList.clear();
+                    searchResultList =
+                        await _search.searchNearby(searchdata: _buttons[index]);
+                    markers.clear();
+                    for (var item in searchResultList) {
+                      markers.add(CustomMarker(
+                          point: LatLng(13.199165, 77.707984),
+                          color: Colors.red));
+                      markers.add(CustomMarker(
+                          point: LatLng(item.latitude, item.longitude)));
+                    }
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

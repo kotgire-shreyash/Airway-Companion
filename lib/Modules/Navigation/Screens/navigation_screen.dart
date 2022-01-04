@@ -10,8 +10,11 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
 
+final List<Marker> markers = [];
+
 class NavigationScreen extends StatefulWidget {
-  const NavigationScreen({Key? key}) : super(key: key);
+  const NavigationScreen({Key? key, required this.bottomBar}) : super(key: key);
+  final bottomBar;
 
   @override
   _NavigationScreenState createState() => _NavigationScreenState();
@@ -22,17 +25,15 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   final MapController _mapController = MapController();
-  final List<Marker> _markers = [];
   final _origin = LatLng(13.199165, 77.707984);
   var points = <LatLng>[];
 
   set result(List<SearchModel> searchResultList) {
     setState(() {
-      _markers.clear();
+      markers.clear();
       for (var item in searchResultList) {
-        _markers.add(CustomMarker(point: _origin, color: Colors.red));
-        _markers
-            .add(CustomMarker(point: LatLng(item.latitude, item.longitude)));
+        markers.add(CustomMarker(point: _origin, color: Colors.red));
+        markers.add(CustomMarker(point: LatLng(item.latitude, item.longitude)));
       }
     });
   }
@@ -40,6 +41,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: widget.bottomBar,
       body: Stack(
         children: [
           SlidingUpPanel(
@@ -54,18 +56,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
             ),
             backdropEnabled: false,
           ),
-          // SafeArea(
-          //   child: IconButton(
-          //     onPressed: () {
-          //       Navigator.pop(context);
-          //     },
-          //     icon: const Icon(
-          //       Icons.arrow_back,
-          //       color: Colors.black,
-          //       size: 28,
-          //     ),
-          //   ),
-          // ),
           SafeArea(
             child: Container(
                 alignment: Alignment.topCenter,
@@ -77,7 +67,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
                 alignment: Alignment.topCenter,
                 margin: EdgeInsets.only(
                     top: 60,
-                    bottom: MediaQuery.of(context).size.height - 150,
+                    bottom: MediaQuery.of(context).size.height - 230,
                     left: 5,
                     right: 5),
                 child: const QuickSelect()),
@@ -92,7 +82,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       mapController: _mapController,
       options: MapOptions(
         onMapCreated: (mapController) {
-          _markers.add(
+          markers.add(
               CustomMarker(point: _origin, color: Colors.redAccent.shade700));
         },
         center: _origin,
@@ -117,11 +107,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
           },
           tileProvider: const NonCachingNetworkTileProvider(),
           errorImage: const Image(
-            image: AssetImage("assets/GIF/mao_loading.gif"),
+            image: AssetImage("assets/GIF/map_loading.gif"),
             fit: BoxFit.scaleDown,
+            height: 30,
+            width: 30,
           ).image,
-          // errorImage: AssetImage("assets/GIF/map_loading.gif"),
-          // errorImage: GIF
         ),
         // For building Polylines
         PolylineLayerOptions(
@@ -136,7 +126,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
           ],
         ),
         MarkerLayerOptions(
-          markers: _markers,
+          markers: markers,
         ),
       ],
     );
