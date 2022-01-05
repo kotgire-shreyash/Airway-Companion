@@ -32,19 +32,26 @@ class NavigationScreenState {
 
   final origin = LatLng(13.199165, 77.707984);
   final Search search = Search();
+  bool isRequestBeingProcessed;
 
   NavigationScreenState({
     this.markers = const [],
     this.searchResultList = const [],
     this.points = const [],
+    this.isRequestBeingProcessed = false,
   });
 
   NavigationScreenState copyWith(
-      {var searchResultList, var markers, var points}) {
+      {var searchResultList,
+      var markers,
+      var points,
+      var isRequestBeingProcessed}) {
     return NavigationScreenState(
       searchResultList: searchResultList ?? this.searchResultList,
       markers: markers ?? this.markers,
       points: points ?? this.points,
+      isRequestBeingProcessed:
+          isRequestBeingProcessed ?? this.isRequestBeingProcessed,
     );
   }
 }

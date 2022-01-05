@@ -1,6 +1,7 @@
 import 'package:airwaycompanion/Data/Repositories/RoutesRepository/route_data_provider.dart';
 import 'package:airwaycompanion/Data/Repositories/SearchRepository/search_model.dart';
 import 'package:airwaycompanion/Logic/Bloc/NavigationScreenBloc/navigation_screen_bloc.dart';
+import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart';
 import 'package:airwaycompanion/Modules/Navigation/Events/navigation_screen_events.dart';
 import 'package:airwaycompanion/Modules/Navigation/Widgets/custom_marker.dart';
 import 'package:airwaycompanion/Modules/Navigation/Widgets/explore_widget.dart';
@@ -31,6 +32,12 @@ class NavigationScreen extends StatefulWidget {
 class _NavigationScreenState extends State<NavigationScreen> {
   final MapController _mapController = MapController();
   final _origin = LatLng(13.199165, 77.707984);
+
+  @override
+  void initState() {
+    CustomBottomNavigationBar.index = 2;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +113,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
           tileProvider: const NonCachingNetworkTileProvider(),
           errorImage: const Image(
             image: AssetImage("assets/GIF/map_loading.gif"),
-            fit: BoxFit.scaleDown,
+            fit: BoxFit.cover,
             height: 30,
             width: 30,
           ).image,
@@ -169,10 +176,22 @@ class _NavigationScreenState extends State<NavigationScreen> {
                         fontSize: 15),
 
                     // prefixIcon: const Icon(Icons.arrow_back),
-                    suffixIcon: const Icon(
-                      Icons.search_outlined,
-                      size: 25,
-                    ),
+                    suffixIcon: context
+                            .read<NavigationScreenBloc>()
+                            .state
+                            .isRequestBeingProcessed
+                        ? Container(
+                            margin: const EdgeInsets.all(15),
+                            height: 5,
+                            width: 5,
+                            child: CircularProgressIndicator(
+                              color: Colors.grey.shade600,
+                              strokeWidth: 2,
+                            ))
+                        : const Icon(
+                            Icons.search_outlined,
+                            size: 25,
+                          ),
                     border: InputBorder.none,
                   ),
                 ),

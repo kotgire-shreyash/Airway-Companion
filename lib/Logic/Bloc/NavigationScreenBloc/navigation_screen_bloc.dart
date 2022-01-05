@@ -17,7 +17,8 @@ class NavigationScreenBloc
 
   void _onAmenitiesSearchButtonPressedEvent(AmenitiesSearchButtonPressed event,
       Emitter<NavigationScreenState> emit) async {
-    emit(state.copyWith(points: const <LatLng>[]));
+    emit(state
+        .copyWith(points: const <LatLng>[], isRequestBeingProcessed: true));
     List<SearchModel> _searchResultList =
         await state.search.searchNearby(searchdata: state.buttons[event.index]);
 
@@ -33,6 +34,7 @@ class NavigationScreenBloc
     emit(state.copyWith(
       searchResultList: _searchResultList,
       markers: markers,
+      isRequestBeingProcessed: false,
     ));
   }
 
@@ -45,7 +47,8 @@ class NavigationScreenBloc
 
   void _onDrawPolylines(
       DrawPolylines event, Emitter<NavigationScreenState> emit) async {
+    emit(state.copyWith(isRequestBeingProcessed: true));
     List<LatLng> points = await event.routes.getRouteDetails();
-    emit(state.copyWith(points: points));
+    emit(state.copyWith(points: points, isRequestBeingProcessed: false));
   }
 }

@@ -330,6 +330,9 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                       height: 30,
                     ),
                     _servicesWidget(),
+                    const SizedBox(
+                      height: 30,
+                    ),
                   ],
                 ),
               ),
@@ -725,58 +728,34 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
   // Services Widget
 
   Widget _servicesWidget() {
-    return Center(
-        child: Column(
-      children: [
-        _serviceRowLayout(
-          _serviceCard(
-              Colors.deepPurpleAccent.shade400, Colors.yellow.shade600),
-          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
-        ),
-        const SizedBox(height: 15),
-        _serviceRowLayout(
-          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
-          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
-        ),
-        const SizedBox(height: 15),
-        Center(
-            child: _serviceCard(
-                Colors.deepPurpleAccent.shade400, Colors.yellow.shade600)),
-        const SizedBox(height: 15),
-      ],
-    ));
-  }
-
-  // Services Layout
-  Widget _serviceRowLayout(Widget serviceCard1, Widget serviceCard2) {
     return Container(
       height: 150,
       width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        children: [
-          serviceCard1,
-          const SizedBox(width: 15),
-          serviceCard2,
-        ],
-      ),
-    );
-  }
-
-  // Service card
-  Widget _serviceCard(Color color1, Color color2) {
-    return Card(
-      elevation: 10,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-      ),
-      child: Container(
-        height: 150,
-        width: MediaQuery.of(context).size.width / 2.5,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        itemCount: 5,
+        itemBuilder: (context, int index) {
+          return Row(
+            children: [
+              Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)),
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: const BorderRadius.all(Radius.circular(50)),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10)
+            ],
+          );
+        },
       ),
     );
   }

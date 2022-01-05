@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   const CustomBottomNavigationBar({Key? key}) : super(key: key);
-  static int index = 1;
+  static int index = 0;
   static int prevIndex = -1;
 
   @override
@@ -49,14 +49,14 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         if (index == 0) {
           if (CustomBottomNavigationBar.index != index) {
             CustomBottomNavigationBar.index = index;
-            Navigator.pushNamed(context, 'availableFlights');
+            Navigator.pushNamed(context, 'home');
           }
 
           // Home Screen
         } else if (index == 1) {
           if (CustomBottomNavigationBar.index != index) {
             CustomBottomNavigationBar.index = index;
-            Navigator.pushNamed(context, 'home');
+            Navigator.pushNamed(context, "availableFlights");
           }
         } else if (index == 2) {
           if (CustomBottomNavigationBar.index != index) {
@@ -74,9 +74,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   }
 
   final List<BottomBarWithSheetItem> _items = [
+    const BottomBarWithSheetItem(icon: CupertinoIcons.home, label: "Home"),
     const BottomBarWithSheetItem(
         icon: Icons.airplanemode_active_outlined, label: "Flights"),
-    const BottomBarWithSheetItem(icon: CupertinoIcons.home, label: "Home"),
     const BottomBarWithSheetItem(icon: CupertinoIcons.map, label: "Navigation"),
     const BottomBarWithSheetItem(
         icon: CupertinoIcons.book, label: "Guidelines"),
