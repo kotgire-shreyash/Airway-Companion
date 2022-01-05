@@ -21,10 +21,8 @@ class AzureDataRetrieveEvent extends CheckListScreenEvent {
 
 // Delete Card
 class DeleteCard extends CheckListScreenEvent {
-  // int cardIndex;
-  // DeleteCard({required this.cardIndex});
-  var uniqueKey;
-  DeleteCard({required this.uniqueKey});
+  String title;
+  DeleteCard({required this.title});
 }
 
 // CheckBox pressed

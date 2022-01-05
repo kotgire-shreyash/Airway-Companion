@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:group_button/group_button.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class ExploreWidget extends StatefulWidget {
   const ExploreWidget({Key? key, required this.scrollController})
@@ -59,8 +60,6 @@ class _ExploreWidgetState extends State<ExploreWidget> {
       isRadio: false,
       spacing: 10,
       onSelected: (index, isSelected) async {
-        // searchResultList.clear();
-        // NavigationScreen.of(context)!.points.clear();
         if (isSelected) {
           context
               .read<NavigationScreenBloc>()
@@ -68,7 +67,6 @@ class _ExploreWidgetState extends State<ExploreWidget> {
 
           iconIndex = index;
         }
-        // NavigationScreen.of(context)!.result = searchResultList;
       },
       groupingType: GroupingType.wrap,
       buttons: context.read<NavigationScreenBloc>().state.buttons,

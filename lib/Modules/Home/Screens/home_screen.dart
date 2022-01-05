@@ -493,8 +493,10 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                     .read<HomeScreenBloc>()
                     .add(NavigationTilePressed(isNavigationTilePressed: true));
               }),
-              _drawerListTile("Settings", CupertinoIcons.settings, () {
-                Navigator.pushNamed(context, "timeline");
+              _drawerListTile("Track", Icons.track_changes_sharp, () {
+                context
+                    .read<HomeScreenBloc>()
+                    .add(TimeLineButtonPressed(isTimeLineButtonPressed: true));
               }),
             ],
           ),

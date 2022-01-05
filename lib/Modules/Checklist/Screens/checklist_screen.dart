@@ -28,12 +28,16 @@ class _CheckListScreenState extends State<CheckListScreen> {
       RefreshController(initialRefresh: false);
   final _latoBoldFontFamily =
       GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
+  final TextEditingController _mainTitleTextController =
+      TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
   var fieldTitle, mainTitle;
   final _fieldsList = [];
 
   @override
   void initState() {
+    CustomBottomNavigationBar.index = -1;
     if (context.read<CheckListScreenBloc>().state.taskWidgets.isEmpty) {
       context
           .read<CheckListScreenBloc>()
@@ -72,7 +76,7 @@ class _CheckListScreenState extends State<CheckListScreen> {
                 backgroundColor: Colors.white,
                 elevation: 0,
                 leading: Container(
-                  margin: const EdgeInsets.only(right: 20),
+                  margin: const EdgeInsets.only(left: 5),
                   alignment: Alignment.centerLeft,
                   child: IconButton(
                       onPressed: () {
@@ -85,7 +89,7 @@ class _CheckListScreenState extends State<CheckListScreen> {
                 ),
                 actions: [
                   Container(
-                    margin: const EdgeInsets.only(right: 20),
+                    margin: const EdgeInsets.only(right: 5),
                     alignment: Alignment.centerRight,
                     child: IconButton(
                         onPressed: () async {
@@ -96,6 +100,7 @@ class _CheckListScreenState extends State<CheckListScreen> {
                         icon: const Icon(
                           Icons.add,
                           color: Colors.black,
+                          size: 28,
                         )),
                   ),
                 ],
@@ -150,61 +155,67 @@ class _CheckListScreenState extends State<CheckListScreen> {
                   ),
                   Flexible(
                     flex: 8,
-                    child: SizedBox(
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: Center(
-                          child: !state.isDataBeingUpdated &&
-                                  state.taskWidgets.isEmpty
-                              ? SizedBox(
-                                  height: 300,
-                                  child: Center(
-                                      child: Text(
-                                    "Create your personalized checklist",
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 20,
-                                        fontFamily:
-                                            GoogleFonts.lato().fontFamily),
-                                  )))
-                              : ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: state.isDataBeingUpdated
-                                      ? 10
-                                      : state.taskWidgets.length,
-                                  itemBuilder: (context, int index) {
-                                    return BlocBuilder<CheckListScreenBloc,
-                                        CheckListScreenState>(
-                                      builder: (context, state) {
-                                        return state.isDataBeingUpdated
-                                            ? SizedBox(
-                                                height: 250,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width -
-                                                    50,
-                                                child: Center(
-                                                  child: SizedBox(
-                                                    height: 30,
-                                                    width: 30,
-                                                    child:
-                                                        LoadingAnimationWidget
-                                                            .staggeredDotWave(
-                                                                color: Colors
-                                                                    .black,
-                                                                size: 30),
-                                                  ),
+                    child:
+                        !state.isDataBeingUpdated && state.taskWidgets.isEmpty
+                            ? Center(
+                                child: SizedBox(
+                                    height: 300,
+                                    child: Center(
+                                        child: Text(
+                                      "Nothing to display",
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 15,
+                                          fontFamily:
+                                              GoogleFonts.lato().fontFamily),
+                                    ))),
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: state.isDataBeingUpdated
+                                    ? 10
+                                    : state.taskWidgets.length,
+                                itemBuilder: (context, int index) {
+                                  return BlocBuilder<CheckListScreenBloc,
+                                      CheckListScreenState>(
+                                    builder: (context, state) {
+                                      return state.isDataBeingUpdated
+                                          ? SizedBox(
+                                              height: 250,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width -
+                                                  50,
+                                              child: Center(
+                                                child: SizedBox(
+                                                  height: 30,
+                                                  width: 30,
+                                                  child: LoadingAnimationWidget
+                                                      .staggeredDotWave(
+                                                          color: Colors.black,
+                                                          size: 30),
                                                 ),
-                                              )
-                                            : state.taskWidgets[index];
-                                      },
-                                    );
-                                  },
-                                ),
-                        ),
-                      ),
-                    ),
+                                              ),
+                                            )
+                                          : Dismissible(
+                                              key: Key(state.taskWidgets[index]
+                                                  .taskClassObject.title),
+                                              child: state.taskWidgets[index],
+                                              onDismissed: (direction) {
+                                                context
+                                                    .read<CheckListScreenBloc>()
+                                                    .add(DeleteCard(
+                                                        title: state
+                                                            .taskWidgets[index]
+                                                            .taskClassObject
+                                                            .title));
+                                              },
+                                            );
+                                    },
+                                  );
+                                },
+                              ),
                   ),
                 ],
               ),
@@ -222,110 +233,127 @@ class _CheckListScreenState extends State<CheckListScreen> {
       builder: (context) {
         return BlocBuilder<CheckListScreenBloc, CheckListScreenState>(
             builder: (context, state) {
-          return Dialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            elevation: 16,
-            child: SizedBox(
-              height: 350,
-              width: 300,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: <Widget>[
-                    const SizedBox(height: 20),
-                    Center(
-                        child: Text(
-                      'Create a checklist',
-                      style: TextStyle(
-                        fontFamily:
-                            GoogleFonts.lato(fontWeight: FontWeight.bold)
-                                .fontFamily,
-                        fontSize: 18,
-                      ),
-                    )),
-                    Form(
-                      key: _formKey,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                                // name textfield
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 32.0),
-                                  child: TextFormField(
-                                    decoration: const InputDecoration(
-                                        hintText: 'Title'),
-                                    onChanged: (value) {
-                                      mainTitle = value;
-                                    },
-                                    validator: (v) {
-                                      if (v!.trim().isEmpty) {
-                                        return 'Please enter something';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ),
+          return state.isDataBeingUpdated
+              ? const Center(
+                  child: SizedBox(
+                      height: 30,
+                      width: 30,
+                      child: CircularProgressIndicator(
+                        color: Colors.black,
+                      )),
+                )
+              : Dialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  elevation: 16,
+                  child: SizedBox(
+                    height: 350,
+                    width: 300,
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: <Widget>[
+                          const SizedBox(height: 20),
+                          Center(
+                              child: Text(
+                            'Create a checklist',
+                            style: TextStyle(
+                              fontFamily:
+                                  GoogleFonts.lato(fontWeight: FontWeight.bold)
+                                      .fontFamily,
+                              fontSize: 18,
+                            ),
+                          )),
+                          Form(
+                            key: _formKey,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                      // name textfield
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 32.0),
+                                        child: TextFormField(
+                                          controller: _mainTitleTextController,
+                                          decoration: const InputDecoration(
+                                              hintText: 'Title'),
+                                          onChanged: (value) {
+                                            mainTitle = value;
+                                          },
+                                          validator: (v) {
+                                            if (v!.trim().isEmpty) {
+                                              return 'Please enter something';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                      ),
 
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                const Text(
-                                  'Add fields',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16),
-                                )
-                              ] +
-                              context
-                                  .read<CheckListScreenBloc>()
-                                  .state
-                                  .fieldsList +
-                              [
-                                _textInputFieldWidget(),
-                                const SizedBox(
-                                  height: 40,
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    if (mainTitle != null && mainTitle != "") {
-                                      Map<String, dynamic> dataMap = {
-                                        "title": mainTitle.replaceAll(" ", ""),
-                                      };
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      const Text(
+                                        'Add fields',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 16),
+                                      )
+                                    ] +
+                                    context
+                                        .read<CheckListScreenBloc>()
+                                        .state
+                                        .fieldsList +
+                                    [
+                                      _textInputFieldWidget(),
+                                      const SizedBox(
+                                        height: 40,
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          if (mainTitle != null &&
+                                              mainTitle != "") {
+                                            Map<String, dynamic> dataMap = {
+                                              "title":
+                                                  mainTitle.replaceAll(" ", ""),
+                                            };
 
-                                      int index = 0;
-                                      for (var field in state.fieldsNameList) {
-                                        dataMap["field$index"] = field;
-                                        index++;
-                                      }
+                                            int index = 0;
+                                            for (var field
+                                                in state.fieldsNameList) {
+                                              dataMap["field$index"] = field;
+                                              index++;
+                                            }
 
-                                      context
-                                          .read<CheckListScreenBloc>()
-                                          .add(AzureTableCardAddition(
-                                            checkListCardMap: dataMap,
-                                          ));
-                                    }
+                                            context
+                                                .read<CheckListScreenBloc>()
+                                                .add(AzureTableCardAddition(
+                                                  checkListCardMap: dataMap,
+                                                ));
 
-                                    if (_formKey.currentState!.validate()) {
-                                      _formKey.currentState!.save();
-                                    }
-                                  },
-                                  child: const Text('Save'),
-                                  style: TextButton.styleFrom(
-                                    backgroundColor: Colors.blue,
-                                  ),
-                                ),
-                              ],
-                        ),
+                                            _mainTitleTextController.clear();
+                                          }
+
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            _formKey.currentState!.save();
+                                          }
+                                        },
+                                        child: const Text('Save'),
+                                        style: TextButton.styleFrom(
+                                          backgroundColor: Colors.blue,
+                                        ),
+                                      ),
+                                    ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-          );
+                  ),
+                );
         });
       },
     );

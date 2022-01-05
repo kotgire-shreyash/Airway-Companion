@@ -27,12 +27,10 @@ class CheckListScreenBloc
     ));
   }
 
-  void _onDeleteCardEvent(
-      DeleteCard event, Emitter<CheckListScreenState> emit) {
-    print(state.taskWidgets.length);
-    state.taskWidgets.removeWhere((element) => element.key == event.uniqueKey);
-    print(state.taskWidgets.length);
-    emit(state.copyWith(taskWidgets: state.taskWidgets));
+  _onDeleteCardEvent(
+      DeleteCard event, Emitter<CheckListScreenState> emit) async {
+    await state.deleteTable(event.title);
+    await _onRetrieveCardsFromAzureDatabase(AzureDataRetrieveEvent(), emit);
   }
 
   void _onCheckBoxPressedEvent(
@@ -56,7 +54,10 @@ class CheckListScreenBloc
       emit(state.copyWith(isDataBeingUpdated: false));
       rethrow;
     }
-    emit(state.copyWith(isDataBeingUpdated: false));
+    emit(state.copyWith(
+        isDataBeingUpdated: false,
+        fieldsList: const <Widget>[],
+        fieldsNameList: const <String>[]));
   }
 
   _onRetrieveCardsFromAzureDatabase(
@@ -95,7 +96,10 @@ class CheckListScreenBloc
       }
     }
 
-    emit(state.copyWith(taskWidgets: taskCardList, isDataBeingUpdated: false));
+    emit(state.copyWith(
+      taskWidgets: taskCardList,
+      isDataBeingUpdated: false,
+    ));
   }
 
   Widget _fieldRowWidget(String title) {

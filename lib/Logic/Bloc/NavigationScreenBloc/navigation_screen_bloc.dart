@@ -18,7 +18,6 @@ class NavigationScreenBloc
   void _onAmenitiesSearchButtonPressedEvent(AmenitiesSearchButtonPressed event,
       Emitter<NavigationScreenState> emit) async {
     emit(state.copyWith(points: const <LatLng>[]));
-
     List<SearchModel> _searchResultList =
         await state.search.searchNearby(searchdata: state.buttons[event.index]);
 
@@ -31,7 +30,10 @@ class NavigationScreenBloc
       markers.add(CustomMarker(point: LatLng(item.latitude, item.longitude)));
     }
 
-    emit(state.copyWith(searchResultList: _searchResultList, markers: markers));
+    emit(state.copyWith(
+      searchResultList: _searchResultList,
+      markers: markers,
+    ));
   }
 
   void _onAddMarkerEvent(AddMarker event, Emitter<NavigationScreenState> emit) {

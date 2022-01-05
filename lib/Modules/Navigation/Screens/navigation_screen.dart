@@ -45,6 +45,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
                   panelBuilder: (sc) => ExploreWidget(
                     scrollController: sc,
                   ),
+                  color: Colors.white,
                   minHeight: 80,
                   body: mapWidget(),
                   borderRadius: const BorderRadius.only(

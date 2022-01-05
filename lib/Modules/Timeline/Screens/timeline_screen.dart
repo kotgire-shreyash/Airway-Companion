@@ -21,6 +21,12 @@ class TimeLineScreen extends StatefulWidget {
 
 class _TimeLineScreenState extends State<TimeLineScreen> {
   @override
+  void initState() {
+    CustomBottomNavigationBar.index = -1;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,

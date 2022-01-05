@@ -59,6 +59,10 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             Navigator.pushNamed(context, 'home');
           }
         } else if (index == 2) {
+          if (CustomBottomNavigationBar.index != index) {
+            CustomBottomNavigationBar.index = index;
+            Navigator.pushNamed(context, 'navigation');
+          }
         } else if (index == 3) {
           if (CustomBottomNavigationBar.index != index) {
             CustomBottomNavigationBar.index = index;
@@ -73,9 +77,10 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     const BottomBarWithSheetItem(
         icon: Icons.airplanemode_active_outlined, label: "Flights"),
     const BottomBarWithSheetItem(icon: CupertinoIcons.home, label: "Home"),
-    const BottomBarWithSheetItem(
-        icon: CupertinoIcons.settings, label: "Settings"),
+    const BottomBarWithSheetItem(icon: CupertinoIcons.map, label: "Navigation"),
     const BottomBarWithSheetItem(
         icon: CupertinoIcons.book, label: "Guidelines"),
+    const BottomBarWithSheetItem(
+        icon: CupertinoIcons.settings, label: "Settings"),
   ];
 }

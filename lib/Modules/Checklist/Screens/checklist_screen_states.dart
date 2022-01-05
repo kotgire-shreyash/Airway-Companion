@@ -38,7 +38,6 @@ class CheckListScreenState {
 
   Future<void> uploadCheckListCardData(Map<String, dynamic> dataMap) async {
     try {
-      print(dataMap["title"]);
       await azureStorage.createTable(dataMap["title"]);
       var _rowKey = "${dataMap["title"]}row123";
       var _partitionKey = "${dataMap["title"]}partition123";
@@ -61,5 +60,14 @@ class CheckListScreenState {
     );
 
     return tableData;
+  }
+
+  deleteTable(String tableName) async {
+    try {
+      await azureStorage.deleteTable(tableName);
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
   }
 }
