@@ -68,6 +68,11 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             CustomBottomNavigationBar.index = index;
             Navigator.pushNamed(context, 'guidelines');
           }
+        } else if (index == 4) {
+          if (CustomBottomNavigationBar.index != index) {
+            CustomBottomNavigationBar.index = index;
+            Navigator.pushNamed(context, 'bookings');
+          }
         }
       },
     );
@@ -81,6 +86,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     const BottomBarWithSheetItem(
         icon: CupertinoIcons.book, label: "Guidelines"),
     const BottomBarWithSheetItem(
-        icon: CupertinoIcons.settings, label: "Settings"),
+        icon: CupertinoIcons.list_bullet, label: "Bookings"),
   ];
 }

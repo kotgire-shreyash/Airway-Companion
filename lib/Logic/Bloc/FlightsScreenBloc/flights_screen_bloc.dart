@@ -7,6 +7,7 @@ class FlightScreenBloc extends Bloc<FlightScreenEvent, FlightScreenState> {
   final FlightRepository _flightDataRepo = FlightRepository();
   FlightScreenBloc() : super(FlightScreenState()) {
     on<FlightAPICalled>(_onFlightAPICalledEvent);
+    on<FlightTicketBooking>(_onFlightTicketBookingEvent);
   }
 
   void _onFlightAPICalledEvent(
@@ -17,5 +18,16 @@ class FlightScreenBloc extends Bloc<FlightScreenEvent, FlightScreenState> {
     emit(state.copyWith(
         isFlightAPICalled: event.isFlightAPICalled,
         isFlightAPIDataLoading: false));
+  }
+
+  void _onFlightTicketBookingEvent(
+      FlightTicketBooking event, Emitter<FlightScreenState> emit) async {
+    emit(state.copyWith(isTicketBeingBooked: true));
+    try {
+      await state.uploadTicketDetails(event.dataMap);
+    } catch (e) {
+      rethrow;
+    }
+    emit(state.copyWith(isTicketBeingBooked: false));
   }
 }
