@@ -155,7 +155,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 25),
                                 height:
-                                    MediaQuery.of(context).size.height / 4.8,
+                                    MediaQuery.of(context).size.height / 4.7,
                                 width: MediaQuery.of(context).size.width,
                                 decoration: const BoxDecoration(
                                   color: Colors.white,

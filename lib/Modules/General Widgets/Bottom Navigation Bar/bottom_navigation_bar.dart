@@ -1,5 +1,7 @@
 import 'package:airwaycompanion/Logic/Bloc/FlightsScreenBloc/flights_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
+import 'package:airwaycompanion/Modules/Notifications/notifications.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +61,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           }
         } else if (index == 2) {
           // Navigator.pushNamed(context, 'timeline');
+          //CreateBasicNotification(title: 'title', body: 'body');
+          CreateReminderNotification(
+              title: 'title', body: 'body', dateTimeobject: DateTime.now());
         } else if (index == 3) {
           if (CustomBottomNavigationBar.index != index) {
             CustomBottomNavigationBar.index = index;
