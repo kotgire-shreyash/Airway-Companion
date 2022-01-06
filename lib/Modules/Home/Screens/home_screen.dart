@@ -124,21 +124,6 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
             .read<HomeScreenBloc>()
             .add(SearchBoxTextFieldPressed(isSearchBoxTextFieldEnabled: false));
         showSearch(context: context, delegate: SearchBoxDelegate());
-      } else if (state.isChecklistTilePressed) {
-        context
-            .read<HomeScreenBloc>()
-            .add(CheckListTilePressed(isChecklistTilePressed: false));
-        Navigator.pushNamed(context, "checklistPage");
-      } else if (state.isNavigationTilePressed) {
-        context
-            .read<HomeScreenBloc>()
-            .add(NavigationTilePressed(isNavigationTilePressed: false));
-        Navigator.pushNamed(context, "navigation");
-      } else if (state.isTimeLineButtonPressed) {
-        context
-            .read<HomeScreenBloc>()
-            .add(TimeLineButtonPressed(isTimeLineButtonPressed: false));
-        Navigator.pushNamed(context, "timeline");
       }
     }, builder: (context, state) {
       return Scaffold(
@@ -487,19 +472,13 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
               _drawerListTile("Profile", CupertinoIcons.person, () => null),
               _drawerListTile("Check List", CupertinoIcons.checkmark_alt_circle,
                   () {
-                context
-                    .read<HomeScreenBloc>()
-                    .add(CheckListTilePressed(isChecklistTilePressed: true));
+                Navigator.pushNamed(context, "checklistPage");
               }),
               _drawerListTile("Navigation", FontAwesomeIcons.globe, () {
-                context
-                    .read<HomeScreenBloc>()
-                    .add(NavigationTilePressed(isNavigationTilePressed: true));
+                Navigator.pushNamed(context, "navigation");
               }),
               _drawerListTile("Track", Icons.track_changes_sharp, () {
-                context
-                    .read<HomeScreenBloc>()
-                    .add(TimeLineButtonPressed(isTimeLineButtonPressed: true));
+                Navigator.pushNamed(context, "timeline");
               }),
             ],
           ),
@@ -695,10 +674,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                         .fontFamily),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    context.read<HomeScreenBloc>().add(
-                                          TimeLineButtonPressed(
-                                              isTimeLineButtonPressed: true),
-                                        );
+                                    Navigator.pushNamed(context, "timeline");
                                   },
                                   child: Text("Catch up!",
                                       style: TextStyle(

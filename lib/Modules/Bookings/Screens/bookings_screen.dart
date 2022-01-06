@@ -5,10 +5,12 @@ import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Checklist/Events/checklist_screen_event.dart';
 import 'package:expandable/expandable.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class BookingScreen extends StatefulWidget {
@@ -23,6 +25,8 @@ class BookingScreen extends StatefulWidget {
 }
 
 class _BookingScreenState extends State<BookingScreen> {
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   @override
   void initState() {
     if (context.read<BookingScreenBloc>().state.bookedTicketsList.isEmpty) {
@@ -34,6 +38,13 @@ class _BookingScreenState extends State<BookingScreen> {
     super.initState();
   }
 
+  _onRefresh() async {
+    context
+        .read<BookingScreenBloc>()
+        .add(AzureDatabaseRetrieve(isDataBeingUpdated: true));
+    _refreshController.refreshCompleted();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BookingScreenBloc, BookingScreenState>(
@@ -41,7 +52,18 @@ class _BookingScreenState extends State<BookingScreen> {
       return Scaffold(
         bottomNavigationBar: widget.bottomBar,
         floatingActionButton: widget.chatbot,
-        body: _body(),
+        body: SafeArea(
+          child: SmartRefresher(
+              // physics: const BouncingScrollPhysics(),
+              header: WaterDropMaterialHeader(
+                distance: 50,
+                backgroundColor: Colors.grey.shade200,
+                color: Colors.black87,
+              ),
+              controller: _refreshController,
+              onRefresh: _onRefresh,
+              child: _body()),
+        ),
       );
     });
   }
@@ -85,7 +107,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         }),
                   );
           },
-          minHeight: MediaQuery.of(context).size.height / 1.6,
+          minHeight: MediaQuery.of(context).size.height / 1.4,
           maxHeight: MediaQuery.of(context).size.height / 1.3,
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -110,18 +132,246 @@ class TicketCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Column(
           children: <Widget>[
+            const SizedBox(
+              height: 20,
+            ),
             Container(
-              height: 150,
-              child: Center(
-                child:
-                    context.read<BookingScreenBloc>().state.isDataBeingUpdated
-                        ? SizedBox(
-                            height: 30,
-                            width: 30,
-                            child: LoadingAnimationWidget.staggeredDotWave(
-                                color: Colors.black, size: 30),
-                          )
-                        : Text(ticket["head"]),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Text(
+                                  ticket["departureIATACode"],
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: GoogleFonts.lato(
+                                            fontWeight: FontWeight.w900)
+                                        .fontFamily,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Flexible(
+                                child: SizedBox(
+                                  width: 80,
+                                  height: 15,
+                                  child: Center(
+                                    child: Text(
+                                      ticket["departureAirport"],
+                                      overflow: TextOverflow.ellipsis,
+                                      softWrap: false,
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        fontFamily: GoogleFonts.lato(
+                                                fontWeight: FontWeight.w900)
+                                            .fontFamily,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        Icon(
+                          CupertinoIcons.airplane,
+                          size: 30,
+                          color: Colors.blue.shade500,
+                        ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Text(
+                                  ticket["arrivalIATACode"],
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: GoogleFonts.lato(
+                                            fontWeight: FontWeight.w900)
+                                        .fontFamily,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Flexible(
+                                child: Container(
+                                  width: 80,
+                                  height: 15,
+                                  child: Center(
+                                    child: Text(
+                                      ticket["arrivalAirport"],
+                                      overflow: TextOverflow.ellipsis,
+                                      softWrap: false,
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        fontFamily: GoogleFonts.lato(
+                                                fontWeight: FontWeight.w900)
+                                            .fontFamily,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    // height: 25,
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 2 - 30,
+                            height: 35,
+                            decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.grey, width: 0.5),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Scheduled",
+                                  style: TextStyle(
+                                    color: Colors.grey.shade900,
+                                    fontFamily: GoogleFonts.lato(
+                                            fontWeight: FontWeight.bold)
+                                        .fontFamily,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: FittedBox(
+                                    child: Text(
+                                      ticket["departureSchedule"],
+                                      style: TextStyle(
+                                        color: Colors.redAccent.shade200,
+                                        fontFamily: GoogleFonts.lato(
+                                                fontWeight: FontWeight.w900)
+                                            .fontFamily,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Flexible(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 2 - 30,
+                            height: 35,
+                            decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.grey, width: 0.5),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Scheduled",
+                                  style: TextStyle(
+                                    color: Colors.grey.shade900,
+                                    fontFamily: GoogleFonts.lato(
+                                            fontWeight: FontWeight.bold)
+                                        .fontFamily,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: FittedBox(
+                                    child: Text(
+                                      ticket["arrivalSchedule"],
+                                      style: TextStyle(
+                                        color: Colors.redAccent.shade200,
+                                        fontFamily: GoogleFonts.lato(
+                                                fontWeight: FontWeight.w900)
+                                            .fontFamily,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    margin: const EdgeInsets.only(right: 10),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Center(
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily:
+                                GoogleFonts.lato(fontWeight: FontWeight.w800)
+                                    .fontFamily,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                        fixedSize: const Size.fromWidth(100),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             ScrollOnExpand(
