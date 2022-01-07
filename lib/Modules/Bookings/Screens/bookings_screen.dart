@@ -7,6 +7,7 @@ import 'package:expandable/expandable.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -35,6 +36,8 @@ class _BookingScreenState extends State<BookingScreen> {
           .add(AzureDatabaseRetrieve(isDataBeingUpdated: true));
     }
 
+    context.read<BookingScreenBloc>().add(UpdateTime());
+
     super.initState();
   }
 
@@ -49,6 +52,7 @@ class _BookingScreenState extends State<BookingScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<BookingScreenBloc, BookingScreenState>(
         builder: (context, state) {
+      context.read<BookingScreenBloc>().add(UpdateTime());
       return Scaffold(
         bottomNavigationBar: widget.bottomBar,
         floatingActionButton: widget.chatbot,
@@ -348,29 +352,47 @@ class TicketCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    margin: const EdgeInsets.only(right: 10),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Center(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(left: 10),
                         child: Text(
-                          "Cancel",
+                          context.read<BookingScreenBloc>().state.time,
                           style: TextStyle(
-                            color: Colors.white,
-                            fontFamily:
-                                GoogleFonts.lato(fontWeight: FontWeight.w800)
-                                    .fontFamily,
-                            fontSize: 12,
+                            color: Colors.green,
+                            fontSize: 22,
                           ),
                         ),
                       ),
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.redAccent,
-                        fixedSize: const Size.fromWidth(100),
+                      Container(
+                        alignment: Alignment.centerRight,
+                        margin: const EdgeInsets.only(right: 10),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            await _onCancel(context);
+                          },
+                          child: Center(
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: GoogleFonts.lato(
+                                        fontWeight: FontWeight.w800)
+                                    .fontFamily,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.redAccent,
+                            fixedSize: const Size.fromWidth(100),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
+                  const SizedBox(height: 5),
                 ],
               ),
             ),
@@ -382,19 +404,57 @@ class TicketCard extends StatelessWidget {
                   headerAlignment: ExpandablePanelHeaderAlignment.center,
                   tapBodyToCollapse: true,
                   iconColor: Colors.black,
+                  hasIcon: true,
                 ),
-                collapsed: const Text(
-                  "More details",
-                  softWrap: true,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                header: Container(
+                  margin: const EdgeInsets.only(left: 10),
+                  child: const Text(
+                    "More details",
+                    softWrap: true,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
+                collapsed: const SizedBox(),
                 expanded: Padding(
                   padding: const EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    "body",
-                    softWrap: true,
-                    overflow: TextOverflow.fade,
+                  child: SizedBox(
+                    height: 250,
+                    child: Center(
+                      child: ListView.builder(
+                          itemCount: ticket.length - 3,
+                          itemBuilder: (context, int index) {
+                            return SizedBox(
+                              height: 25,
+                              width: 100,
+                              child: Row(
+                                children: [
+                                  Container(
+                                      child: Text(ticket.entries
+                                              .elementAt(index + 3)
+                                              .key +
+                                          " : ")),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Flexible(
+                                    child: Container(
+                                      child: Text(
+                                        ticket.entries
+                                            .elementAt(index + 3)
+                                            .value,
+                                        style: TextStyle(
+                                          overflow: TextOverflow.ellipsis,
+                                          color: Colors.blue.shade700,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                    ),
                   ),
                 ),
                 builder: (_, collapsed, expanded) {
@@ -414,5 +474,48 @@ class TicketCard extends StatelessWidget {
         ),
       ),
     ));
+  }
+
+  _onCancel(context) async {
+    await showAnimatedDialog(
+        curve: Curves.fastOutSlowIn,
+        duration: const Duration(milliseconds: 200),
+        barrierDismissible: true,
+        animationType: DialogTransitionType.scale,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: Text(
+              'Are you sure you want to cancel?',
+              style: TextStyle(
+                  fontFamily:
+                      GoogleFonts.lato(fontWeight: FontWeight.bold).fontFamily,
+                  fontSize: 16),
+            ),
+            content: Text(
+              'Changes will not be reverted',
+              style: TextStyle(
+                  fontFamily: GoogleFonts.lato().fontFamily, fontSize: 13),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                  onPressed: () {
+                    context.read<BookingScreenBloc>().add(CancelTicket(
+                        tableName:
+                            "${ticket["arrivalIATACode"]}${ticket["departureIATACode"]}"));
+
+                    Navigator.of(context).pop(false);
+                  },
+                  child: const Text('Yes')),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: const Text('No')),
+            ],
+          );
+        });
   }
 }

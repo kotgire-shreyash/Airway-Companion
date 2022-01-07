@@ -5,16 +5,20 @@ class BookingScreenState {
       "DefaultEndpointsProtocol=https;AccountName=acflightbookings;AccountKey=CX4yeg2NXi3W0LbtFk1RvpcqlHJ717sfhHqibjMVOOGlYYCVw0rgcMH4UJI8mVyIp361ivherFOr8mmWw75g9w==;EndpointSuffix=core.windows.net");
   List bookedTicketsList;
   bool isDataBeingUpdated;
+  var time;
 
   BookingScreenState({
     this.bookedTicketsList = const [],
     this.isDataBeingUpdated = false,
+    this.time,
   });
 
-  BookingScreenState copyWith({var bookedTicketsList, var isDataBeingUpdated}) {
+  BookingScreenState copyWith(
+      {var bookedTicketsList, var isDataBeingUpdated, var time}) {
     return BookingScreenState(
       bookedTicketsList: bookedTicketsList ?? this.bookedTicketsList,
       isDataBeingUpdated: isDataBeingUpdated ?? this.isDataBeingUpdated,
+      time: time ?? this.time,
     );
   }
 
