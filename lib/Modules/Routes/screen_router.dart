@@ -1,5 +1,6 @@
 import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/login_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/signup_bloc.dart';
+import 'package:airwaycompanion/Logic/Bloc/BookingScreenBloc/bookings_screen_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/GuidelineScreenBloc/guideline_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Authentication/Screens/LoginScreen/login_screen.dart';
 import 'package:airwaycompanion/Modules/Authentication/Screens/SignUpScreen/signup_screen.dart';
@@ -51,8 +52,10 @@ class GlobalRouter {
 
       case 'bookings':
         return MaterialPageRoute(
-            builder: (_) =>
-                BookingScreen(chatbot: _chatBot, bottomBar: _bottomBar));
+            builder: (_) => BlocProvider(
+                create: (context) => BookingScreenBloc(),
+                child:
+                    BookingScreen(chatbot: _chatBot, bottomBar: _bottomBar)));
 
       case 'timeline':
         return MaterialPageRoute(

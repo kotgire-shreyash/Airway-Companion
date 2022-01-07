@@ -41,7 +41,7 @@ class _AirwayCompanionAppState extends State<AirwayCompanionApp> {
         BlocProvider(create: (context) => CheckListScreenBloc()),
         BlocProvider(create: (context) => AzureBotBloc()),
         BlocProvider(create: (context) => NavigationScreenBloc()),
-        BlocProvider(create: (context) => BookingScreenBloc()),
+        // BlocProvider(create: (context) => BookingScreenBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

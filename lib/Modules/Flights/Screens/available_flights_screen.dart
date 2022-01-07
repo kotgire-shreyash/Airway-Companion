@@ -78,7 +78,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
               bottomNavigationBar: widget.bottomBar,
               appBar: AppBar(
                 elevation: 0,
-                backgroundColor: Colors.blue.shade800,
+                backgroundColor: Colors.blue.shade700,
                 leading: IconButton(
                     onPressed: () {
                       CustomBottomNavigationBar.index = 1;
@@ -90,8 +90,6 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                       color: Colors.white,
                     )),
               ),
-
-              // ! SHRINK WRAP ISSUE HERE
               body: Container(
                 height: MediaQuery.of(context).size.height,
                 child: Column(
@@ -104,22 +102,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                           bottomLeft: Radius.circular(20),
                           bottomRight: Radius.circular(20),
                         ),
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.blue.shade800,
-                            Colors.blue.shade600,
-                            Colors.blue.shade600,
-                            Colors.blue.shade800,
-                          ],
-                          stops: const [
-                            0.1,
-                            0.2,
-                            0.6,
-                            0.9,
-                          ],
-                        ),
+                        color: Colors.blue.shade700,
                       ),
                       child: Column(
                         children: [

@@ -52,7 +52,6 @@ class _BookingScreenState extends State<BookingScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<BookingScreenBloc, BookingScreenState>(
         builder: (context, state) {
-      context.read<BookingScreenBloc>().add(UpdateTime());
       return Scaffold(
         bottomNavigationBar: widget.bottomBar,
         floatingActionButton: widget.chatbot,
@@ -81,40 +80,120 @@ class _BookingScreenState extends State<BookingScreen> {
       ),
       child: Container(
         height: MediaQuery.of(context).size.height,
-        color: Colors.grey,
-        child: SlidingUpPanel(
-          panelBuilder: (sc) {
-            return context.read<BookingScreenBloc>().state.isDataBeingUpdated
-                ? Center(
-                    child: SizedBox(
-                      height: 30,
-                      width: 30,
-                      child: LoadingAnimationWidget.staggeredDotWave(
-                          color: Colors.black, size: 30),
-                    ),
-                  )
-                : SizedBox(
-                    child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: context
-                            .read<BookingScreenBloc>()
-                            .state
-                            .bookedTicketsList
-                            .length,
-                        itemBuilder: (context, int index) {
-                          Map ticket = context
-                              .read<BookingScreenBloc>()
-                              .state
-                              .bookedTicketsList[index];
+        color: Colors.lightBlue,
+        child: Stack(
+          children: [
+            SlidingUpPanel(
+              controller: PanelController(),
+              panelBuilder: (scrollController) {
+                return context
+                        .read<BookingScreenBloc>()
+                        .state
+                        .isDataBeingUpdated
+                    ? Center(
+                        child: SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: LoadingAnimationWidget.staggeredDotWave(
+                              color: Colors.black, size: 30),
+                        ),
+                      )
+                    : SizedBox(
+                        child: ListView.builder(
+                            controller: scrollController,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: context
+                                .read<BookingScreenBloc>()
+                                .state
+                                .bookedTicketsList
+                                .length,
+                            itemBuilder: (context, int index) {
+                              Map ticket = context
+                                  .read<BookingScreenBloc>()
+                                  .state
+                                  .bookedTicketsList[index];
 
-                          return TicketCard(ticket: ticket);
-                        }),
-                  );
-          },
-          minHeight: MediaQuery.of(context).size.height / 1.4,
-          maxHeight: MediaQuery.of(context).size.height / 1.3,
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                              return TicketCard(ticket: ticket);
+                            }),
+                      );
+              },
+              minHeight: MediaQuery.of(context).size.height / 1.4,
+              maxHeight: MediaQuery.of(context).size.height / 1.3,
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            ),
+            SafeArea(
+              child: Container(
+                  alignment: Alignment.topCenter,
+                  margin: const EdgeInsets.only(left: 10, right: 10, top: 70),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 320,
+                        height: 25,
+                        margin: const EdgeInsets.only(left: 10),
+                        child: const Text(
+                          "Your Bookings",
+                          style: TextStyle(color: Colors.white, fontSize: 17),
+                        ),
+                      ),
+                      _searchBar(),
+                    ],
+                  )),
+            ),
+            SafeArea(
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    )))
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _searchBar() {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: SizedBox(
+        height: 50,
+        width: 320,
+        child: Row(
+          children: [
+            const SizedBox(
+              height: 50,
+              width: 50,
+              child: Icon(Icons.menu),
+            ),
+            Flexible(
+              child: SizedBox(
+                height: 50,
+                width: 280,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    isDense: true,
+
+                    contentPadding: const EdgeInsets.all(16.0),
+                    hintText: "search",
+                    hintStyle: TextStyle(
+                        fontFamily: GoogleFonts.lato().fontFamily,
+                        fontSize: 15),
+
+                    // prefixIcon: const Icon(Icons.arrow_back),
+                    suffixIcon: const Icon(
+                      Icons.search_outlined,
+                      size: 25,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -139,7 +218,7 @@ class TicketCard extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Container(
+            SizedBox(
               child: Column(
                 children: [
                   SizedBox(
@@ -355,16 +434,20 @@ class TicketCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          context.read<BookingScreenBloc>().state.time,
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontSize: 22,
+                      BlocBuilder<BookingScreenBloc, BookingScreenState>(
+                          builder: (currContext, state) {
+                        currContext.read<BookingScreenBloc>().add(UpdateTime());
+                        return Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          child: Text(
+                            currContext.read<BookingScreenBloc>().state.time,
+                            style: const TextStyle(
+                              color: Colors.green,
+                              fontSize: 22,
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      }),
                       Container(
                         alignment: Alignment.centerRight,
                         margin: const EdgeInsets.only(right: 10),
