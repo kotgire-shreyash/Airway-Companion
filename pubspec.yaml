@@ -67,7 +67,8 @@ dependencies:
   azstore: 
   expandable:
   sliding_up_panel:
-  extended_nested_scroll_view:
+  animated_splash_screen:
+  show_up_animation:
   
 dev_dependencies:
   flutter_test:

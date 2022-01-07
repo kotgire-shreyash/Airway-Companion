@@ -47,36 +47,39 @@ class _SignUpButtonState extends State<SignUpButton> {
             ],
           ),
         ),
-        child: ElevatedButton(
-          child: context.read<SignupBloc>().state.internalStateValue == 1
-              ? const Icon(
-                  Icons.done,
-                  color: Colors.white,
-                )
-              : context.read<SignupBloc>().state.isFormSubmitted
-                  ? const Text(
-                      "sign up",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: Colors.white),
-                    )
-                  : const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      )),
-          style: ElevatedButton.styleFrom(
-            primary: Colors.transparent,
-            shadowColor: Colors.transparent,
-            elevation: 5,
-          ),
-          onPressed: () {
-            context.read<SignupBloc>().add(
-                SignUpFormBeingSubmittedEvent(isSignupFormSubmitted: true));
-          },
-        ),
+        child: BlocBuilder<SignupBloc, SignupState>(builder: (context, state) {
+          return ElevatedButton(
+            child: state.internalStateValue == 1
+                ? const Icon(
+                    Icons.done,
+                    color: Colors.white,
+                  )
+                : state.isFormSubmitted
+                    ? const Text(
+                        "sign up",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: Colors.white),
+                      )
+                    : const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 3,
+                        )),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.transparent,
+              shadowColor: Colors.transparent,
+              elevation: 5,
+            ),
+            onPressed: () {
+              context.read<SignupBloc>().add(
+                  SignUpFormBeingSubmittedEvent(isSignupFormSubmitted: true));
+            },
+          );
+        }),
       ),
     );
   }
