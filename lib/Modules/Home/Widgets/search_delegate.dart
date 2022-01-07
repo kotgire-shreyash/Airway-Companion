@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// Search logic
 class SearchBoxDelegate extends SearchDelegate<Widget> {
   final _appFeatureWidgets = [
     "Available Flights",
@@ -43,7 +44,7 @@ class SearchBoxDelegate extends SearchDelegate<Widget> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return SizedBox();
+    return const SizedBox();
   }
 
   @override
@@ -62,9 +63,11 @@ class SearchBoxDelegate extends SearchDelegate<Widget> {
           try {
             _text = _suggestedItems[index];
             _leadingIcon = Icon(Icons.widgets,
+                size: 20,
                 color:
                     index % 2 == 0 ? Colors.blue.shade600 : Colors.redAccent);
-            _trailingIcon = const Icon(Icons.open_in_new, color: Colors.black);
+            _trailingIcon =
+                const Icon(Icons.open_in_new, size: 20, color: Colors.black);
           } catch (e) {
             _leadingIcon = null;
             _trailingIcon = null;
@@ -76,8 +79,8 @@ class SearchBoxDelegate extends SearchDelegate<Widget> {
               _text,
               style: TextStyle(
                 fontFamily:
-                    GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily,
-                fontSize: 20,
+                    GoogleFonts.lato(fontWeight: FontWeight.bold).fontFamily,
+                fontSize: 15,
               ),
             ),
             onTap: () {

@@ -1,6 +1,7 @@
 import 'package:airwaycompanion/Modules/Authentication/Events/login_events.dart';
 import 'package:airwaycompanion/Modules/Authentication/Screens/LoginScreen/login_states.dart';
 import 'package:airwaycompanion/Modules/Firebase/firebase.dart';
+import 'package:airwaycompanion/Modules/General%20Widgets/toast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -33,7 +34,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   void _onloginFormSubmissionFailure(
       LoginFormFailureSubmissionEvent event, Emitter<LoginState> emit) {
-    emit(state.copyWith(internalStateValue: 2));
+    emit(state.copyWith(internalStateValue: event.code));
   }
 
   void _onLoginFormBeingSubmitted(
@@ -44,10 +45,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       // Logging in
       await Firebase.firebaseAuthentication.signInWithEmailAndPassword(
           email: state.mail, password: state.password);
-      _onloginFormSuccessfulSubmission(
-          LoginFormSuccesfulSubmissionEvent(), emit);
+      emit(state.copyWith(internalStateValue: 1));
     } catch (e) {
-      _onloginFormSubmissionFailure(LoginFormFailureSubmissionEvent(), emit);
+      CustomFlutterToast.display("Failed to log in");
     }
 
     emit(state.copyWith(isFormSubmitted: true));

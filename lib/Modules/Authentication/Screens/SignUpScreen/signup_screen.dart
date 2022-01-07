@@ -25,23 +25,14 @@ class _SignUpPageViewState extends State<SignUpPageView> {
   @override
   void initState() {
     super.initState();
-    FlutterToast.init(context);
+    CustomFlutterToast.init(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignupBloc, SignupState>(
       listener: (context, state) async {
-        // Display Signup succesful toast
-        if (state.internalStateValue == 1) {
-          FlutterToast.display("Signed up");
-          await Future.delayed(const Duration(seconds: 2));
-          Navigator.pop(context);
-
-          // Display Signup failed toast
-        } else if (state.internalStateValue == 2) {
-          FlutterToast.display("Failed to Sign Up");
-        } else if (state.isBackToNavigationButtonPressed) {
+        if (state.isBackToNavigationButtonPressed) {
           context.read<SignupBloc>().add(BackToLoginNavigationEvent(
               isBackToNavigationButtonPressed: false));
           Navigator.pop(context);
@@ -128,7 +119,7 @@ class _SignUpPageViewState extends State<SignUpPageView> {
         labelStyle: TextStyle(fontSize: 15, color: Colors.grey.shade500),
         hintStyle: TextStyle(color: Colors.grey.shade300),
         focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.5)),
+            borderSide: BorderSide(color: Colors.redAccent, width: 2.5)),
         icon: Icon(
           Icons.person,
           color: CustomColors.signupSwatch,
@@ -155,7 +146,7 @@ class _SignUpPageViewState extends State<SignUpPageView> {
         labelStyle: TextStyle(fontSize: 15, color: Colors.grey.shade500),
         hintStyle: TextStyle(color: Colors.grey.shade300),
         focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.5)),
+            borderSide: BorderSide(color: Colors.redAccent, width: 2.5)),
         icon: Icon(
           Icons.lock,
           color: CustomColors.signupSwatch,
@@ -181,7 +172,7 @@ class _SignUpPageViewState extends State<SignUpPageView> {
         labelStyle: TextStyle(fontSize: 15, color: Colors.grey.shade500),
         hintStyle: TextStyle(color: Colors.grey.shade300),
         focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.5)),
+            borderSide: BorderSide(color: Colors.redAccent, width: 2.5)),
         icon: Icon(
           Icons.mail,
           color: CustomColors.signupSwatch,

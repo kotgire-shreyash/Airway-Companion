@@ -27,4 +27,7 @@ class LoginFormBeingSubmittedEvent extends LoginEvent {
 
 class LoginFormSuccesfulSubmissionEvent extends LoginEvent {}
 
-class LoginFormFailureSubmissionEvent extends LoginEvent {}
+class LoginFormFailureSubmissionEvent extends LoginEvent {
+  int code;
+  LoginFormFailureSubmissionEvent({required this.code});
+}
