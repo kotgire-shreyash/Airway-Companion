@@ -235,58 +235,28 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                               right: 25,
                             ),
                             child: Center(
-                              child: Showcase(
-                                key: _searchKey,
-                                description:
-                                    "Tap to search for the required widget",
-                                descTextStyle: TextStyle(
-                                    fontFamily: GoogleFonts.lato(
-                                            fontWeight: FontWeight.w800)
-                                        .fontFamily),
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.search,
-                                    size: 30,
-                                    color: context
-                                            .read<HomeScreenBloc>()
-                                            .state
-                                            .isSearchIconPressed
-                                        ? Colors.grey.shade600
-                                        : Colors.black,
-                                  ),
-                                  onPressed: () {
-                                    print("pressed");
-                                    context.read<HomeScreenBloc>().add(
-                                        SearchIconPressed(
-                                            isSearchIconPressed: context
-                                                    .read<HomeScreenBloc>()
-                                                    .state
-                                                    .isSearchIconPressed
-                                                ? false
-                                                : true));
-                                  },
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.menu,
+                                  size: 30,
+                                  color: Colors.black,
                                 ),
+                                onPressed: () {
+                                  _scaffoldKey.currentState!.openEndDrawer();
+                                },
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: context
-                              .read<HomeScreenBloc>()
-                              .state
-                              .isSearchIconPressed
-                          ? 15
-                          : 0,
-                    ),
-                    context.read<HomeScreenBloc>().state.isSearchIconPressed
-                        ? AnimationConfiguration.synchronized(
-                            child: ScaleAnimation(child: _searchWidget()),
-                          )
-                        : const SizedBox(),
+                    const SizedBox(height: 30),
+                    Showcase(
+                        key: _searchKey,
+                        description: "Tap to search for the required widget",
+                        child: Center(child: _searchWidget())),
                     const SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     _flightsCheckNotifier(),
                     const SizedBox(
@@ -341,7 +311,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
       width: MediaQuery.of(context).size.width - 50,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.all(Radius.elliptical(30, 30)),
+        borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
         border: Border.all(
           width: 0.8,
           color: Colors.grey.shade700,
@@ -381,6 +351,26 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 ),
                 speed: const Duration(milliseconds: 60),
               ),
+              TypewriterAnimatedText(
+                "Flight Booking?",
+                textStyle: TextStyle(
+                  color: Colors.grey.shade400,
+                  fontSize: 13,
+                  fontFamily: _latoFontFamily,
+                  fontWeight: FontWeight.bold,
+                ),
+                speed: const Duration(milliseconds: 60),
+              ),
+              TypewriterAnimatedText(
+                "Personal Assistance?",
+                textStyle: TextStyle(
+                  color: Colors.grey.shade400,
+                  fontSize: 13,
+                  fontFamily: _latoFontFamily,
+                  fontWeight: FontWeight.bold,
+                ),
+                speed: const Duration(milliseconds: 60),
+              ),
             ],
             repeatForever: true,
             pause: const Duration(seconds: 2),
@@ -407,80 +397,138 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
       child: SizedBox(
         width: MediaQuery.of(context).size.width - 100,
         child: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              Container(
-                color: Colors.blue.shade500,
-                height: 220,
-                child: Column(
-                  children: [
-                    Container(
-                      height: 130,
-                      width: MediaQuery.of(context).size.width - 100,
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 20),
-                        height: 100,
-                        width: 100,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width - 100,
+            color: Colors.white,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      Container(
+                        color: Colors.blue.shade500,
+                        height: 220,
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 130,
+                              width: MediaQuery.of(context).size.width - 100,
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                margin: const EdgeInsets.only(right: 20),
+                                height: 100,
+                                width: 100,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                                child: Center(
+                                    child: Image.asset(
+                                  "assets/images/user.jpg",
+                                  fit: BoxFit.cover,
+                                  height: 70,
+                                  width: 70,
+                                )),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(right: 23),
+                              alignment: Alignment.centerRight,
+                              // height: 35,
+                              child: Text(
+                                "Ninad07",
+                                style: TextStyle(
+                                  fontFamily: GoogleFonts.lato(
+                                          fontWeight: FontWeight.w900)
+                                      .fontFamily,
+                                  fontSize: 25,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(right: 23),
+                              alignment: Alignment.centerRight,
+                              height: 25,
+                              child: Text(
+                                "demouser123@gmail.com",
+                                style: TextStyle(
+                                  fontFamily: GoogleFonts.lato(
+                                          fontWeight: FontWeight.w800)
+                                      .fontFamily,
+                                  fontSize: 15,
+                                  color: Colors.grey.shade200,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        child: Center(
-                            child: Image.asset(
-                          "assets/images/user.jpg",
-                          fit: BoxFit.cover,
-                          height: 70,
-                          width: 70,
-                        )),
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(right: 23),
-                      alignment: Alignment.centerRight,
-                      // height: 35,
-                      child: Text(
-                        "Ninad07",
-                        style: TextStyle(
-                          fontFamily:
-                              GoogleFonts.lato(fontWeight: FontWeight.w900)
-                                  .fontFamily,
-                          fontSize: 25,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(right: 23),
-                      alignment: Alignment.centerRight,
-                      height: 25,
-                      child: Text(
-                        "demouser123@gmail.com",
-                        style: TextStyle(
-                          fontFamily:
-                              GoogleFonts.lato(fontWeight: FontWeight.w800)
-                                  .fontFamily,
-                          fontSize: 15,
-                          color: Colors.grey.shade200,
-                        ),
-                      ),
-                    ),
-                  ],
+                      _drawerListTile(
+                          "Profile", CupertinoIcons.person, () => null),
+                      _drawerListTile(
+                          "Check List", CupertinoIcons.checkmark_alt_circle,
+                          () {
+                        Navigator.pushNamed(context, "checklistPage");
+                      }),
+                      _drawerListTile("Navigation", FontAwesomeIcons.globe, () {
+                        Navigator.pushNamed(context, "navigation");
+                      }),
+                      _drawerListTile("Track", Icons.track_changes_sharp, () {
+                        Navigator.pushNamed(context, "timeline");
+                      }),
+                    ],
+                  ),
                 ),
-              ),
-              _drawerListTile("Profile", CupertinoIcons.person, () => null),
-              _drawerListTile("Check List", CupertinoIcons.checkmark_alt_circle,
-                  () {
-                Navigator.pushNamed(context, "checklistPage");
-              }),
-              _drawerListTile("Navigation", FontAwesomeIcons.globe, () {
-                Navigator.pushNamed(context, "navigation");
-              }),
-              _drawerListTile("Track", Icons.track_changes_sharp, () {
-                Navigator.pushNamed(context, "timeline");
-              }),
-            ],
+                SizedBox(
+                  height: 150,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 150,
+                        width: 100,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Airway",
+                                style: TextStyle(
+                                  color: Colors.lightBlue,
+                                  fontSize: 25,
+                                  fontFamily: GoogleFonts.lato(
+                                          fontWeight: FontWeight.bold)
+                                      .fontFamily,
+                                ),
+                              ),
+                              Text(
+                                "Companion",
+                                style: TextStyle(
+                                  color: Colors.grey.shade800,
+                                  fontSize: 18,
+                                  fontFamily: GoogleFonts.lato(
+                                          fontWeight: FontWeight.bold)
+                                      .fontFamily,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      SizedBox(
+                          height: 80,
+                          width: 80,
+                          child: Image.asset("assets/images/logo.jpg"))
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

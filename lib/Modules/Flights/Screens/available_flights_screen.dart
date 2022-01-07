@@ -6,7 +6,6 @@ import 'package:airwaycompanion/Modules/Flights/Events/flights_screen_events.dar
 import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/custom_colors.dart';
 import 'package:expandable/expandable.dart';
-import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:airwaycompanion/Modules/General Widgets/Bottom Navigation Bar/bottom_navigation_bar.dart'

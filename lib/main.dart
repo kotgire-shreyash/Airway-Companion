@@ -47,7 +47,7 @@ class _AirwayCompanionAppState extends State<AirwayCompanionApp> {
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
         onGenerateRoute: _authPageRouter.onGenerateRoute,
-        initialRoute: "login",
+        initialRoute: "splash",
       ),
     );
   }
