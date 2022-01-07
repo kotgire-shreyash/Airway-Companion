@@ -7,6 +7,7 @@ import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'Logic/Bloc/AuthenticationBloc/login_bloc.dart';
 import 'Logic/Bloc/HomeBloc/home_screen_bloc.dart';
 import 'Modules/General Widgets/Bottom Navigation Bar/bottom_navigation_bar.dart';
@@ -37,11 +38,11 @@ class _AirwayCompanionAppState extends State<AirwayCompanionApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => HomeScreenBloc()),
+        BlocProvider(create: (context) => LoginBloc()),
         BlocProvider(create: (context) => FlightScreenBloc()),
         BlocProvider(create: (context) => CheckListScreenBloc()),
         BlocProvider(create: (context) => AzureBotBloc()),
         BlocProvider(create: (context) => NavigationScreenBloc()),
-        // BlocProvider(create: (context) => BookingScreenBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -1,4 +1,5 @@
 import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/login_bloc.dart';
+import 'package:airwaycompanion/Modules/Authentication/Events/login_events.dart';
 import 'package:airwaycompanion/Modules/Authentication/Screens/LoginScreen/login_states.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/custom_colors.dart';
 import 'package:flutter/material.dart';
@@ -47,38 +48,39 @@ class _LoginButtonState extends State<LoginButton> {
             ],
           ),
         ),
-        child: ElevatedButton(
-          child: context.read<LoginBloc>().state.internalStateValue == 1
-              ? const Icon(
-                  Icons.done,
-                  color: Colors.white,
-                )
-              : context.read<LoginBloc>().state.isFormSubmitted
-                  ? const Text(
-                      "login",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: Colors.white),
-                    )
-                  : const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      )),
-          style: ElevatedButton.styleFrom(
-            primary: Colors.transparent,
-            shadowColor: Colors.transparent,
-            elevation: 5,
-          ),
-          onPressed: () {
-            // context.read<LoginBloc>().add(
-            //     LoginFormBeingSubmittedEvent(isLoginFormSubmitted: true));
-
-            Navigator.pushReplacementNamed(context, "home");
-          },
-        ),
+        child: BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
+          return ElevatedButton(
+            child: state.internalStateValue == 1
+                ? const Icon(
+                    Icons.done_rounded,
+                    color: Colors.white,
+                  )
+                : state.isFormSubmitted
+                    ? const Text(
+                        "login",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: Colors.white),
+                      )
+                    : const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: const CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 3,
+                        )),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.transparent,
+              shadowColor: Colors.transparent,
+              elevation: 5,
+            ),
+            onPressed: () {
+              context.read<LoginBloc>().add(
+                  LoginFormBeingSubmittedEvent(isLoginFormSubmitted: true));
+            },
+          );
+        }),
       ),
     );
   }

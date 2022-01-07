@@ -1,11 +1,13 @@
 import 'dart:ui';
 
+import 'package:airwaycompanion/Logic/Bloc/AuthenticationBloc/login_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/HomeBloc/home_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Home/Events/home_screen_events.dart';
 import 'package:airwaycompanion/Modules/Home/Screens/home_screen_states.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/flights_check_button.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/search_delegate.dart';
+import 'package:airwaycompanion/Modules/Home/Widgets/services_widget.dart';
 import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
@@ -188,8 +190,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                   textScaleFactor: 1.6,
                                 ),
                                 Text(
-                                  // context.read<LoginBloc>().state.username
-                                  "Ninad07!",
+                                  context.read<LoginBloc>().state.username,
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     color: Colors.black,
@@ -284,7 +285,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                     const SizedBox(
                       height: 30,
                     ),
-                    _servicesWidget(),
+                    const ServicesWidget(),
                     const SizedBox(
                       height: 30,
                     ),
@@ -439,13 +440,14 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                               alignment: Alignment.centerRight,
                               // height: 35,
                               child: Text(
-                                "Ninad07",
+                                context.read<LoginBloc>().state.username,
                                 style: TextStyle(
                                   fontFamily: GoogleFonts.lato(
                                           fontWeight: FontWeight.w900)
                                       .fontFamily,
                                   fontSize: 25,
                                   color: Colors.white,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ),
@@ -454,13 +456,14 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                               alignment: Alignment.centerRight,
                               height: 25,
                               child: Text(
-                                "demouser123@gmail.com",
+                                context.read<LoginBloc>().state.mail,
                                 style: TextStyle(
                                   fontFamily: GoogleFonts.lato(
                                           fontWeight: FontWeight.w800)
                                       .fontFamily,
                                   fontSize: 15,
                                   color: Colors.grey.shade200,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ),
@@ -745,41 +748,6 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  // Services Widget
-
-  Widget _servicesWidget() {
-    return Container(
-      height: 150,
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        itemCount: 5,
-        itemBuilder: (context, int index) {
-          return Row(
-            children: [
-              Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50)),
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: const BorderRadius.all(Radius.circular(50)),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10)
-            ],
-          );
-        },
       ),
     );
   }

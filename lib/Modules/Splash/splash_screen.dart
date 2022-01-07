@@ -26,11 +26,10 @@ class _SplashScreenState extends State<SplashScreen> {
       body: AnimatedSplashScreen(
         splash: const Splash(),
         splashIconSize: double.infinity,
-        nextScreen: BlocProvider(
-            create: (context) => LoginBloc(), child: const LoginPageView()),
+        nextScreen: const LoginPageView(),
         splashTransition: SplashTransition.fadeTransition,
         animationDuration: const Duration(seconds: 1),
-        duration: 6000,
+        duration: 5000,
         pageTransitionType: PageTransitionType.rightToLeftWithFade,
       ),
     );

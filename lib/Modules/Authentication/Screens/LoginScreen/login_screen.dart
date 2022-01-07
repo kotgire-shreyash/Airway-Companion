@@ -27,26 +27,18 @@ class _LoginPageViewState extends State<LoginPageView> {
   @override
   void initState() {
     super.initState();
-    FlutterToast.init(context);
+    CustomFlutterToast.init(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) async {
-        // Signup page Navigation
-        if (state.isSignupPageNavigationCalled) {
-          Navigator.pushNamed(context, "signup");
-
-          // Successful login
-        } else if (state.internalStateValue == 1) {
-          FlutterToast.display("Logged in");
+        if (state.internalStateValue == 1) {
+          CustomFlutterToast.init(context);
+          CustomFlutterToast.display("Logged in");
           await Future.delayed(const Duration(seconds: 2));
           Navigator.pushReplacementNamed(context, "home");
-
-          // Login failure
-        } else if (state.internalStateValue == 2) {
-          FlutterToast.display("Failed to log in");
         }
       },
       child: _loginForm(),
@@ -285,8 +277,7 @@ class _LoginPageViewState extends State<LoginPageView> {
               overlayColor: MaterialStateProperty.all(
                   const Color.fromRGBO(95, 77, 250, 0.05))),
           onPressed: () {
-            context.read<LoginBloc>().add(
-                SignupPageNavigationEvent(isSignupPageNavigationCalled: true));
+            Navigator.pushNamed(context, "signup");
           },
         ),
       ],
