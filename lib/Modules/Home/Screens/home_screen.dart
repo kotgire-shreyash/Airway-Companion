@@ -25,7 +25,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.chatbot, required this.bottomBar})
       : super(key: key);
   final ChatBot chatbot;
-  final CustomBottomNavigationBar bottomBar;
+  final bottomBar;
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -36,8 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext buildContext) {
-    CustomBottomNavigationBar.index = 1;
-
     return WillPopScope(
       onWillPop: _onbackpressed,
       child: MaterialApp(
@@ -126,21 +124,6 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
             .read<HomeScreenBloc>()
             .add(SearchBoxTextFieldPressed(isSearchBoxTextFieldEnabled: false));
         showSearch(context: context, delegate: SearchBoxDelegate());
-      } else if (state.isChecklistTilePressed) {
-        context
-            .read<HomeScreenBloc>()
-            .add(CheckListTilePressed(isChecklistTilePressed: false));
-        Navigator.pushNamed(context, "checklistPage");
-      } else if (state.isNavigationTilePressed) {
-        context
-            .read<HomeScreenBloc>()
-            .add(NavigationTilePressed(isNavigationTilePressed: false));
-        Navigator.pushNamed(context, "navigationPage");
-      } else if (state.isTimeLineButtonPressed) {
-        context
-            .read<HomeScreenBloc>()
-            .add(TimeLineButtonPressed(isTimeLineButtonPressed: false));
-        Navigator.pushNamed(context, "timeline");
       }
     }, builder: (context, state) {
       return Scaffold(
@@ -332,6 +315,9 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                       height: 30,
                     ),
                     _servicesWidget(),
+                    const SizedBox(
+                      height: 30,
+                    ),
                   ],
                 ),
               ),
@@ -486,16 +472,12 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
               _drawerListTile("Profile", CupertinoIcons.person, () => null),
               _drawerListTile("Check List", CupertinoIcons.checkmark_alt_circle,
                   () {
-                context
-                    .read<HomeScreenBloc>()
-                    .add(CheckListTilePressed(isChecklistTilePressed: true));
+                Navigator.pushNamed(context, "checklistPage");
               }),
               _drawerListTile("Navigation", FontAwesomeIcons.globe, () {
-                // context
-                //     .read<HomeScreenBloc>()
-                //     .add(NavigationTilePressed(isNavigationTilePressed: true));
+                Navigator.pushNamed(context, "navigation");
               }),
-              _drawerListTile("Settings", CupertinoIcons.settings, () {
+              _drawerListTile("Track", Icons.track_changes_sharp, () {
                 Navigator.pushNamed(context, "timeline");
               }),
             ],
@@ -692,10 +674,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                         .fontFamily),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    context.read<HomeScreenBloc>().add(
-                                          TimeLineButtonPressed(
-                                              isTimeLineButtonPressed: true),
-                                        );
+                                    Navigator.pushNamed(context, "timeline");
                                   },
                                   child: Text("Catch up!",
                                       style: TextStyle(
@@ -725,58 +704,34 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
   // Services Widget
 
   Widget _servicesWidget() {
-    return Center(
-        child: Column(
-      children: [
-        _serviceRowLayout(
-          _serviceCard(
-              Colors.deepPurpleAccent.shade400, Colors.yellow.shade600),
-          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
-        ),
-        const SizedBox(height: 15),
-        _serviceRowLayout(
-          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
-          _serviceCard(Colors.yellow.shade600, Colors.yellow.shade600),
-        ),
-        const SizedBox(height: 15),
-        Center(
-            child: _serviceCard(
-                Colors.deepPurpleAccent.shade400, Colors.yellow.shade600)),
-        const SizedBox(height: 15),
-      ],
-    ));
-  }
-
-  // Services Layout
-  Widget _serviceRowLayout(Widget serviceCard1, Widget serviceCard2) {
     return Container(
       height: 150,
       width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        children: [
-          serviceCard1,
-          const SizedBox(width: 15),
-          serviceCard2,
-        ],
-      ),
-    );
-  }
-
-  // Service card
-  Widget _serviceCard(Color color1, Color color2) {
-    return Card(
-      elevation: 10,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-      ),
-      child: Container(
-        height: 150,
-        width: MediaQuery.of(context).size.width / 2.5,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        itemCount: 5,
+        itemBuilder: (context, int index) {
+          return Row(
+            children: [
+              Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)),
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: const BorderRadius.all(Radius.circular(50)),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10)
+            ],
+          );
+        },
       ),
     );
   }

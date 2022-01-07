@@ -14,12 +14,18 @@ class TimeLineScreen extends StatefulWidget {
       {Key? key, required this.chatbot, required this.bottomBar})
       : super(key: key);
   final ChatBot chatbot;
-  final CustomBottomNavigationBar bottomBar;
+  final bottomBar;
   @override
   _TimeLineScreenState createState() => _TimeLineScreenState();
 }
 
 class _TimeLineScreenState extends State<TimeLineScreen> {
+  @override
+  void initState() {
+    CustomBottomNavigationBar.index = -1;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

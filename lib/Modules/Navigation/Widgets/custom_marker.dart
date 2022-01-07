@@ -6,7 +6,7 @@ import 'package:latlong2/latlong.dart';
 class CustomMarker extends Marker {
   CustomMarker({
     required LatLng point,
-    Color color = Colors.deepPurple,
+    Color color = Colors.blue,
   }) : super(
           width: 80.0,
           height: 80.0,
@@ -16,7 +16,7 @@ class CustomMarker extends Marker {
               NavigationScreen.of(ctx)!.drawPolyline(point);
             },
             icon: Icon(
-              Icons.location_on_outlined,
+              Icons.location_on,
               color: color,
               size: 40,
             ),

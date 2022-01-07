@@ -17,7 +17,7 @@ class GuidelineScreen extends StatefulWidget {
       {Key? key, required this.chatbot, required this.bottomBar})
       : super(key: key);
   final ChatBot chatbot;
-  final CustomBottomNavigationBar bottomBar;
+  final bottomBar;
 
   @override
   _GuidelineScreenState createState() => _GuidelineScreenState();
@@ -52,6 +52,7 @@ class _GuidelineScreenState extends State<GuidelineScreen> {
               backgroundColor: Colors.transparent,
               leading: IconButton(
                   onPressed: () {
+                    CustomBottomNavigationBar.index = 1;
                     Navigator.pop(context);
                   },
                   icon: const Icon(

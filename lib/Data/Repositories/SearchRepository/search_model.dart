@@ -1,13 +1,13 @@
 class SearchModel {
-  String Name;
-  String Address;
-  double Latitude;
-  double Longitude;
+  String name;
+  String address;
+  double latitude;
+  double longitude;
   double distance;
   SearchModel(
-      {this.Name = 'Name',
-      this.Address = 'Address',
-      this.Latitude = 13.199165,
-      this.Longitude = 77.707984,
+      {this.name = 'Name',
+      this.address = 'Address',
+      this.latitude = 13.199165,
+      this.longitude = 77.707984,
       this.distance = 0});
 }
