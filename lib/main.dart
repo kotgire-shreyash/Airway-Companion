@@ -4,6 +4,7 @@ import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/checklist_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/FlightsScreenBloc/flights_screen_bloc.dart';
 import 'package:airwaycompanion/Logic/Bloc/NavigationScreenBloc/navigation_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +16,19 @@ import 'Modules/General Widgets/Bottom Navigation Bar/bottom_navigation_bar.dart
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
+  AwesomeNotifications().initialize(
+    'resource://drawable/airway_companion',
+    [
+      NotificationChannel(
+        channelKey: 'basic_channel',
+        channelName: 'Basic Notifications',
+        defaultColor: Colors.brown,
+        channelDescription: 'Basic Channel description',
+        importance: NotificationImportance.High,
+        channelShowBadge: true,
+      ),
+    ],
+  );
   runApp(const AirwayCompanionApp());
 }
 
@@ -31,6 +45,16 @@ class _AirwayCompanionAppState extends State<AirwayCompanionApp> {
   @override
   void initState() {
     super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((isallowed) {
+      if (!isallowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    // AwesomeNotifications().createdStream.listen((event) {
+    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //     content: Text('Notifcation Created on ${event.channelKey}'),
+    //   ));
+    // });
   }
 
   @override

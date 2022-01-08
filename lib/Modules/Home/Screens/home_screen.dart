@@ -8,6 +8,7 @@ import 'package:airwaycompanion/Modules/Home/Widgets/flights_check_button.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/search_delegate.dart';
 import 'package:airwaycompanion/Modules/Home/Widgets/services_widget.dart';
+import 'package:airwaycompanion/Modules/Profile/Screens/profile_screen.dart';
 import 'package:airwaycompanion/Modules/Routes/screen_router.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
@@ -475,8 +476,9 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                           ],
                         ),
                       ),
-                      _drawerListTile(
-                          "Profile", CupertinoIcons.person, () => null),
+                      _drawerListTile("Profile", CupertinoIcons.person, () {
+                        Navigator.pushNamed(context, 'profile');
+                      }),
                       _drawerListTile(
                           "Check List", CupertinoIcons.checkmark_alt_circle,
                           () {

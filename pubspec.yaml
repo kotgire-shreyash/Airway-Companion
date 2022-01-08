@@ -66,9 +66,12 @@ dependencies:
   showcaseview:
   azstore: 
   expandable:
+  awesome_notifications: ^0.6.19
   sliding_up_panel:
   animated_splash_screen:
   show_up_animation:
+  
+  simple_animations: ^4.0.1
   
 dev_dependencies:
   flutter_test:
