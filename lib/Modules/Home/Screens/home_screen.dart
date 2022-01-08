@@ -285,7 +285,12 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                     const SizedBox(
                       height: 30,
                     ),
-                    const ServicesWidget(),
+                    ServicesWidget(),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    _logo(200, MediaQuery.of(context).size.width - 200, 30, 23,
+                        100, 100),
                     const SizedBox(
                       height: 30,
                     ),
@@ -486,54 +491,58 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 150,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 150,
-                        width: 100,
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Airway",
-                                style: TextStyle(
-                                  color: Colors.lightBlue,
-                                  fontSize: 25,
-                                  fontFamily: GoogleFonts.lato(
-                                          fontWeight: FontWeight.bold)
-                                      .fontFamily,
-                                ),
-                              ),
-                              Text(
-                                "Companion",
-                                style: TextStyle(
-                                  color: Colors.grey.shade800,
-                                  fontSize: 18,
-                                  fontFamily: GoogleFonts.lato(
-                                          fontWeight: FontWeight.bold)
-                                      .fontFamily,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      SizedBox(
-                          height: 80,
-                          width: 80,
-                          child: Image.asset("assets/images/logo.jpg"))
-                    ],
-                  ),
-                ),
+                _logo(150, 100, 25, 18, 80, 80),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  // App logo Showcase
+  Widget _logo(double height, double width, double fontSize1, double fontSize2,
+      double imageHeight, double imageWidth) {
+    return SizedBox(
+      height: 150,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: height,
+            width: width,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Airway",
+                    style: TextStyle(
+                      color: Colors.lightBlue,
+                      fontSize: fontSize1,
+                      fontFamily: GoogleFonts.lato(fontWeight: FontWeight.bold)
+                          .fontFamily,
+                    ),
+                  ),
+                  Text(
+                    "Companion",
+                    style: TextStyle(
+                      color: Colors.grey.shade800,
+                      fontSize: fontSize2,
+                      fontFamily: GoogleFonts.lato(fontWeight: FontWeight.bold)
+                          .fontFamily,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          SizedBox(
+              height: imageHeight,
+              width: imageWidth,
+              child: Image.asset("assets/images/logo.jpg"))
+        ],
       ),
     );
   }

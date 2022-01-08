@@ -79,7 +79,7 @@ class _BookingScreenState extends State<BookingScreen> {
       ),
       child: Container(
         height: MediaQuery.of(context).size.height,
-        color: Colors.lightBlue,
+        color: Colors.grey.shade300,
         child: Stack(
           children: [
             SlidingUpPanel(
@@ -366,7 +366,7 @@ class TicketCard extends StatelessWidget {
                                     child: Text(
                                       ticket["departureSchedule"],
                                       style: TextStyle(
-                                        color: Colors.redAccent.shade200,
+                                        color: Colors.green,
                                         fontFamily: GoogleFonts.lato(
                                                 fontWeight: FontWeight.w900)
                                             .fontFamily,
@@ -413,7 +413,7 @@ class TicketCard extends StatelessWidget {
                                     child: Text(
                                       ticket["arrivalSchedule"],
                                       style: TextStyle(
-                                        color: Colors.redAccent.shade200,
+                                        color: Colors.green,
                                         fontFamily: GoogleFonts.lato(
                                                 fontWeight: FontWeight.w900)
                                             .fontFamily,
@@ -441,7 +441,7 @@ class TicketCard extends StatelessWidget {
                           child: Text(
                             currContext.read<BookingScreenBloc>().state.time,
                             style: const TextStyle(
-                              color: Colors.green,
+                              color: Colors.amber,
                               fontSize: 22,
                             ),
                           ),
