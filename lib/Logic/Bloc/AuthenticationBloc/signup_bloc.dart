@@ -1,6 +1,7 @@
 import 'package:airwaycompanion/Modules/Authentication/Events/signup_events.dart';
 import 'package:airwaycompanion/Modules/Authentication/Screens/SignUpScreen/signup_states.dart';
 import 'package:airwaycompanion/Modules/Firebase/firebase.dart';
+import 'package:airwaycompanion/Modules/General%20Widgets/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,14 +31,10 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     emit(state.copyWith(isFormSubmitted: true, displayToastByValue: 1));
   }
 
-  void _signupFormSubmissionFailureEvent(
-      SignupFormFailureSubmissionEvent event, Emitter<SignupState> emit) {
-    emit(state.copyWith(isFormSubmitted: true, displayToastByValue: 2));
-  }
-
   void _onBackToNavigationButtonPressEvent(
       BackToLoginNavigationEvent event, Emitter<SignupState> emit) {
     emit(state.copyWith(
+        isFormSubmitted: true,
         isBackToNavigationButtonPressed:
             event.isBackToNavigationButtonPressed));
   }
@@ -67,10 +64,12 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
       _signupFormSuccessfulSubmissionEvent(
           SignupFormSuccesfulSubmissionEvent(), emit);
+      CustomFlutterToast.display("Signed up");
+      await Future.delayed(const Duration(seconds: 2));
     } catch (e) {
-      print("EXCEPTION" + e.toString());
-      _signupFormSubmissionFailureEvent(
-          SignupFormFailureSubmissionEvent(), emit);
+      CustomFlutterToast.display("Failed to sign up");
     }
+
+    emit(state.copyWith(isFormSubmitted: true));
   }
 }

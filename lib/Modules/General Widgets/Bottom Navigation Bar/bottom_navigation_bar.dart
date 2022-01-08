@@ -10,7 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   const CustomBottomNavigationBar({Key? key}) : super(key: key);
-  static int index = 1;
+  static int index = 0;
+  static int prevIndex = -1;
 
   @override
   _CustomBottomNavigationBarState createState() =>
@@ -50,24 +51,29 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         if (index == 0) {
           if (CustomBottomNavigationBar.index != index) {
             CustomBottomNavigationBar.index = index;
-            Navigator.pushNamed(context, 'availableFlights');
+            Navigator.pushNamed(context, 'home');
           }
 
           // Home Screen
         } else if (index == 1) {
           if (CustomBottomNavigationBar.index != index) {
             CustomBottomNavigationBar.index = index;
-            Navigator.pushNamed(context, 'home');
+            Navigator.pushNamed(context, "availableFlights");
           }
         } else if (index == 2) {
-          // Navigator.pushNamed(context, 'timeline');
-          //CreateBasicNotification(title: 'title', body: 'body');
-          CreateReminderNotification(
-              title: 'title', body: 'body', dateTimeobject: DateTime.now());
+          if (CustomBottomNavigationBar.index != index) {
+            CustomBottomNavigationBar.index = index;
+            Navigator.pushNamed(context, 'navigation');
+          }
         } else if (index == 3) {
           if (CustomBottomNavigationBar.index != index) {
             CustomBottomNavigationBar.index = index;
             Navigator.pushNamed(context, 'guidelines');
+          }
+        } else if (index == 4) {
+          if (CustomBottomNavigationBar.index != index) {
+            CustomBottomNavigationBar.index = index;
+            Navigator.pushNamed(context, 'bookings');
           }
         }
       },
@@ -75,12 +81,13 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   }
 
   final List<BottomBarWithSheetItem> _items = [
-    const BottomBarWithSheetItem(
-        icon: Icons.airplanemode_active_outlined, label: "Flights"),
     const BottomBarWithSheetItem(icon: CupertinoIcons.home, label: "Home"),
     const BottomBarWithSheetItem(
-        icon: CupertinoIcons.settings, label: "Settings"),
+        icon: Icons.airplanemode_active_outlined, label: "Flights"),
+    const BottomBarWithSheetItem(icon: CupertinoIcons.map, label: "Navigation"),
     const BottomBarWithSheetItem(
         icon: CupertinoIcons.book, label: "Guidelines"),
+    const BottomBarWithSheetItem(
+        icon: CupertinoIcons.list_bullet, label: "Bookings"),
   ];
 }

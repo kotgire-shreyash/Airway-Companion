@@ -67,6 +67,9 @@ dependencies:
   azstore: 
   expandable:
   awesome_notifications: ^0.6.19
+  sliding_up_panel:
+  animated_splash_screen:
+  show_up_animation:
   
 dev_dependencies:
   flutter_test:
@@ -93,6 +96,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/GIF/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

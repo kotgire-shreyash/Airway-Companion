@@ -22,31 +22,23 @@ class _LoginPageViewState extends State<LoginPageView> {
   final _formKey = GlobalKey();
   final _latoFontFamily = GoogleFonts.lato().fontFamily;
   final _latoBoldFontFamily =
-      GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily;
+      GoogleFonts.lato(fontWeight: FontWeight.bold).fontFamily;
 
   @override
   void initState() {
     super.initState();
-    FlutterToast.init(context);
+    CustomFlutterToast.init(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) async {
-        // Signup page Navigation
-        if (state.isSignupPageNavigationCalled) {
-          Navigator.pushNamed(context, "signup");
-
-          // Successful login
-        } else if (state.internalStateValue == 1) {
-          FlutterToast.display("Logged in");
+        if (state.internalStateValue == 1) {
+          CustomFlutterToast.init(context);
+          CustomFlutterToast.display("Logged in");
           await Future.delayed(const Duration(seconds: 2));
           Navigator.pushReplacementNamed(context, "home");
-
-          // Login failure
-        } else if (state.internalStateValue == 2) {
-          FlutterToast.display("Failed to log in");
         }
       },
       child: _loginForm(),
@@ -144,12 +136,11 @@ class _LoginPageViewState extends State<LoginPageView> {
                 fontFamily: _latoFontFamily),
             hintStyle: TextStyle(
                 color: Colors.grey.shade300, fontFamily: _latoFontFamily),
-            focusedBorder: UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: CustomColors.loginSwatch, width: 2.5)),
-            icon: Icon(
+            focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.lightBlue, width: 2.5)),
+            icon: const Icon(
               Icons.person,
-              color: CustomColors.loginSwatch,
+              color: Colors.lightBlue,
             ),
           ),
           validator: (value) {
@@ -182,12 +173,11 @@ class _LoginPageViewState extends State<LoginPageView> {
                 fontFamily: _latoFontFamily),
             hintStyle: TextStyle(
                 color: Colors.grey.shade300, fontFamily: _latoFontFamily),
-            focusedBorder: UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: CustomColors.loginSwatch, width: 2.5)),
-            icon: Icon(
+            focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.lightBlue, width: 2.5)),
+            icon: const Icon(
               Icons.lock,
-              color: CustomColors.loginSwatch,
+              color: Colors.lightBlue,
             ),
           ),
           validator: (value) {
@@ -219,12 +209,11 @@ class _LoginPageViewState extends State<LoginPageView> {
                 fontFamily: _latoFontFamily),
             hintStyle: TextStyle(
                 color: Colors.grey.shade300, fontFamily: _latoFontFamily),
-            focusedBorder: UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: CustomColors.loginSwatch, width: 2.5)),
-            icon: Icon(
+            focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.lightBlue, width: 2.5)),
+            icon: const Icon(
               Icons.mail,
-              color: CustomColors.loginSwatch,
+              color: Colors.lightBlue,
             ),
           ),
           validator: (value) {
@@ -248,9 +237,9 @@ class _LoginPageViewState extends State<LoginPageView> {
         "Forgot password?",
         style: TextStyle(
           fontSize: 15,
-          fontWeight: FontWeight.w900,
+          fontWeight: FontWeight.bold,
           fontFamily: _latoBoldFontFamily,
-          color: CustomColors.loginSwatch,
+          color: Colors.grey.shade700,
         ),
       ),
     );
@@ -259,7 +248,7 @@ class _LoginPageViewState extends State<LoginPageView> {
 //? Login Screen Image
   Widget _loginIndicatorImage() {
     return Image.asset(
-      "assets/images/login_image_peacock_blue.png",
+      "assets/images/login_image_lightBlue.png",
       fit: BoxFit.cover,
     );
   }
@@ -280,7 +269,7 @@ class _LoginPageViewState extends State<LoginPageView> {
           child: Text(
             "SignUp",
             style: TextStyle(
-                color: CustomColors.loginSwatch,
+                color: Colors.lightBlue,
                 fontFamily: _latoBoldFontFamily,
                 fontWeight: FontWeight.w900),
           ),
@@ -288,8 +277,7 @@ class _LoginPageViewState extends State<LoginPageView> {
               overlayColor: MaterialStateProperty.all(
                   const Color.fromRGBO(95, 77, 250, 0.05))),
           onPressed: () {
-            context.read<LoginBloc>().add(
-                SignupPageNavigationEvent(isSignupPageNavigationCalled: true));
+            Navigator.pushNamed(context, "signup");
           },
         ),
       ],

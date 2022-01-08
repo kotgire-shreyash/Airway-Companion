@@ -1,7 +1,6 @@
 import 'package:airwaycompanion/Logic/Bloc/ChecklistBloc/checklist_bloc.dart';
 import 'package:airwaycompanion/Modules/Checklist/Events/checklist_screen_event.dart';
 import 'package:airwaycompanion/Modules/Checklist/Screens/checklist_screen_states.dart';
-import 'package:airwaycompanion/Modules/Checklist/Screens/taskcard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -82,19 +81,19 @@ class _TaskCardState extends State<TaskCard> {
                   return BlocBuilder<CheckListScreenBloc, CheckListScreenState>(
                     builder: (context, state) {
                       return CheckboxListTile(
-                        value: state.taskWidgets[widget.cardIndex].child
+                        value: state.taskWidgets[widget.cardIndex]
                             .taskClassObject.todolist[index][1],
                         activeColor: Colors.red,
                         onChanged: (value) {
                           context.read<CheckListScreenBloc>().add(
                                 CheckBoxPressed(
-                                  isCheckBoxPressed: !state.isChecked,
                                   index: index,
                                   cardIndex: widget.cardIndex,
                                 ),
                               );
                         },
-                        title: Text(widget.taskClassObject.todolist[index][0]),
+                        title: Text(state.taskWidgets[widget.cardIndex]
+                            .taskClassObject.todolist[index][0]),
                         controlAffinity: ListTileControlAffinity.leading,
                       );
                     },
@@ -116,8 +115,8 @@ class TaskClass {
       required this.todolist,
       this.iconData,
       this.isChecked = false});
-  final title;
-  final todolist;
-  final iconData;
+  var title;
+  var todolist;
+  var iconData;
   bool isChecked;
 }

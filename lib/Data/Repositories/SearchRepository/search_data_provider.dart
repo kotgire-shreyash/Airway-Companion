@@ -18,11 +18,11 @@ class Search {
         var responsedata = json.decode(response.body);
         for (var item in responsedata['results']) {
           searchResultList.add(SearchModel(
-            Name: item['poi']['name'],
-            Address: item['address']['freeformAddress'],
+            name: item['poi']['name'],
+            address: item['address']['freeformAddress'],
             distance: item['dist'],
-            Latitude: item['position']['lat'],
-            Longitude: item['position']['lon'],
+            latitude: item['position']['lat'],
+            longitude: item['position']['lon'],
           ));
         }
       } else {
