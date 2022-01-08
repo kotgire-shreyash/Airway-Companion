@@ -1,4 +1,5 @@
 import 'package:airwaycompanion/Data/Repositories/ProfileRepository/profile_data.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,6 @@ class _ProfilePageState extends State<ProfilePage> {
   ProfileData _profileData = ProfileData();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _profileData.getDetails();
   }
@@ -21,62 +21,103 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        leading: backButton(),
+        backgroundColor: Colors.white,
+      ),
       body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            backgroundImage(),
-            detailsBody(),
-            profilePic(),
-            backButton(),
-          ],
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: [
+              Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _profilePic(),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  _headerDetails(),
+                ],
+              ),
+              const SizedBox(height: 10),
+              _detailsBody(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  backgroundImage() {
-    return Container(
-      height: 300,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/background_image.jpg'),
-              fit: BoxFit.cover)),
+  _headerDetails() {
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(right: 23),
+          alignment: Alignment.centerRight,
+          // height: 35,
+          child: Text(
+            "Ninad07",
+            style: TextStyle(
+              fontFamily:
+                  GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily,
+              fontSize: 25,
+              color: Colors.black,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(right: 23),
+          alignment: Alignment.centerRight,
+          height: 25,
+          child: Text(
+            "mail@gmail.com",
+            style: TextStyle(
+              fontFamily:
+                  GoogleFonts.lato(fontWeight: FontWeight.w800).fontFamily,
+              fontSize: 15,
+              color: Colors.grey.shade600,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
-  profilePic() {
+  _profilePic() {
     return Container(
-      width: 140.0,
-      height: 140.0,
-      margin: EdgeInsets.only(top: 125, left: 130),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(
-              'https://th.bing.com/th/id/OIP.-DTmchXt8KxCU_hCF3i6JgHaH6?w=177&h=189&c=7&r=0&o=5&dpr=1.25&pid=1.7'),
+      height: 130,
+      alignment: Alignment.centerLeft,
+      child: Container(
+        margin: const EdgeInsets.only(left: 20),
+        height: 120,
+        width: 120,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+        ),
+        child: Center(
+            child: Image.asset(
+          "assets/images/user.jpg",
           fit: BoxFit.cover,
-        ),
-        borderRadius: BorderRadius.circular(80.0),
-        border: Border.all(
-          color: Colors.white54,
-          width: 10.0,
-        ),
+          height: 80,
+          width: 80,
+        )),
       ),
     );
   }
 
-  detailsBody() {
+  _detailsBody() {
     return Container(
-      margin: EdgeInsets.only(top: 200),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(0),
-        ),
-      ),
+      height: MediaQuery.of(context).size.height - 280,
       child: ListView(
         children: <Widget>[
           SizedBox(
-            height: 40,
+            height: 10,
           ),
           Card(
             elevation: 0,
@@ -94,7 +135,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     // // fontSize: 28.0,
                     // fontWeight: FontWeight.w700,
                   )),
-              subtitle: Text(_profileData.Name),
+              subtitle: Text(_profileData.name),
             ),
           ),
           Card(
@@ -109,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                   )),
-              subtitle: Text(_profileData.Mail),
+              subtitle: Text(_profileData.mail),
             ),
           ),
           Card(
@@ -124,7 +165,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                   )),
-              subtitle: Text(_profileData.MobileNumber),
+              subtitle: Text(_profileData.mobileNumber),
             ),
           ),
           Card(
@@ -139,7 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                   )),
-              subtitle: Text(_profileData.LastLogin.toLocal().toString()),
+              subtitle: Text(_profileData.lastLogin.toLocal().toString()),
             ),
           ),
           Card(
@@ -154,8 +195,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                   )),
-              subtitle: Text(_profileData.Address),
+              subtitle: Text(_profileData.address),
             ),
+          ),
+          const SizedBox(
+            height: 20,
           ),
           editButton(),
         ],
@@ -168,17 +212,22 @@ class _ProfilePageState extends State<ProfilePage> {
       onPressed: () {
         Navigator.pop(context);
       },
-      icon: Icon(
+      icon: const Icon(
         Icons.arrow_back,
-        color: Colors.white,
+        color: Colors.black,
       ),
     );
   }
 
   editButton() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ElevatedButton(onPressed: () {}, child: Text('Edit Details')),
+    return Container(
+      width: 100,
+      margin: const EdgeInsets.symmetric(horizontal: 100),
+      child: ElevatedButton(
+        onPressed: () {},
+        child: Text('Edit Details'),
+        style: TextButton.styleFrom(fixedSize: const Size.fromWidth(100)),
+      ),
     );
   }
 }

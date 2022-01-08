@@ -191,7 +191,8 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                   textScaleFactor: 1.6,
                                 ),
                                 Text(
-                                  context.read<LoginBloc>().state.username,
+                                  context.read<LoginBloc>().state.username +
+                                      "!",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     color: Colors.black,

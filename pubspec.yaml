@@ -56,7 +56,6 @@ dependencies:
   bottom_bar_with_sheet:
   custom_pop_up_menu:
   pinput:
-  geolocator:
   flutter_slidable:
   fluttericon:
   material_floating_search_bar: ^0.3.6
@@ -66,12 +65,11 @@ dependencies:
   showcaseview:
   azstore: 
   expandable:
-  awesome_notifications: ^0.6.19
+  awesome_notifications: 
   sliding_up_panel:
   animated_splash_screen:
   show_up_animation:
-  
-  simple_animations: ^4.0.1
+  simple_animations:
   
 dev_dependencies:
   flutter_test:

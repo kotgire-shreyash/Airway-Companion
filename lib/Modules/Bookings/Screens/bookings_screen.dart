@@ -3,6 +3,7 @@ import 'package:airwaycompanion/Modules/Bookings/Events/bookings_screen_events.d
 import 'package:airwaycompanion/Modules/Bookings/Screens/bookings_screen_state.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Checklist/Events/checklist_screen_event.dart';
+import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -143,6 +144,7 @@ class _BookingScreenState extends State<BookingScreen> {
             SafeArea(
                 child: IconButton(
                     onPressed: () {
+                      CustomBottomNavigationBar.index = 0;
                       Navigator.pop(context);
                     },
                     icon: const Icon(
