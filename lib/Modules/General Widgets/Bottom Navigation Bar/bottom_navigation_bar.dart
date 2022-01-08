@@ -1,6 +1,7 @@
 import 'package:airwaycompanion/Logic/Bloc/FlightsScreenBloc/flights_screen_bloc.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Notifications/notifications.dart';
+import 'package:airwaycompanion/Modules/Profile/Screens/profile_screen.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
 import 'package:flutter/cupertino.dart';

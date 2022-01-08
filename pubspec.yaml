@@ -71,6 +71,8 @@ dependencies:
   animated_splash_screen:
   show_up_animation:
   
+  simple_animations: ^4.0.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

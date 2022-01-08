@@ -12,7 +12,11 @@ import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20
 import 'package:airwaycompanion/Modules/Guidelines/Screens/guidelines_screen.dart';
 import 'package:airwaycompanion/Modules/Home/Screens/home_screen.dart';
 import 'package:airwaycompanion/Modules/Navigation/Screens/navigation_screen.dart';
+<<<<<<< HEAD
 import 'package:airwaycompanion/Modules/Splash/splash_screen.dart';
+=======
+import 'package:airwaycompanion/Modules/Profile/Screens/profile_screen.dart';
+>>>>>>> shreyash-day-4
 import 'package:airwaycompanion/Modules/Timeline/Screens/timeline_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,10 +45,10 @@ class GlobalRouter {
             builder: (_) =>
                 HomeScreen(chatbot: _chatBot, bottomBar: _bottomBar));
 
-      case 'checklistPage':
-        return MaterialPageRoute(
-            builder: (_) =>
-                CheckListScreen(chatbot: _chatBot, bottomBar: _bottomBar));
+      // case 'checklistPage':
+      //   return MaterialPageRoute(
+      //       builder: (_) =>
+      //           CheckListScreen(chatbot: _chatBot, bottomBar: _bottomBar));
 
       case 'availableFlights':
         return MaterialPageRoute(
@@ -62,11 +66,15 @@ class GlobalRouter {
         return MaterialPageRoute(
             builder: (_) =>
                 TimeLineScreen(chatbot: _chatBot, bottomBar: _bottomBar));
+
       case 'navigation':
         return MaterialPageRoute(
             builder: (_) => NavigationScreen(
                   bottomBar: _bottomBar,
                 ));
+      case 'profile':
+        return MaterialPageRoute(builder: (_) => ProfilePage());
+
       case 'guidelines':
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
