@@ -18,7 +18,8 @@ class AzureTranslatorRepository {
     List<Map<String, String>> translatedList = [];
 
     for (var body in content) {
-      List _translatedContent = await translate(from, to, body);
+      var _translatedContent = await translate(from, to, body);
+      print(_translatedContent);
 
       Map<String, String> _translatedGuidelinesMap = {
         "image": body['image'],

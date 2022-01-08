@@ -56,7 +56,7 @@ class ServicesWidget extends StatelessWidget {
 
   final List _servicesList = [
     [Icons.local_parking_outlined, "Parking"],
-    [Icons.family_restroom_outlined, "Lounge"],
+    [Icons.hotel, "Lounges"],
     [Icons.leave_bags_at_home_outlined, "Luggage"],
     [Icons.travel_explore_outlined, "Explore"],
   ];
