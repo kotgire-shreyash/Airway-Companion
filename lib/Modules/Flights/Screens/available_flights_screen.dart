@@ -54,6 +54,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
 
   @override
   Widget build(BuildContext context) {
+    // Set bottom bar index
     CustomBottomNavigationBar.index = 1;
 
     return BlocConsumer<FlightScreenBloc, FlightScreenState>(
