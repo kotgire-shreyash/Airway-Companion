@@ -1,5 +1,4 @@
 import 'package:airwaycompanion/Data/Repositories/ProfileRepository/profile_data.dart';
-import 'package:simple_animations/simple_animations.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -94,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     // // fontSize: 28.0,
                     // fontWeight: FontWeight.w700,
                   )),
-              subtitle: Text(_profileData.Name),
+              subtitle: Text(_profileData.name),
             ),
           ),
           Card(
@@ -109,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                   )),
-              subtitle: Text(_profileData.Mail),
+              subtitle: Text(_profileData.mail),
             ),
           ),
           Card(
@@ -124,7 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                   )),
-              subtitle: Text(_profileData.MobileNumber),
+              subtitle: Text(_profileData.mobileNumber),
             ),
           ),
           Card(
@@ -139,7 +138,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                   )),
-              subtitle: Text(_profileData.LastLogin.toLocal().toString()),
+              subtitle: Text(_profileData.lastLogin.toLocal().toString()),
             ),
           ),
           Card(
@@ -154,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                   )),
-              subtitle: Text(_profileData.Address),
+              subtitle: Text(_profileData.address),
             ),
           ),
           editButton(),
