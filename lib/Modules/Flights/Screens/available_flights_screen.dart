@@ -54,7 +54,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
 
   @override
   Widget build(BuildContext context) {
-    CustomBottomNavigationBar.index = 0;
+    CustomBottomNavigationBar.index = 1;
 
     return BlocConsumer<FlightScreenBloc, FlightScreenState>(
       listener: (context, state) {},
@@ -80,7 +80,7 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                 backgroundColor: Colors.blue.shade700,
                 leading: IconButton(
                     onPressed: () {
-                      CustomBottomNavigationBar.index = 1;
+                      CustomBottomNavigationBar.index = 0;
 
                       Navigator.pop(context);
                     },
