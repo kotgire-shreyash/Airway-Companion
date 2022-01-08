@@ -485,11 +485,14 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                           () {
                         Navigator.pushNamed(context, "checklistPage");
                       }),
-                      _drawerListTile("Navigation", FontAwesomeIcons.globe, () {
+                      _drawerListTile("Navigation", CupertinoIcons.map, () {
                         Navigator.pushNamed(context, "navigation");
                       }),
                       _drawerListTile("Track", Icons.track_changes_sharp, () {
                         Navigator.pushNamed(context, "timeline");
+                      }),
+                      _drawerListTile("Guidelines", CupertinoIcons.book, () {
+                        Navigator.pushNamed(context, "guidelines");
                       }),
                     ],
                   ),

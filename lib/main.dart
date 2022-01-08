@@ -50,11 +50,6 @@ class _AirwayCompanionAppState extends State<AirwayCompanionApp> {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
-    // AwesomeNotifications().createdStream.listen((event) {
-    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //     content: Text('Notifcation Created on ${event.channelKey}'),
-    //   ));
-    // });
   }
 
   @override

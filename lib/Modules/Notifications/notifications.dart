@@ -26,7 +26,7 @@ Future<void> CreateReminderNotification(
       title: title,
       body: body,
       notificationLayout: NotificationLayout.Default,
-      //icon: 'asset://assets/images/plane.jpg'
+      // icon: 'asset://assets/images/plane.jpg'
     ),
     actionButtons: [
       NotificationActionButton(key: 'Mark_Done', label: 'Mark Done'),

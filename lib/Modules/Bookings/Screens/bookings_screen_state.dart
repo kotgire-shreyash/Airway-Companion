@@ -2,7 +2,7 @@ import 'package:azstore/azstore.dart';
 
 class BookingScreenState {
   final azureStorage = AzureStorage.parse(
-      "DefaultEndpointsProtocol=https;AccountName=acflightbookings;AccountKey=CX4yeg2NXi3W0LbtFk1RvpcqlHJ717sfhHqibjMVOOGlYYCVw0rgcMH4UJI8mVyIp361ivherFOr8mmWw75g9w==;EndpointSuffix=core.windows.net");
+      "DefaultEndpointsProtocol=https;AccountName=acflightbookingservice;AccountKey=Vw3i+ZWx+bIdxKOK7dBm6FMrxZ/YiCsAjFydC/5gwkhwnZM7VzffXPbG+TKyM2EpGJuuQbeAJwkUFDI1wzBmwA==;EndpointSuffix=core.windows.net");
   List bookedTicketsList;
   bool isDataBeingUpdated;
   var time;

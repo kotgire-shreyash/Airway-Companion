@@ -18,6 +18,7 @@ class GuidelineScreenBloc
 
     var translatedList = await _azureTranslatorRepository.getTranslatedList(
         state.prevLanguage, event.to, event.content);
+    print(translatedList.runtimeType);
 
     emit(state.copyWith(
         guidelineCardList: translatedList,

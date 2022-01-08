@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 
 class AzureBotAPI {
   final String connectionEndpoint =
-      "https://airwaycompanionqnamaker.azurewebsites.net/qnamaker/knowledgebases/5ace3c88-f973-4cdd-8392-991a85bc25d0/generateAnswer";
-  final String endPointKey = "c8716b2e-b7f3-476d-ad27-134e1a941093";
+      "https://ac-qnamaker-service.azurewebsites.net/qnamaker/knowledgebases/f1c8a711-3c10-467c-92ab-0e2c4dbc5855/generateAnswer";
+  final String endPointKey = "6f895546-317f-426f-8c93-821eff4a0ce0";
 
   Future<http.Response> getAzureBotQueryResponse(String question) async {
     try {

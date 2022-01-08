@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class CheckListScreenState {
   List<dynamic> taskWidgets;
   var azureStorage = AzureStorage.parse(
-      "DefaultEndpointsProtocol=https;AccountName=airwaycompanionblob;AccountKey=Br8NyBihgsdUJ+iQfqUDUPbY4jutmNwBoYSdT40fmLUo/ZsV9f86pelutmew8aEZOfinjk9tsK8L0FrEx/8P8A==;EndpointSuffix=core.windows.net");
+      "DefaultEndpointsProtocol=https;AccountName=accheckliststorage;AccountKey=hNgW3qZNysbP2hkVaO37oJ7twF1CaNcY9Hg5fvgvrjjuY4d+1Y1MejVifPzwQSNkDQEIq3iMbm3F33LPunvdRg==;EndpointSuffix=core.windows.net");
 
   List<Widget> fieldsList;
   List<String> fieldsNameList;
