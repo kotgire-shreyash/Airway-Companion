@@ -47,19 +47,19 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       // Creating Signup profile
       await Firebase.firebaseAuthentication.createUserWithEmailAndPassword(
           email: state.mail, password: state.password);
-
       // Creating cloud firestore collection
       await Firebase.firebaseFirestoreInstance
           .collection("users")
           .doc("profiles")
           .collection("${state.mail}")
-          .doc("${state.mail}-${state.username}")
+          .doc(Firebase.firebaseAuthentication.currentUser!.uid)
           .set({
         "fullname": "Not Set",
         "username": state.username,
         "mail": state.mail,
         "password": state.password,
         "mobile": "Not Set",
+        "address": "Not Set"
       });
 
       _signupFormSuccessfulSubmissionEvent(

@@ -4,6 +4,8 @@ import 'package:airwaycompanion/Modules/Bookings/Screens/bookings_screen_state.d
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Checklist/Events/checklist_screen_event.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/Bottom%20Navigation%20Bar/bottom_navigation_bar.dart';
+import 'package:airwaycompanion/Modules/Notifications/notifications.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -144,15 +146,37 @@ class _BookingScreenState extends State<BookingScreen> {
                       )),
                 ),
                 SafeArea(
-                    child: IconButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          padding: EdgeInsets.only(left: 10),
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                            size: 28,
+                          )),
+                      IconButton(
                         onPressed: () {
-                          CustomBottomNavigationBar.index = 0;
-                          Navigator.pop(context);
+                          CreateBasicNotification(
+                              title:
+                                  'Leave For Airport ${Emojis.transport_motor_scooter}',
+                              body:
+                                  'Reach Airport before 2 hours of departure');
                         },
+                        padding: EdgeInsets.only(right: 20),
                         icon: const Icon(
-                          Icons.arrow_back,
+                          Icons.notification_add,
                           color: Colors.white,
-                        )))
+                          size: 30,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
           alignment: Alignment.centerRight,
           // height: 35,
           child: Text(
-            "Ninad07",
+            _profileData.name,
             style: TextStyle(
               fontFamily:
                   GoogleFonts.lato(fontWeight: FontWeight.w900).fontFamily,
@@ -74,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
           alignment: Alignment.centerRight,
           height: 25,
           child: Text(
-            "mail@gmail.com",
+            _profileData.mail,
             style: TextStyle(
               fontFamily:
                   GoogleFonts.lato(fontWeight: FontWeight.w800).fontFamily,
@@ -224,7 +224,11 @@ class _ProfilePageState extends State<ProfilePage> {
       width: 100,
       margin: const EdgeInsets.symmetric(horizontal: 100),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            _profileData;
+          });
+        },
         child: Text('Edit Details'),
         style: TextButton.styleFrom(fixedSize: const Size.fromWidth(100)),
       ),
