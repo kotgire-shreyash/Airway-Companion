@@ -146,35 +146,37 @@ class _BookingScreenState extends State<BookingScreen> {
                       )),
                 ),
                 SafeArea(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          padding: EdgeInsets.only(left: 10),
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                            size: 28,
+                          )),
+                      IconButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          CreateBasicNotification(
+                              title:
+                                  'Leave For Airport ${Emojis.transport_motor_scooter}',
+                              body:
+                                  'Reach Airport before 2 hours of departure');
                         },
-                        padding: EdgeInsets.only(left: 10),
+                        padding: EdgeInsets.only(right: 20),
                         icon: const Icon(
-                          Icons.arrow_back,
+                          Icons.notification_add,
                           color: Colors.white,
-                          size: 28,
-                        )),
-                    IconButton(
-                      onPressed: () {
-                        CreateBasicNotification(
-                            title:
-                                'Leave For Airport ${Emojis.transport_motor_scooter}',
-                            body: 'Reach Airport before 2 hours of departure');
-                      },
-                      padding: EdgeInsets.only(right: 20),
-                      icon: const Icon(
-                        Icons.notification_add,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    )
-                  ],
-                ))
+                          size: 30,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
