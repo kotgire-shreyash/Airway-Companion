@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // function for basic notification
 Future<void> CreateBasicNotification(
     {required String title, required String body}) async {
+  print("HERE");
   await AwesomeNotifications().createNotification(
     content: NotificationContent(
       id: 4,

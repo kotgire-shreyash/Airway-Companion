@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:airwaycompanion/Data/Repositories/SearchRepository/search_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:latlong2/latlong.dart';
-//import 'package:flutter/material.dart';
 
+// Search Amenities
 class Search {
   List<SearchModel> searchResultList = [];
   Future<List<SearchModel>> searchNearby(
@@ -25,13 +24,9 @@ class Search {
             longitude: item['position']['lon'],
           ));
         }
-      } else {
-        print('ERROR OCCURED');
-        print(response.reasonPhrase);
       }
       return searchResultList;
     } catch (e) {
-      print(e);
       rethrow;
     }
   }

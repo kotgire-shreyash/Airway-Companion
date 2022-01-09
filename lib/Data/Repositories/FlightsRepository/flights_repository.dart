@@ -1,18 +1,17 @@
-import 'dart:collection';
 import 'dart:convert';
-
 import 'package:airwaycompanion/Data/Repositories/FlightsRepository/flights_data_provider.dart';
 import 'package:airwaycompanion/Data/Repositories/FlightsRepository/flights_model.dart';
 
+// Flight Screen Repository
 class FlightRepository {
   final FlightAPI _flightAPI = FlightAPI();
   List<FlightModel> flightList = [];
 
+  // Receives flight data from the API
   Future getFlightList() async {
     var rawFlightData = await _flightAPI.getFlightDataEncoded();
     var flightDataJsonDecoded = await jsonDecode(rawFlightData.body);
 
-    print(flightDataJsonDecoded);
     try {
       for (var item in flightDataJsonDecoded['data']) {
         FlightModel flightModel = FlightModel(

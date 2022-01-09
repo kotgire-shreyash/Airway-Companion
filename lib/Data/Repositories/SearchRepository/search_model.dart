@@ -1,3 +1,4 @@
+// Search Data Model
 class SearchModel {
   String name;
   String address;

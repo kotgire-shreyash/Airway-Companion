@@ -117,7 +117,7 @@ class CheckListScreenBloc
               child: Text(
                 title,
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
               ),
             ),
           ),
@@ -131,7 +131,7 @@ class CheckListScreenBloc
                   color: Colors.redAccent,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.remove,
                   color: Colors.white,
                 ),
@@ -143,4 +143,3 @@ class CheckListScreenBloc
     );
   }
 }
-// https://meet.google.com/nox-okqy-nop

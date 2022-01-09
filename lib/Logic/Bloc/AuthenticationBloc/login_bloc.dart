@@ -27,16 +27,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(state.copyWith(password: event.password));
   }
 
-  void _onloginFormSuccessfulSubmission(
-      LoginFormSuccesfulSubmissionEvent event, Emitter<LoginState> emit) {
-    emit(state.copyWith(internalStateValue: 1));
-  }
-
-  void _onloginFormSubmissionFailure(
-      LoginFormFailureSubmissionEvent event, Emitter<LoginState> emit) {
-    emit(state.copyWith(internalStateValue: event.code));
-  }
-
   void _onLoginFormBeingSubmitted(
       LoginFormBeingSubmittedEvent event, Emitter<LoginState> emit) async {
     emit(state.copyWith(isFormSubmitted: false));

@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+// Azure Translator API source
 class AzureTranslatorAPI {
+  // Connection string
   final String connectionAPIString =
       "https://api.cognitive.microsofttranslator.com/";
 

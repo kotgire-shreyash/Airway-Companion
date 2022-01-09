@@ -1,3 +1,4 @@
+// Flights Data Model
 class FlightModel {
   String flightDate;
   String flightStatus;
