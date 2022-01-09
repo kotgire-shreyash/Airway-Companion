@@ -716,54 +716,59 @@ class _AvailableFlightsState extends State<AvailableFlights> {
                       ),
                     ),
                   )),
-                  ElevatedButton(
-                    onPressed: () {
-                      Map<String, dynamic> dataMap = {
-                        "head":
-                            "${dataModel.arrivalIATACode}${dataModel.departureIATACode}",
-                        "arrivalDelay": "${dataModel.arrivalDelay}",
-                        "departureDelay": "${dataModel.departureDelay}",
-                        "arrivalAirport": "${dataModel.arrivalAirport}",
-                        "departureAirport": "${dataModel.departureAirport}",
-                        "arrivalIATACode": "${dataModel.arrivalIATACode}",
-                        "departureIATACode": "${dataModel.departureIATACode}",
-                        "arrivalSchedule": "${dataModel.arrivalSchedule}",
-                        "departureSchedule": "${dataModel.departureSchedule}",
-                        "airlineName": "${dataModel.airlineName}",
-                      };
+                  BlocBuilder<FlightScreenBloc, FlightScreenState>(
+                      builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        Map<String, dynamic> dataMap = {
+                          "head":
+                              "${dataModel.arrivalIATACode}${dataModel.departureIATACode}",
+                          "arrivalDelay": "${dataModel.arrivalDelay}",
+                          "departureDelay": "${dataModel.departureDelay}",
+                          "arrivalAirport": "${dataModel.arrivalAirport}",
+                          "departureAirport": "${dataModel.departureAirport}",
+                          "arrivalIATACode": "${dataModel.arrivalIATACode}",
+                          "departureIATACode": "${dataModel.departureIATACode}",
+                          "arrivalSchedule": "${dataModel.arrivalSchedule}",
+                          "departureSchedule": "${dataModel.departureSchedule}",
+                          "airlineName": "${dataModel.airlineName}",
+                        };
 
-                      context
-                          .read<FlightScreenBloc>()
-                          .add(FlightTicketBooking(dataMap: dataMap));
-                    },
-                    child: Center(
-                      child: context
-                              .read<FlightScreenBloc>()
-                              .state
-                              .isTicketBeingBooked
-                          ? Container(
-                              margin: const EdgeInsets.all(20),
-                              child: const CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2,
+                        context
+                            .read<FlightScreenBloc>()
+                            .add(FlightTicketBooking(dataMap: dataMap));
+                      },
+                      child: Center(
+                        child: context
+                                .read<FlightScreenBloc>()
+                                .state
+                                .isTicketBeingBooked
+                            ? Container(
+                                // margin: const EdgeInsets.all(20),
+                                height: 20,
+                                width: 20,
+                                child: const CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : FittedBox(
+                                child: Text(
+                                  "Book",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: GoogleFonts.lato(
+                                              fontWeight: FontWeight.w800)
+                                          .fontFamily),
+                                ),
                               ),
-                            )
-                          : FittedBox(
-                              child: Text(
-                                "Book",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: GoogleFonts.lato(
-                                            fontWeight: FontWeight.w800)
-                                        .fontFamily),
-                              ),
-                            ),
-                    ),
-                    style: TextButton.styleFrom(
-                      minimumSize: const Size(90, 20),
-                      backgroundColor: Colors.blue,
-                    ),
-                  ),
+                      ),
+                      style: TextButton.styleFrom(
+                        minimumSize: const Size(90, 20),
+                        backgroundColor: Colors.blue,
+                      ),
+                    );
+                  }),
                 ],
               ),
             )),

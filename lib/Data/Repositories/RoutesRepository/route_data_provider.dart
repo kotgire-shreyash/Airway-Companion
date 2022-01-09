@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
 
+// Navigation Routes
 class Routes {
   var origin;
   var destination;
@@ -22,7 +23,6 @@ class Routes {
 
       return points;
     } catch (e) {
-      print(e);
       rethrow;
     }
   }

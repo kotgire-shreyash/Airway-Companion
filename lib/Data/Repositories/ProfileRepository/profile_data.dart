@@ -1,7 +1,6 @@
 import 'package:airwaycompanion/Modules/Firebase/firebase.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
+// User Profile Data
 class ProfileData {
   String name = 'Not-Set';
   String mail = 'Not-set';
@@ -31,8 +30,7 @@ class ProfileData {
             .firebaseAuthentication.currentUser!.metadata.lastSignInTime!;
       }
     } catch (e) {
-      print('Error Occured');
-      print(e.toString());
+      rethrow;
     }
   }
 }

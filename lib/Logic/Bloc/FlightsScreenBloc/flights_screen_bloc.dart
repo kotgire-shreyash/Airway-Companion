@@ -27,7 +27,8 @@ class FlightScreenBloc extends Bloc<FlightScreenEvent, FlightScreenState> {
       await state.uploadTicketDetails(event.dataMap);
     } catch (e) {
       rethrow;
+    } finally {
+      emit(state.copyWith(isTicketBeingBooked: false));
     }
-    emit(state.copyWith(isTicketBeingBooked: false));
   }
 }

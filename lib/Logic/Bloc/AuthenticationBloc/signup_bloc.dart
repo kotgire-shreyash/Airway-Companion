@@ -2,7 +2,6 @@ import 'package:airwaycompanion/Modules/Authentication/Events/signup_events.dart
 import 'package:airwaycompanion/Modules/Authentication/Screens/SignUpScreen/signup_states.dart';
 import 'package:airwaycompanion/Modules/Firebase/firebase.dart';
 import 'package:airwaycompanion/Modules/General%20Widgets/toast.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
