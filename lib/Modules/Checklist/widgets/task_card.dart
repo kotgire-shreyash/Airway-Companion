@@ -51,7 +51,8 @@ class _TaskCardState extends State<TaskCard> {
                         fontSize: 15,
                         fontFamily: _latoBoldFontFamily,
                         fontWeight: FontWeight.w900),
-                    textScaleFactor: 1.6,
+                    textScaleFactor: 1.15,
+                    overflow: TextOverflow.clip,
                   ),
                   const SizedBox(
                     width: 60,

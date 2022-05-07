@@ -12,6 +12,8 @@ class AzureBotRepository {
         await _azureBotAPI.getAzureBotQueryResponse(question);
     var azureBotResponseJSON = await jsonDecode(rawAzureBotResponse.body);
 
+    print("################## $azureBotResponseJSON");
+
     return azureBotResponseJSON['answers'][0]['answer'];
   }
 }
