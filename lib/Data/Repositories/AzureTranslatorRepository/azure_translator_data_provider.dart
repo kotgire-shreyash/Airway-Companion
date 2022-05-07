@@ -8,7 +8,7 @@ class AzureTranslatorAPI {
   final String connectionAPIString =
       "https://api.cognitive.microsofttranslator.com/";
 
-  final String endpointKey = "8e216a5136a6481b97dec9d7f68a4acc";
+  final String endpointKey = "d155e1deb34f4d63be9bff4a766f65ea";
 
   // Receives content as a map of guidelines
   Future<http.Response> getAzureTranslatorResponseEncoded(

@@ -1,4 +1,5 @@
 import 'package:airwaycompanion/Logic/Bloc/FlightsScreenBloc/flights_screen_bloc.dart';
+import 'package:airwaycompanion/Modules/Bookings/Screens/booking_ui_card.dart';
 import 'package:airwaycompanion/Modules/ChatBot/Widget/chat_bot.dart';
 import 'package:airwaycompanion/Modules/Notifications/notifications.dart';
 import 'package:airwaycompanion/Modules/Profile/Screens/profile_screen.dart';
@@ -59,7 +60,11 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         } else if (index == 1) {
           if (CustomBottomNavigationBar.index != index) {
             CustomBottomNavigationBar.index = index;
-            Navigator.pushNamed(context, "availableFlights");
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const FlightDetailsCard()));
+            // Navigator.pushNamed(context, "availableFlights");
           }
         } else if (index == 2) {
           if (CustomBottomNavigationBar.index != index) {

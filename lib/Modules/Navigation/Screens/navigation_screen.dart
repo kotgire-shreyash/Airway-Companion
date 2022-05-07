@@ -107,7 +107,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
           urlTemplate:
               "https://atlas.microsoft.com/map/tile?subscription-key={subscriptionKey}&api-version=2.1&tileSize=512&tilesetId={tilesetId}&zoom={z}&x={x}&y={y}",
           additionalOptions: {
-            'subscriptionKey': 'OmHax9byGsCpudWRxU0lYnTgw81r6Eq9nlCqRk3EnGI',
+            'subscriptionKey': '00KZPaf_h8qKYC4kyvauh4XAJ5GxGQlX4zxMhGMAeG4',
             'tilesetId': 'microsoft.base.road'
           },
           tileProvider: const NonCachingNetworkTileProvider(),
